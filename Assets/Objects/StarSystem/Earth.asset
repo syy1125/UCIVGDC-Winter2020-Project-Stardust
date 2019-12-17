@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f53d4193dd95764a8e42937be957fed, type: 3}
-  m_Name: Sun
+  m_Name: Earth
   m_EditorClassIdentifier: 
-  _gravitationalParameter: 837000
-  _fixed: 1
+  _gravitationalParameter: 0
+  _fixed: 0
   _position: {x: 0, y: 0, z: 0}
-  _orbit: {fileID: 0}
-  _radius: 0.6955
-  _overviewColor: {r: 1, g: 1, b: 0, a: 0}
+  _orbit: {fileID: 11400000, guid: 36f7b06fcc9f005499b348c21f110888, type: 2}
+  _radius: 0
+  _overviewColor: {r: 0, g: 1, b: 1, a: 1}

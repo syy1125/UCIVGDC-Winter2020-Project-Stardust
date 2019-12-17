@@ -1,5 +1,4 @@
-﻿using TMPro.EditorUtilities;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Celestial Body")]
@@ -16,9 +15,15 @@ public class CelestialBody : ScriptableObject
 	private Orbit _orbit;
 	public Orbit Orbit => _orbit;
 
-	public Vector3 GetPositionAt(float time)
+	[SerializeField]
+	private float _radius;
+	[SerializeField]
+	private Color _overviewColor;
+	public Color OverviewColor => _overviewColor;
+
+	public Vector3 GetGlobalPositionAt(float time)
 	{
-		return _fixed ? _position : default; // TODO use orbit
+		return _fixed ? _position : _orbit.GetGlobalPositionAt(time);
 	}
 }
 
@@ -29,6 +34,8 @@ public class CelestialBodyEditor : Editor
 	private SerializedProperty _fixed;
 	private SerializedProperty _position;
 	private SerializedProperty _orbit;
+	private SerializedProperty _radius;
+	private SerializedProperty _overviewColor;
 
 	private void OnEnable()
 	{
@@ -36,22 +43,22 @@ public class CelestialBodyEditor : Editor
 		_fixed = serializedObject.FindProperty("_fixed");
 		_position = serializedObject.FindProperty("_position");
 		_orbit = serializedObject.FindProperty("_orbit");
+		_radius = serializedObject.FindProperty("_radius");
+		_overviewColor = serializedObject.FindProperty("_overviewColor");
 	}
 
 	public override void OnInspectorGUI()
 	{
+		EditorGUILayout.LabelField("Physics", EditorStyles.boldLabel);
+
 		EditorGUILayout.PropertyField(_gravitationalParameter);
-
 		EditorGUILayout.PropertyField(_fixed);
+		EditorGUILayout.PropertyField(_fixed.boolValue ? _position : _orbit);
 
-		if (_fixed.boolValue)
-		{
-			EditorGUILayout.PropertyField(_position);
-		}
-		else
-		{
-			EditorGUILayout.PropertyField(_orbit);
-		}
+		EditorGUILayout.LabelField("Rendering", EditorStyles.boldLabel);
+
+		EditorGUILayout.PropertyField(_radius);
+		EditorGUILayout.PropertyField(_overviewColor);
 
 		serializedObject.ApplyModifiedProperties();
 	}

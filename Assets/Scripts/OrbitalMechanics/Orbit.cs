@@ -21,6 +21,7 @@ public class Orbit : ScriptableObject
 {
 	[SerializeField]
 	private CelestialBody _centralBody;
+	public CelestialBody CentralBody => _centralBody;
 
 	// Orbital elements that describe the orbit
 	// Reference: https://en.wikipedia.org/wiki/Orbital_elements
@@ -107,5 +108,10 @@ public class Orbit : ScriptableObject
 		return ellipse.Center
 		       + ellipse.SemimajorAxis * Mathf.Cos(eccentricAnomaly)
 		       + ellipse.SemiminorAxis * Mathf.Sin(eccentricAnomaly);
+	}
+
+	public Vector3 GetGlobalPositionAt(float time)
+	{
+		return _centralBody.GetGlobalPositionAt(time) + GetLocalPositionAt(time);
 	}
 }
