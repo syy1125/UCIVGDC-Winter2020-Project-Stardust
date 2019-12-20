@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class VisualizeOrbitGizmo : MonoBehaviour
 {
@@ -11,22 +12,17 @@ public class VisualizeOrbitGizmo : MonoBehaviour
 	{
 		if (Orbit == null) return;
 
-		Ellipse ellipse = Orbit.GetLocalEllipse();
-		Vector3 last = ellipse.Center + ellipse.SemimajorAxis;
-
+		Vector3[] positions = Orbit.GetDrawPositions(Segments);
 		Gizmos.color = OrbitColor;
-		
-		for (int i = 1; i <= Segments; i++)
+
+		for (int i = 0; i < Segments; i++)
 		{
-			float angle = (float) i / Segments * 2 * Mathf.PI;
-			Vector3 position = ellipse.Center + ellipse.SemimajorAxis * Mathf.Cos(angle)
-			                          + ellipse.SemiminorAxis * Mathf.Sin(angle);
-			
-			Gizmos.DrawLine(last, position);
-			last = position;
+			Gizmos.DrawLine(positions[i], positions[i + 1]);
 		}
 
 		Gizmos.color = BodyColor;
-		Gizmos.DrawWireSphere(Orbit.GetLocalPositionAt(0), 0.1f);
+		(Vector3 position, Vector3 velocity) = Orbit.GetGlobalPositionAndVelocityAt(0);
+		Gizmos.DrawWireSphere(position, Orbit.SemilatusRectum * 0.05f);
+		Gizmos.DrawLine(position, position + velocity);
 	}
 }

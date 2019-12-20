@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Test Orbit
   m_EditorClassIdentifier: 
   _centralBody: {fileID: 11400000, guid: 7bde4e16142d10c4cb95274b97b4ad7a, type: 2}
-  _eccentricity: 0.5
-  _semimajorAxis: 5
+  _eccentricity: 0.3
+  _semilatusRectum: 100
   _inclination: 0
   _longitudeOfAscendingNode: 0
   _argumentOfPeriapsis: 0

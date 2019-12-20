@@ -8,8 +8,10 @@
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
         <e p="Scripts" t="Include">
+          <e p="MathUtils.cs" t="Include" />
           <e p="OrbitalMechanics" t="Include">
             <e p="CelestialBody.cs" t="Include" />
+            <e p="ConicSection.cs" t="Include" />
             <e p="Orbit.cs" t="Include" />
             <e p="VisualizeBodyRealtimeOverview.cs" t="Include" />
             <e p="VisualizeOrbit.cs" t="Include" />

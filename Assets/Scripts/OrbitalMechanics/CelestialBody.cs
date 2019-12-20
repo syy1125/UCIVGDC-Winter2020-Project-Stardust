@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Celestial Body")]
@@ -21,9 +22,9 @@ public class CelestialBody : ScriptableObject
 	private Color _overviewColor;
 	public Color OverviewColor => _overviewColor;
 
-	public Vector3 GetGlobalPositionAt(float time)
+	public Tuple<Vector3, Vector3> GetGlobalPositionAndVelocityAt(float time)
 	{
-		return _fixed ? _position : _orbit.GetGlobalPositionAt(time);
+		return _fixed ? new Tuple<Vector3, Vector3>(_position, Vector3.zero) : _orbit.GetGlobalPositionAndVelocityAt(time);
 	}
 }
 

@@ -11,6 +11,6 @@ public class VisualizeBodyRealtimeOverview : MonoBehaviour
 	{
 		if (Body == null) return;
 
-		transform.position = Body.GetGlobalPositionAt(Application.isPlaying ? Time.time : 0);
+		// transform.position = Body.GetGlobalPositionAt(Application.isPlaying ? Time.time : 0);
 	}
 }
