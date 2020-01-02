@@ -142,7 +142,7 @@ public class Orbit : ScriptableObject
 			float eccentricAnomaly = meanAnomaly;
 			for (var i = 0; i < SOLVER_ITERATION_LIMIT; i++)
 			{
-				float dE = (eccentricAnomaly - _eccentricity * Mathf.Sin(eccentricAnomaly) - meanAnomaly)
+				float dE = -(eccentricAnomaly - _eccentricity * Mathf.Sin(eccentricAnomaly) - meanAnomaly)
 				           / (1 - _eccentricity * Mathf.Cos(eccentricAnomaly));
 				eccentricAnomaly += dE;
 				if (Mathf.Abs(dE) < SOLVER_SMALL_THRESHOLD) break;
@@ -173,7 +173,7 @@ public class Orbit : ScriptableObject
 			float hyperbolicAnomaly = Mathf.Log(2 * meanAnomaly / _eccentricity + 1.8f);
 			for (var i = 0; i < SOLVER_ITERATION_LIMIT; i++)
 			{
-				float dH = (_eccentricity * (float) Math.Sinh(hyperbolicAnomaly) - hyperbolicAnomaly - meanAnomaly)
+				float dH = -(_eccentricity * (float) Math.Sinh(hyperbolicAnomaly) - hyperbolicAnomaly - meanAnomaly)
 				           / (_eccentricity * (float) Math.Cosh(hyperbolicAnomaly) - 1);
 				hyperbolicAnomaly += dH;
 				if (Mathf.Abs(dH) < SOLVER_SMALL_THRESHOLD) break;
