@@ -136,7 +136,7 @@ public class Orbit : ScriptableObject
 			float meanMotion = Mathf.Sqrt(
 				_centralBody.GravitationalParameter * Mathf.Pow((1 - Mathf.Pow(_eccentricity, 2)) / _semilatusRectum, 3)
 			);
-			float meanAnomaly = (meanAnomalyAtEpoch + meanMotion * time) % Mathf.PI;
+			float meanAnomaly = (meanAnomalyAtEpoch + meanMotion * time) % (2 * Mathf.PI);
 
 			// Use Newton's solver
 			float eccentricAnomaly = meanAnomaly;
@@ -148,10 +148,10 @@ public class Orbit : ScriptableObject
 				if (Mathf.Abs(dE) < SOLVER_SMALL_THRESHOLD) break;
 			}
 
-			return Mathf.Atan2(
-				Mathf.Sqrt(1 + _eccentricity) * Mathf.Sin(eccentricAnomaly / 2),
-				Mathf.Sqrt(1 - _eccentricity) * Mathf.Cos(eccentricAnomaly / 2)
-			);
+			return 2 * Mathf.Atan2(
+				       Mathf.Sqrt(1 + _eccentricity) * Mathf.Sin(eccentricAnomaly / 2),
+				       Mathf.Sqrt(1 - _eccentricity) * Mathf.Cos(eccentricAnomaly / 2)
+			       );
 		}
 		else // Hyperbolic case
 		{
@@ -251,7 +251,7 @@ public class Orbit : ScriptableObject
 		orbit._inclination = inclination;
 		orbit._longitudeOfAscendingNode = longitudeOfAscendingNode;
 		orbit._argumentOfPeriapsis = argumentOfPeriapsis;
-		
+
 		// To find true anomaly at epoch, we first pretend that the current true anomaly is at "epoch".
 		// Then we can take advantage of the function already written in order to run time backwards and find the actual true anomaly at epoch.
 		orbit._trueAnomalyAtEpoch = trueAnomaly;
