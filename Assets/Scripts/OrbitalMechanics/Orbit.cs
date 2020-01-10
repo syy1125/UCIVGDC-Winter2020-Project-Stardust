@@ -230,18 +230,18 @@ public class Orbit : ScriptableObject
 	{
 		// Reference: https://downloads.rene-schwarz.com/download/M002-Cartesian_State_Vectors_to_Keplerian_Orbit_Elements.pdf
 		// With adaptations to account for Unity's left-handed system and y-direction being up.
-		Vector3 orbitMomentum = Vector3.Cross(position, velocity);
+		Vector3 orbitMomentum = Vector3.Cross(velocity, position);
 
-		Vector3 eccentricityVector = Vector3.Cross(velocity, orbitMomentum) / centralBody.GravitationalParameter
+		Vector3 eccentricityVector = Vector3.Cross(orbitMomentum, velocity) / centralBody.GravitationalParameter
 		                             - position.normalized;
 
-		Vector3 ascendingNodeDirection = Vector3.Cross(Vector3.up, orbitMomentum);
+		Vector3 ascendingNodeDirection = Vector3.Cross(orbitMomentum, Vector3.up);
 
-		float trueAnomaly = Vector3.SignedAngle(eccentricityVector, position, orbitMomentum);
+		float trueAnomaly = Vector3.SignedAngle(position, eccentricityVector, orbitMomentum) * Mathf.Deg2Rad;
 		float inclination = Mathf.Acos(orbitMomentum.y / orbitMomentum.magnitude);
 		float eccentricity = eccentricityVector.magnitude;
 		float longitudeOfAscendingNode = Mathf.Atan2(ascendingNodeDirection.z, ascendingNodeDirection.x);
-		float argumentOfPeriapsis = Vector3.SignedAngle(ascendingNodeDirection, eccentricityVector, orbitMomentum);
+		float argumentOfPeriapsis = Vector3.SignedAngle(eccentricityVector, ascendingNodeDirection, orbitMomentum) * Mathf.Deg2Rad;
 		float semilatusRectum = position.magnitude * (1 + eccentricity * Mathf.Cos(trueAnomaly));
 
 		var orbit = CreateInstance<Orbit>();
