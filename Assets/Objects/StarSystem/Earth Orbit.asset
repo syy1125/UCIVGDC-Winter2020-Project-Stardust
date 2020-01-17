@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Earth Orbit
   m_EditorClassIdentifier: 
   _centralBody: {fileID: 11400000, guid: 7bde4e16142d10c4cb95274b97b4ad7a, type: 2}
-  _eccentricity: 0.017
-  _semilatusRectum: 150
+  _eccentricity: 0.0167
+  _semilatusRectum: 149.56
   _inclination: 0
   _longitudeOfAscendingNode: 0
   _argumentOfPeriapsis: 0

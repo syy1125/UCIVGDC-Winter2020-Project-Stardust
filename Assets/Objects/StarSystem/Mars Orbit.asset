@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cb13be656aa6e3644b7981162398e556, type: 3}
-  m_Name: Test Orbit
+  m_Name: Mars Orbit
   m_EditorClassIdentifier: 
   _centralBody: {fileID: 11400000, guid: 7bde4e16142d10c4cb95274b97b4ad7a, type: 2}
-  _eccentricity: 0.53
-  _semilatusRectum: 100
-  _inclination: 0.67
-  _longitudeOfAscendingNode: 0.66
-  _argumentOfPeriapsis: 0.63
+  _eccentricity: 0.09339
+  _semilatusRectum: 227.9
+  _inclination: 0
+  _longitudeOfAscendingNode: 0
+  _argumentOfPeriapsis: 0
   _trueAnomalyAtEpoch: 0

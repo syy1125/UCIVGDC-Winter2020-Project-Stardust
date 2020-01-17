@@ -26,6 +26,12 @@ public class CelestialBody : ScriptableObject
 	{
 		return _fixed ? new Tuple<Vector3, Vector3>(_position, Vector3.zero) : _orbit.GetGlobalPositionAndVelocityAt(time);
 	}
+
+	public void SetOrbit(Orbit orbit)
+	{
+		_orbit = orbit;
+		_fixed = false;
+	}
 }
 
 [CustomEditor(typeof(CelestialBody))]

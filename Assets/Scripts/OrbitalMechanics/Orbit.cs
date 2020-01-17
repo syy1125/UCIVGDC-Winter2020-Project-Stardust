@@ -220,7 +220,6 @@ public class Orbit : ScriptableObject
 		return new Tuple<Vector3, Vector3>(centralPosition + localPosition, centralVelocity + localVelocity);
 	}
 
-	// TODO This function needs testing
 	public static Orbit FromPositionAndVelocity(
 		CelestialBody centralBody,
 		Vector3 position,
@@ -228,33 +227,40 @@ public class Orbit : ScriptableObject
 		float time
 	)
 	{
-		// Reference: https://downloads.rene-schwarz.com/download/M002-Cartesian_State_Vectors_to_Keplerian_Orbit_Elements.pdf
+		// Reference: https://github.com/RazerM/orbital/blob/0.7.0/orbital/utilities.py#L252
 		// With adaptations to account for Unity's left-handed system and y-direction being up.
 		Vector3 orbitMomentum = Vector3.Cross(velocity, position);
+
+		Vector3 nodeVector = Vector3.Cross(orbitMomentum, Vector3.up);
 
 		Vector3 eccentricityVector = Vector3.Cross(orbitMomentum, velocity) / centralBody.GravitationalParameter
 		                             - position.normalized;
 
-		Vector3 ascendingNodeDirection = Vector3.Cross(orbitMomentum, Vector3.up);
-
-		float trueAnomaly = Vector3.SignedAngle(position, eccentricityVector, orbitMomentum) * Mathf.Deg2Rad;
-		float inclination = Mathf.Acos(orbitMomentum.y / orbitMomentum.magnitude);
-		float eccentricity = eccentricityVector.magnitude;
-		float longitudeOfAscendingNode = Mathf.Atan2(ascendingNodeDirection.z, ascendingNodeDirection.x);
-		float argumentOfPeriapsis = Vector3.SignedAngle(eccentricityVector, ascendingNodeDirection, orbitMomentum) * Mathf.Deg2Rad;
-		float semilatusRectum = position.magnitude * (1 + eccentricity * Mathf.Cos(trueAnomaly));
-
 		var orbit = CreateInstance<Orbit>();
 		orbit._centralBody = centralBody;
-		orbit._eccentricity = eccentricity;
-		orbit._semilatusRectum = semilatusRectum;
-		orbit._inclination = inclination;
-		orbit._longitudeOfAscendingNode = longitudeOfAscendingNode;
-		orbit._argumentOfPeriapsis = argumentOfPeriapsis;
 
-		// To find true anomaly at epoch, we first pretend that the current true anomaly is at "epoch".
-		// Then we can take advantage of the function already written in order to run time backwards and find the actual true anomaly at epoch.
-		orbit._trueAnomalyAtEpoch = trueAnomaly;
+		orbit._eccentricity = eccentricityVector.magnitude;
+		orbit._inclination = Mathf.Acos(orbitMomentum.y / orbitMomentum.magnitude);
+
+		if (Mathf.Approximately(orbit._inclination, 0)) // Singularity - equatorial orbits
+		{
+			nodeVector = Vector3.right;
+		}
+
+		orbit._longitudeOfAscendingNode = Mathf.Atan2(nodeVector.z, nodeVector.x);
+
+		if (Mathf.Approximately(orbit._eccentricity, 0))
+		{
+			// The magnitude of eccentricity vector no longer matters, only the direction, since we already know eccentricity
+			eccentricityVector = nodeVector;
+		}
+		
+		orbit._argumentOfPeriapsis = Vector3.SignedAngle(eccentricityVector, nodeVector, orbitMomentum) * Mathf.Deg2Rad;
+
+		// Note: To find true anomaly at epoch, we first pretend that the current true anomaly is at "epoch".
+		// At the end we can take advantage of the function already written in order to run time backwards and find the actual true anomaly at epoch.
+		orbit._trueAnomalyAtEpoch = Vector3.SignedAngle(position, eccentricityVector, orbitMomentum) * Mathf.Deg2Rad;
+		orbit._semilatusRectum = position.magnitude * (1 + orbit._eccentricity * Mathf.Cos(orbit._trueAnomalyAtEpoch));
 		orbit._trueAnomalyAtEpoch = orbit.GetTrueAnomalyAt(-time);
 
 		return orbit;

@@ -11,11 +11,14 @@
           <e p="MathUtils.cs" t="Include" />
           <e p="OrbitalMechanics" t="Include">
             <e p="CelestialBody.cs" t="Include" />
-            <e p="ConicSection.cs" t="Include" />
+            <e p="LambertSolver.cs" t="Include" />
             <e p="Orbit.cs" t="Include" />
             <e p="VisualizeBodyRealtimeOverview.cs" t="Include" />
             <e p="VisualizeOrbit.cs" t="Include" />
             <e p="VisualizeOrbitGizmo.cs" t="Include" />
+          </e>
+          <e p="Testing" t="Include">
+            <e p="TestScripts.cs" t="Include" />
           </e>
         </e>
       </e>
