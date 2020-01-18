@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f53d4193dd95764a8e42937be957fed, type: 3}
   m_Name: Sun
   m_EditorClassIdentifier: 
-  _gravitationalParameter: 837000
+  _gravitationalParameter: 896780
   _fixed: 1
   _position: {x: 0, y: 0, z: 0}
   _orbit: {fileID: 0}
