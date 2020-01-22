@@ -39,8 +39,8 @@ public class CameraController : MonoBehaviour
         pos.y -= scroll * scrollSpeed * Time.deltaTime * 100f;
 
         pos.x = Mathf.Clamp(pos.x, minX, maxX);
-        pos.y = Mathf.Clamp(pos.y, minY, maxY);
-        pos.z = Mathf.Clamp(pos.z, minX - GetZOffset(pos), maxX - GetZOffset(pos));
+        pos.y = Mathf.Clamp(pos.y, minY + VariableMinScroll(transform.position), maxY);
+        pos.z = Mathf.Clamp(pos.z, minX - GetZOffset(transform.position), maxX - GetZOffset(transform.position));
 
 
         transform.position = pos;
@@ -54,5 +54,13 @@ public class CameraController : MonoBehaviour
         float tan = Mathf.Tan(cameraAngle);
         float zOffset = tan * pos.y;
         return zOffset;
+    }
+
+
+    public float VariableMinScroll(Vector3 pos)
+    {
+        float distance = Mathf.Max(Mathf.Abs(pos.x), Mathf.Abs(pos.z + GetZOffset(pos)));
+        float minScroll = distance * 2500 / 5000;
+        return minScroll;
     }
 }
