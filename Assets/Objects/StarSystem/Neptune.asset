@@ -24,4 +24,4 @@ MonoBehaviour:
     _argumentOfPeriapsis: 0
     _trueAnomalyAtEpoch: 0
   _radius: 0
-  _overviewColor: {r: 0, g: 0, b: 0, a: 0}
+  _overviewColor: {r: 0.1981132, g: 0.1981132, b: 1, a: 1}
