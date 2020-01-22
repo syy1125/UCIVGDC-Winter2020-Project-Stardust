@@ -46,8 +46,6 @@ public class CelestialBodyEditor : Editor
 	private SerializedProperty _radius;
 	private SerializedProperty _overviewColor;
 
-	private bool _orbitCharacteristicsExpanded;
-
 	private void OnEnable()
 	{
 		_gravitationalParameter = serializedObject.FindProperty("_gravitationalParameter");
@@ -56,8 +54,6 @@ public class CelestialBodyEditor : Editor
 		_orbit = serializedObject.FindProperty("_orbit");
 		_radius = serializedObject.FindProperty("_radius");
 		_overviewColor = serializedObject.FindProperty("_overviewColor");
-
-		_orbitCharacteristicsExpanded = false;
 	}
 
 	public override void OnInspectorGUI()
