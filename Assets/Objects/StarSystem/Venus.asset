@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6f53d4193dd95764a8e42937be957fed, type: 3}
-  m_Name: Earth
+  m_Name: Venus
   m_EditorClassIdentifier: 
   _gravitationalParameter: 0
   _fixed: 0
   _position: {x: 0, y: 0, z: 0}
   _orbit:
     _centralBody: {fileID: 11400000, guid: 7bde4e16142d10c4cb95274b97b4ad7a, type: 2}
-    _eccentricity: 0.0167
-    _semilatusRectum: 149.56
+    _eccentricity: 0.00678
+    _semilatusRectum: 108.15
     _inclination: 0
     _longitudeOfAscendingNode: 0
     _argumentOfPeriapsis: 0
     _trueAnomalyAtEpoch: 0
   _radius: 0
-  _overviewColor: {r: 0, g: 1, b: 1, a: 1}
+  _overviewColor: {r: 0, g: 0, b: 0, a: 0}

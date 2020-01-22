@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5470420948163164889}
   - component: {fileID: 5470420948163164886}
   - component: {fileID: 5470420948163164887}
-  - component: {fileID: 5470420948163164884}
   m_Layer: 0
   m_Name: Orbit
   m_TagString: Untagged
@@ -342,19 +341,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Body: {fileID: 0}
   Segments: 200
---- !u!114 &5470420948163164884
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5470420948163164888}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2d900bbd9d228e49829e49e011e5321, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Orbit: {fileID: 0}
-  Segments: 100
-  OrbitColor: {r: 1, g: 1, b: 1, a: 1}
-  BodyColor: {r: 0, g: 0, b: 1, a: 1}

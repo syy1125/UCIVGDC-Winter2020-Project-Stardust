@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Numerics;
 using UnityEngine;
-using Quaternion = UnityEngine.Quaternion;
-using Vector3 = UnityEngine.Vector3;
 
-[CreateAssetMenu(menuName = "Scriptable Objects/Orbit")]
-public class Orbit : ScriptableObject
+[Serializable]
+public class Orbit
 {
 	[SerializeField]
 	private CelestialBody _centralBody;
@@ -47,6 +44,15 @@ public class Orbit : ScriptableObject
 	public float EnergyPerUnitMass => -_centralBody.GravitationalParameter * (1 - Mathf.Pow(_eccentricity, 2))
 	                                  / (2 * _semilatusRectum);
 
+	public float MeanMotion => _centralBody == null
+		? 0
+		: Mathf.Sqrt(
+			_centralBody.GravitationalParameter
+			* Mathf.Pow(Mathf.Abs(1 - Mathf.Pow(_eccentricity, 2)) / _semilatusRectum, 3)
+		);
+
+	public float Period => _centralBody == null ? 0 : 2 * Mathf.PI / MeanMotion;
+
 	private static float Repeat(float value, float min, float max)
 	{
 		Debug.Assert(max > min, "max > min");
@@ -54,17 +60,6 @@ public class Orbit : ScriptableObject
 		value = (value - min) % diff + min;
 		if (value < min) value += diff;
 		return value;
-	}
-
-	private void OnValidate()
-	{
-		_eccentricity = Mathf.Max(_eccentricity, 0);
-		_semilatusRectum = Mathf.Max(_semilatusRectum, float.Epsilon);
-		_inclination = Repeat(_inclination, 0, Mathf.PI * 2);
-		_longitudeOfAscendingNode = Repeat(_longitudeOfAscendingNode, 0, Mathf.PI * 2);
-		_argumentOfPeriapsis = Repeat(_argumentOfPeriapsis, 0, Mathf.PI * 2);
-		float angleLimit = _eccentricity < 1 ? Mathf.PI : Mathf.Acos(-1 / _eccentricity);
-		_trueAnomalyAtEpoch = Mathf.Clamp(_trueAnomalyAtEpoch, -angleLimit, angleLimit);
 	}
 
 	// Config variables
@@ -133,10 +128,7 @@ public class Orbit : ScriptableObject
 				);
 
 			float meanAnomalyAtEpoch = eccentricAnomalyAtEpoch - _eccentricity * Mathf.Sin(eccentricAnomalyAtEpoch);
-			float meanMotion = Mathf.Sqrt(
-				_centralBody.GravitationalParameter * Mathf.Pow((1 - Mathf.Pow(_eccentricity, 2)) / _semilatusRectum, 3)
-			);
-			float meanAnomaly = (meanAnomalyAtEpoch + meanMotion * time) % (2 * Mathf.PI);
+			float meanAnomaly = (meanAnomalyAtEpoch + MeanMotion * time) % (2 * Mathf.PI);
 
 			// Use Newton's solver
 			float eccentricAnomaly = meanAnomaly;
@@ -163,10 +155,7 @@ public class Orbit : ScriptableObject
 			float meanAnomalyAtEpoch =
 				_eccentricity * (float) Math.Sinh(hyperbolicAnomalyAtEpoch) - hyperbolicAnomalyAtEpoch;
 
-			float meanMotion = Mathf.Sqrt(
-				_centralBody.GravitationalParameter * Mathf.Pow((Mathf.Pow(_eccentricity, 2) - 1) / _semilatusRectum, 3)
-			);
-			float meanAnomaly = meanAnomalyAtEpoch + meanMotion * time;
+			float meanAnomaly = meanAnomalyAtEpoch + MeanMotion * time;
 
 			// Use Newton's solver
 			// Initial value estimate provided by Danby, Fundamentals of Celesital Mechanics (p.176)
@@ -236,11 +225,13 @@ public class Orbit : ScriptableObject
 		Vector3 eccentricityVector = Vector3.Cross(orbitMomentum, velocity) / centralBody.GravitationalParameter
 		                             - position.normalized;
 
-		var orbit = CreateInstance<Orbit>();
-		orbit._centralBody = centralBody;
+		var orbit = new Orbit
+		{
+			_centralBody = centralBody,
+			_eccentricity = eccentricityVector.magnitude,
+			_inclination = Mathf.Acos(orbitMomentum.y / orbitMomentum.magnitude)
+		};
 
-		orbit._eccentricity = eccentricityVector.magnitude;
-		orbit._inclination = Mathf.Acos(orbitMomentum.y / orbitMomentum.magnitude);
 
 		if (Mathf.Approximately(orbit._inclination, 0)) // Singularity - equatorial orbits
 		{
@@ -254,7 +245,7 @@ public class Orbit : ScriptableObject
 			// The magnitude of eccentricity vector no longer matters, only the direction, since we already know eccentricity
 			eccentricityVector = nodeVector;
 		}
-		
+
 		orbit._argumentOfPeriapsis = Vector3.SignedAngle(eccentricityVector, nodeVector, orbitMomentum) * Mathf.Deg2Rad;
 
 		// Note: To find true anomaly at epoch, we first pretend that the current true anomaly is at "epoch".

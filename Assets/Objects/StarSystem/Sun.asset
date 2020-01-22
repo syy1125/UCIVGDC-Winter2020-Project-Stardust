@@ -15,6 +15,13 @@ MonoBehaviour:
   _gravitationalParameter: 896780
   _fixed: 1
   _position: {x: 0, y: 0, z: 0}
-  _orbit: {fileID: 0}
+  _orbit:
+    _centralBody: {fileID: 0}
+    _eccentricity: 0
+    _semilatusRectum: 0
+    _inclination: 0
+    _longitudeOfAscendingNode: 0
+    _argumentOfPeriapsis: 0
+    _trueAnomalyAtEpoch: 0
   _radius: 0.6955
   _overviewColor: {r: 1, g: 1, b: 0, a: 0}

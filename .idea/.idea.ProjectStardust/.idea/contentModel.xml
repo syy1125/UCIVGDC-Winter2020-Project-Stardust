@@ -20,7 +20,6 @@
             <e p="Orbit.cs" t="Include" />
             <e p="VisualizeBodyRealtimeOverview.cs" t="Include" />
             <e p="VisualizeOrbit.cs" t="Include" />
-            <e p="VisualizeOrbitGizmo.cs" t="Include" />
           </e>
           <e p="Testing" t="Include">
             <e p="Clock.cs" t="Include" />

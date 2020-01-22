@@ -24,7 +24,9 @@ public class CelestialBody : ScriptableObject
 
 	public Tuple<Vector3, Vector3> GetGlobalPositionAndVelocityAt(float time)
 	{
-		return _fixed ? new Tuple<Vector3, Vector3>(_position, Vector3.zero) : _orbit.GetGlobalPositionAndVelocityAt(time);
+		return _fixed
+			? new Tuple<Vector3, Vector3>(_position, Vector3.zero)
+			: _orbit.GetGlobalPositionAndVelocityAt(time);
 	}
 
 	public void SetOrbit(Orbit orbit)
@@ -44,6 +46,8 @@ public class CelestialBodyEditor : Editor
 	private SerializedProperty _radius;
 	private SerializedProperty _overviewColor;
 
+	private bool _orbitCharacteristicsExpanded;
+
 	private void OnEnable()
 	{
 		_gravitationalParameter = serializedObject.FindProperty("_gravitationalParameter");
@@ -52,6 +56,8 @@ public class CelestialBodyEditor : Editor
 		_orbit = serializedObject.FindProperty("_orbit");
 		_radius = serializedObject.FindProperty("_radius");
 		_overviewColor = serializedObject.FindProperty("_overviewColor");
+
+		_orbitCharacteristicsExpanded = false;
 	}
 
 	public override void OnInspectorGUI()
@@ -60,13 +66,47 @@ public class CelestialBodyEditor : Editor
 
 		EditorGUILayout.PropertyField(_gravitationalParameter);
 		EditorGUILayout.PropertyField(_fixed);
-		EditorGUILayout.PropertyField(_fixed.boolValue ? _position : _orbit);
+		if (_fixed.boolValue)
+		{
+			EditorGUILayout.PropertyField(_position);
+		}
+		else
+		{
+			EditorGUILayout.PropertyField(_orbit, true);
+
+			EditorGUI.indentLevel++;
+
+			EditorGUILayout.LabelField("Keplerian Elements", EditorStyles.boldLabel);
+
+			Orbit orbit = ((CelestialBody) target).Orbit;
+			EditorGUILayout.LabelField("Semimajor Axis", orbit.SemimajorAxis.ToString("#00.00"));
+			EditorGUILayout.LabelField("Eccentricity", orbit.Eccentricity.ToString("#0.000"));
+			EditorGUILayout.LabelField("Inclination (deg)", (orbit.Inclination * Mathf.Rad2Deg).ToString("#0.000"));
+			EditorGUILayout.LabelField(
+				"L of AN (deg)", (orbit.LongitudeOfAscendingNode * Mathf.Rad2Deg).ToString("#0.000")
+			);
+			EditorGUILayout.LabelField(
+				"Arg of PE (deg)", (orbit.ArgumentOfPeriapsis * Mathf.Rad2Deg).ToString("#0.000")
+			);
+			EditorGUILayout.LabelField(
+				"TA at Epoch (deg)", (orbit.TrueAnomalyAtEpoch * Mathf.Rad2Deg).ToString("#0.000")
+			);
+			
+			EditorGUILayout.LabelField("Orbit Characteristics", EditorStyles.boldLabel);
+			
+			EditorGUILayout.LabelField("Period", (orbit.Period * Mathf.Rad2Deg).ToString("#0.000"));
+
+			EditorGUI.indentLevel--;
+		}
 
 		EditorGUILayout.LabelField("Rendering", EditorStyles.boldLabel);
 
 		EditorGUILayout.PropertyField(_radius);
 		EditorGUILayout.PropertyField(_overviewColor);
 
-		serializedObject.ApplyModifiedProperties();
+		if (GUI.changed)
+		{
+			serializedObject.ApplyModifiedProperties();
+		}
 	}
 }
