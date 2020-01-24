@@ -21,7 +21,7 @@ MonoBehaviour:
     _semilatusRectum: 149.56
     _inclination: 0
     _longitudeOfAscendingNode: 0
-    _argumentOfPeriapsis: 0
-    _trueAnomalyAtEpoch: 0
+    _argumentOfPeriapsis: 1.7966
+    _trueAnomalyAtEpoch: -0.04325
   _radius: 0
   _overviewColor: {r: 0, g: 1, b: 1, a: 1}

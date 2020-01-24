@@ -19,9 +19,9 @@ MonoBehaviour:
     _centralBody: {fileID: 11400000, guid: 7bde4e16142d10c4cb95274b97b4ad7a, type: 2}
     _eccentricity: 0.0473
     _semilatusRectum: 2864.25
-    _inclination: 0
-    _longitudeOfAscendingNode: 0
-    _argumentOfPeriapsis: 0
-    _trueAnomalyAtEpoch: 0
+    _inclination: 0.01348
+    _longitudeOfAscendingNode: 1.292
+    _argumentOfPeriapsis: 1.692
+    _trueAnomalyAtEpoch: 2.4834
   _radius: 0
   _overviewColor: {r: 0.627451, g: 1, b: 1, a: 1}
