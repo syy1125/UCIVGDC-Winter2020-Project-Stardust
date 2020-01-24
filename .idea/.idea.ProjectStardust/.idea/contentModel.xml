@@ -13,6 +13,7 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="CameraController.cs" t="Include" />
           <e p="MathUtils.cs" t="Include" />
           <e p="OrbitalMechanics" t="Include">
             <e p="CelestialBody.cs" t="Include" />

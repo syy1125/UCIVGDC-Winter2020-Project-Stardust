@@ -90,7 +90,7 @@ public class CelestialBodyEditor : Editor
 			
 			EditorGUILayout.LabelField("Orbit Characteristics", EditorStyles.boldLabel);
 			
-			EditorGUILayout.LabelField("Period", (orbit.Period * Mathf.Rad2Deg).ToString("#0.000"));
+			EditorGUILayout.LabelField("Period", orbit.Period.ToString("#0.000"));
 
 			EditorGUI.indentLevel--;
 		}
