@@ -14,17 +14,19 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="CameraController.cs" t="Include" />
+          <e p="Manager.cs" t="Include" />
           <e p="MathUtils.cs" t="Include" />
           <e p="OrbitalMechanics" t="Include">
             <e p="CelestialBody.cs" t="Include" />
             <e p="LambertSolver.cs" t="Include" />
             <e p="Orbit.cs" t="Include" />
-            <e p="VisualizeBodyRealtimeOverview.cs" t="Include" />
-            <e p="VisualizeOrbit.cs" t="Include" />
           </e>
+          <e p="PlanetManager.cs" t="Include" />
           <e p="Testing" t="Include">
             <e p="Clock.cs" t="Include" />
             <e p="TestScripts.cs" t="Include" />
+            <e p="VisualizeBodyRealtimeOverview.cs" t="Include" />
+            <e p="VisualizeOrbit.cs" t="Include" />
           </e>
         </e>
       </e>
