@@ -4,15 +4,25 @@ using UnityEngine;
 
 public class Manager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public static float turn;
+    public float next_turn;
+    public float turn_speed;
+
+    public GameObject[] planets;
+
     void Start()
     {
-        
+        turn = 1.0F;
+        turn_speed = 4f;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        turn = Mathf.Lerp(turn, next_turn, turn_speed * 0.01f);
+    }
+
+    public void AdvanceTurn()
+    {
+        next_turn++;
     }
 }

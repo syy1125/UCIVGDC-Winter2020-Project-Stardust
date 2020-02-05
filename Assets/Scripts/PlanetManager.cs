@@ -5,11 +5,28 @@ using UnityEngine;
 public class PlanetManager : MonoBehaviour
 {
     public CelestialBody Body;
+    public int nanite_count;
+    public int nanite_rate;
+    public int material_count;
+    public int material_rate;
 
     private void Start()
     {
+        nanite_count = 0;
+        nanite_rate = 0;
+        material_count = 0;
+        material_rate = 0;
+    }
+
+    private void Update()
+    {
         if (Body == null) return;
 
-        transform.position = Body.GetGlobalPositionAndVelocityAt(0).Item1;
+        this.transform.position = Body.GetGlobalPositionAndVelocityAt(Manager.turn).Item1;
+    }
+
+    public Vector3 GetPosition(float turn)
+    {
+        return Body.GetGlobalPositionAndVelocityAt(turn).Item1;
     }
 }
