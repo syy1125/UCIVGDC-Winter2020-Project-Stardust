@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEditor;
 using UnityEngine;
 
@@ -70,29 +70,32 @@ public class CelestialBodyEditor : Editor
 		{
 			EditorGUILayout.PropertyField(_orbit, true);
 
-			EditorGUI.indentLevel++;
+			if (_orbit.isExpanded)
+			{
+				EditorGUI.indentLevel++;
 
-			EditorGUILayout.LabelField("Keplerian Elements", EditorStyles.boldLabel);
+				EditorGUILayout.LabelField("Keplerian Elements", EditorStyles.boldLabel);
 
-			Orbit orbit = ((CelestialBody) target).Orbit;
-			EditorGUILayout.LabelField("Semimajor Axis", orbit.SemimajorAxis.ToString("#00.00"));
-			EditorGUILayout.LabelField("Eccentricity", orbit.Eccentricity.ToString("#0.000"));
-			EditorGUILayout.LabelField("Inclination (deg)", (orbit.Inclination * Mathf.Rad2Deg).ToString("#0.000"));
-			EditorGUILayout.LabelField(
-				"L of AN (deg)", (orbit.LongitudeOfAscendingNode * Mathf.Rad2Deg).ToString("#0.000")
-			);
-			EditorGUILayout.LabelField(
-				"Arg of PE (deg)", (orbit.ArgumentOfPeriapsis * Mathf.Rad2Deg).ToString("#0.000")
-			);
-			EditorGUILayout.LabelField(
-				"TA at Epoch (deg)", (orbit.TrueAnomalyAtEpoch * Mathf.Rad2Deg).ToString("#0.000")
-			);
-			
-			EditorGUILayout.LabelField("Orbit Characteristics", EditorStyles.boldLabel);
-			
-			EditorGUILayout.LabelField("Period", orbit.Period.ToString("#0.000"));
+				Orbit orbit = ((CelestialBody) target).Orbit;
+				EditorGUILayout.LabelField("Semimajor Axis", orbit.SemimajorAxis.ToString("#00.00"));
+				EditorGUILayout.LabelField("Eccentricity", orbit.Eccentricity.ToString("#0.000"));
+				EditorGUILayout.LabelField("Inclination (deg)", (orbit.Inclination * Mathf.Rad2Deg).ToString("#0.000"));
+				EditorGUILayout.LabelField(
+					"L of AN (deg)", (orbit.LongitudeOfAscendingNode * Mathf.Rad2Deg).ToString("#0.000")
+				);
+				EditorGUILayout.LabelField(
+					"Arg of PE (deg)", (orbit.ArgumentOfPeriapsis * Mathf.Rad2Deg).ToString("#0.000")
+				);
+				EditorGUILayout.LabelField(
+					"TA at Epoch (deg)", (orbit.TrueAnomalyAtEpoch * Mathf.Rad2Deg).ToString("#0.000")
+				);
 
-			EditorGUI.indentLevel--;
+				EditorGUILayout.LabelField("Orbit Characteristics", EditorStyles.boldLabel);
+
+				EditorGUILayout.LabelField("Period", orbit.Period.ToString("#0.000"));
+
+				EditorGUI.indentLevel--;
+			}
 		}
 
 		EditorGUILayout.LabelField("Rendering", EditorStyles.boldLabel);
