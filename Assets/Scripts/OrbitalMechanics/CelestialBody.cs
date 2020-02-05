@@ -1,10 +1,11 @@
-using System;
+﻿using System;
 using UnityEditor;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Celestial Body")]
 public class CelestialBody : ScriptableObject
 {
+	[Header("Physics")]
 	[SerializeField]
 	private float _gravitationalParameter;
 	public float GravitationalParameter => _gravitationalParameter;
@@ -16,6 +17,15 @@ public class CelestialBody : ScriptableObject
 	private Orbit _orbit;
 	public Orbit Orbit => _orbit;
 
+	[Header("Gameplay")]
+	[SerializeField]
+	private int _buildingGridWidth;
+	public int BuildingGridWidth => _buildingGridWidth;
+	[SerializeField]
+	private int _buildingGridHeight;
+	public int BuildingGridHeight => _buildingGridHeight;
+
+	[Header("Rendering")]
 	[SerializeField]
 	private float _radius;
 	[SerializeField]
@@ -43,6 +53,8 @@ public class CelestialBodyEditor : Editor
 	private SerializedProperty _fixed;
 	private SerializedProperty _position;
 	private SerializedProperty _orbit;
+	private SerializedProperty _buildingGridWidth;
+	private SerializedProperty _buildingGridHeight;
 	private SerializedProperty _radius;
 	private SerializedProperty _overviewColor;
 
@@ -52,60 +64,39 @@ public class CelestialBodyEditor : Editor
 		_fixed = serializedObject.FindProperty("_fixed");
 		_position = serializedObject.FindProperty("_position");
 		_orbit = serializedObject.FindProperty("_orbit");
+		_buildingGridWidth = serializedObject.FindProperty("_buildingGridWidth");
+		_buildingGridHeight = serializedObject.FindProperty("_buildingGridHeight");
 		_radius = serializedObject.FindProperty("_radius");
 		_overviewColor = serializedObject.FindProperty("_overviewColor");
 	}
 
 	public override void OnInspectorGUI()
 	{
-		EditorGUILayout.LabelField("Physics", EditorStyles.boldLabel);
+		base.OnInspectorGUI();
 
-		EditorGUILayout.PropertyField(_gravitationalParameter);
-		EditorGUILayout.PropertyField(_fixed);
-		if (_fixed.boolValue)
+		if (_orbit.isExpanded)
 		{
-			EditorGUILayout.PropertyField(_position);
-		}
-		else
-		{
-			EditorGUILayout.PropertyField(_orbit, true);
+			EditorGUILayout.Space();
 
-			if (_orbit.isExpanded)
-			{
-				EditorGUI.indentLevel++;
+			EditorGUILayout.LabelField("Keplerian Elements", EditorStyles.boldLabel);
 
-				EditorGUILayout.LabelField("Keplerian Elements", EditorStyles.boldLabel);
+			Orbit orbit = ((CelestialBody) target).Orbit;
+			EditorGUILayout.LabelField("Semimajor Axis", orbit.SemimajorAxis.ToString("#00.00"));
+			EditorGUILayout.LabelField("Eccentricity", orbit.Eccentricity.ToString("#0.000"));
+			EditorGUILayout.LabelField("Inclination (deg)", (orbit.Inclination * Mathf.Rad2Deg).ToString("#0.000"));
+			EditorGUILayout.LabelField(
+				"L of AN (deg)", (orbit.LongitudeOfAscendingNode * Mathf.Rad2Deg).ToString("#0.000")
+			);
+			EditorGUILayout.LabelField(
+				"Arg of PE (deg)", (orbit.ArgumentOfPeriapsis * Mathf.Rad2Deg).ToString("#0.000")
+			);
+			EditorGUILayout.LabelField(
+				"TA at Epoch (deg)", (orbit.TrueAnomalyAtEpoch * Mathf.Rad2Deg).ToString("#0.000")
+			);
 
-				Orbit orbit = ((CelestialBody) target).Orbit;
-				EditorGUILayout.LabelField("Semimajor Axis", orbit.SemimajorAxis.ToString("#00.00"));
-				EditorGUILayout.LabelField("Eccentricity", orbit.Eccentricity.ToString("#0.000"));
-				EditorGUILayout.LabelField("Inclination (deg)", (orbit.Inclination * Mathf.Rad2Deg).ToString("#0.000"));
-				EditorGUILayout.LabelField(
-					"L of AN (deg)", (orbit.LongitudeOfAscendingNode * Mathf.Rad2Deg).ToString("#0.000")
-				);
-				EditorGUILayout.LabelField(
-					"Arg of PE (deg)", (orbit.ArgumentOfPeriapsis * Mathf.Rad2Deg).ToString("#0.000")
-				);
-				EditorGUILayout.LabelField(
-					"TA at Epoch (deg)", (orbit.TrueAnomalyAtEpoch * Mathf.Rad2Deg).ToString("#0.000")
-				);
+			EditorGUILayout.LabelField("Orbit Characteristics", EditorStyles.boldLabel);
 
-				EditorGUILayout.LabelField("Orbit Characteristics", EditorStyles.boldLabel);
-
-				EditorGUILayout.LabelField("Period", orbit.Period.ToString("#0.000"));
-
-				EditorGUI.indentLevel--;
-			}
-		}
-
-		EditorGUILayout.LabelField("Rendering", EditorStyles.boldLabel);
-
-		EditorGUILayout.PropertyField(_radius);
-		EditorGUILayout.PropertyField(_overviewColor);
-
-		if (GUI.changed)
-		{
-			serializedObject.ApplyModifiedProperties();
+			EditorGUILayout.LabelField("Period", orbit.Period.ToString("#0.000"));
 		}
 	}
 }

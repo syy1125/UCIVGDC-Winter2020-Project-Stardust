@@ -28,6 +28,7 @@
             <e p="VisualizeBodyRealtimeOverview.cs" t="Include" />
             <e p="VisualizeOrbit.cs" t="Include" />
           </e>
+          <e p="TurnController.cs" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
