@@ -14,6 +14,10 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="CameraController.cs" t="Include" />
+          <e p="Event" t="Include">
+            <e p="EventBus.cs" t="Include" />
+            <e p="EventListener.cs" t="Include" />
+          </e>
           <e p="Manager.cs" t="Include" />
           <e p="MathUtils.cs" t="Include" />
           <e p="OrbitalMechanics" t="Include">
@@ -21,6 +25,7 @@
             <e p="LambertSolver.cs" t="Include" />
             <e p="Orbit.cs" t="Include" />
           </e>
+          <e p="OutlineBehaviourScript.cs" t="Include" />
           <e p="PlanetManager.cs" t="Include" />
           <e p="Testing" t="Include">
             <e p="Clock.cs" t="Include" />
