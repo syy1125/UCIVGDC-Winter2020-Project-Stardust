@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class OutlineBehaviourScript : MonoBehaviour
+public class PlanetListOutline : MonoBehaviour
 {
 	public PlanetManager[] Planets;
 	public GameObject PlanetOutlinePrefab;
