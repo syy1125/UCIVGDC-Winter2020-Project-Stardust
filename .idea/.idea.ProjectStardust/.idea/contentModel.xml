@@ -7,9 +7,6 @@
       <e p=".git\info\exclude" t="IncludeRecursive" />
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="Materials" t="Include">
-          <e p="credits.txt" t="Include" />
-        </e>
         <e p="Objects" t="Include">
           <e p="StarSystem" t="Include">
             <e p="notes.txt" t="Include" />
@@ -36,6 +33,9 @@
             <e p="VisualizeBodyRealtimeOverview.cs" t="Include" />
             <e p="VisualizeOrbit.cs" t="Include" />
           </e>
+        </e>
+        <e p="Textures" t="Include">
+          <e p="credits.txt" t="Include" />
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />

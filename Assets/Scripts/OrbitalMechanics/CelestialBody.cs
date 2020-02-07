@@ -1,6 +1,8 @@
 ﻿using System;
 using UnityEditor;
+#if UNITY_EDITOR
 using UnityEngine;
+#endif
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Celestial Body")]
 public class CelestialBody : ScriptableObject
@@ -46,6 +48,7 @@ public class CelestialBody : ScriptableObject
 	}
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(CelestialBody))]
 public class CelestialBodyEditor : Editor
 {
@@ -100,3 +103,4 @@ public class CelestialBodyEditor : Editor
 		}
 	}
 }
+#endif
