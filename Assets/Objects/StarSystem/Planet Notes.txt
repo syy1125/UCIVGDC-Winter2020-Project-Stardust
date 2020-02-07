@@ -1,0 +1,4 @@
+The lengths are in units of million km, or 10^9 m.
+The time are in units of roughly a month - more precisely, 2592000s (30 days).
+The gravitational parameter of the Sun has been re-expressed in those units.
+Outline radius are not proportional to real-world units.
