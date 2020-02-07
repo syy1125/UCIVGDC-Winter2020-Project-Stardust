@@ -1,39 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class OutlineBehaviourScript : MonoBehaviour
 {
-    public static int objNum = 9;
-    public int offsetSize = 30;   
-    public GameObject lineUnit;
+	public PlanetManager[] Planets;
+	public GameObject PlanetOutlinePrefab;
+	public float OverallScale = 2;
 
-    public Object[] objList = new Object[objNum];
+	private void Start()
+	{
+		foreach (PlanetManager planet in Planets)
+		{
+			GameObject planetOutline = Instantiate(PlanetOutlinePrefab, transform);
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-       for (int i = 0; i < objNum; i++)
-        {
-                        
-            GameObject newObj = Instantiate(lineUnit, new Vector3 (transform.position.x, transform.position.y + offsetSize*-i, transform.position.z), transform.rotation);
-            newObj.GetComponentInChildren<Text>().text = objList[i].name;
-
-            //how to get color?....
-            //newObj.GetComponentInChildren<Image>().color = objList[i]. 
-            
-            newObj.transform.SetParent(this.transform.parent);
-
-        }
-                      
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
+			var planetRenderer = planetOutline.GetComponentInChildren<MeshRenderer>();
+			planetRenderer.material = planet.Body.OutlineMaterial;
+			planetRenderer.transform.localScale = Vector3.one * (planet.Body.OutlineRadius * OverallScale);
+		}
+	}
 }
