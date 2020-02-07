@@ -1,7 +1,9 @@
 ﻿using System;
 using UnityEditor;
+using UnityEngine.Serialization;
 #if UNITY_EDITOR
 using UnityEngine;
+
 #endif
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Celestial Body")]
@@ -27,12 +29,21 @@ public class CelestialBody : ScriptableObject
 	private int _buildingGridHeight;
 	public int BuildingGridHeight => _buildingGridHeight;
 
+	[FormerlySerializedAs("_radius")]
 	[Header("Rendering")]
 	[SerializeField]
-	private float _radius;
+	private float _outlineRadius;
+	public float OutlineRadius => _outlineRadius;
 	[SerializeField]
 	private Color _overviewColor;
 	public Color OverviewColor => _overviewColor;
+	[SerializeField]
+	private Material _planetMaterial;
+	public Material PlanetMaterial => _planetMaterial;
+	[FormerlySerializedAs("_outlinerMaterial")]
+	[SerializeField]
+	private Material _outlineMaterial;
+	public Material OutlineMaterial => _outlineMaterial;
 
 	public Tuple<Vector3, Vector3> GetGlobalPositionAndVelocityAt(float time)
 	{
