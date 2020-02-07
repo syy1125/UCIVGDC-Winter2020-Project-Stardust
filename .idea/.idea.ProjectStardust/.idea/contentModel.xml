@@ -26,6 +26,7 @@
             <e p="Orbit.cs" t="Include" />
           </e>
           <e p="OutlineBehaviourScript.cs" t="Include" />
+          <e p="PlanetList.cs" t="Include" />
           <e p="PlanetManager.cs" t="Include" />
           <e p="Testing" t="Include">
             <e p="Clock.cs" t="Include" />
