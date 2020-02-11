@@ -35,6 +35,7 @@
             <e p="VisualizeBodyRealtimeOverview.cs" t="Include" />
             <e p="VisualizeOrbit.cs" t="Include" />
           </e>
+          <e p="Transfer.cs" t="Include" />
         </e>
         <e p="Textures" t="Include">
           <e p="credits.txt" t="Include" />
