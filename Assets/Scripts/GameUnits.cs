@@ -1,6 +1,4 @@
-using UnityEngine;
-
-public class GameUnits
+public static class GameUnits
 {
 	// 1 unit time in-game = 30 days real-time
 	public const float GAME_TO_PHYSICAL_TIME = 2592000;
