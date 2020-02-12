@@ -26,7 +26,7 @@ MonoBehaviour:
   _physicalRadius: 0.0064
   _buildingGridWidth: 0
   _buildingGridHeight: 0
-  _dragCost: 0
+  _dragCost: 2000
   _outlineRadius: 24
   _overviewColor: {r: 0, g: 1, b: 1, a: 1}
   _planetMaterial: {fileID: 2100000, guid: 4ce3425ac269eb141825a3a57db1b920, type: 2}
