@@ -31,7 +31,7 @@
           <e p="PlanetList.cs" t="Include" />
           <e p="PlanetListOutline.cs" t="Include" />
           <e p="PlanetManager.cs" t="Include" />
-          <e p="PlanetOutline.cs" t="Include" />
+          <e p="PlanetOutlineItem.cs" t="Include" />
           <e p="Testing" t="Include">
             <e p="Clock.cs" t="Include" />
             <e p="TestScripts.cs" t="Include" />

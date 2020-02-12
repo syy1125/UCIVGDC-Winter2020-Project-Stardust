@@ -1,8 +1,9 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class PlanetOutline : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class PlanetOutlineItem : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
 	public MeshRenderer Renderer;
 	private Vector3 _originalScale;
@@ -13,6 +14,8 @@ public class PlanetOutline : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 
 	private bool _hover;
 
+	public UnityEvent OnClick = new UnityEvent();
+	
 	private void Start()
 	{
 		_originalScale = Renderer.transform.localScale;
@@ -32,6 +35,11 @@ public class PlanetOutline : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
 		{
 			Renderer.transform.Rotate(Vector3.down, Time.deltaTime * RotationRate, Space.Self);
 		}
+	}
+
+	public void OnPointerClick(PointerEventData eventData)
+	{
+		OnClick.Invoke();
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
