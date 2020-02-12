@@ -22,7 +22,7 @@ public class PlanetManager : MonoBehaviour
     {
         if (Body == null) return;
 
-        this.transform.position = Body.GetGlobalPositionAndVelocityAt(Manager.turn).Item1;
+        this.transform.position = Body.GetGlobalPositionAndVelocityAt(GameController.turn).Item1;
     }
 
     public Vector3 GetPosition(float turn)
