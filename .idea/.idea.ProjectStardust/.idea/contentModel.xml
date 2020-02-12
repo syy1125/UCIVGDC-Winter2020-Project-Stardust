@@ -13,9 +13,9 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
-          <e p="CameraController.cs" t="Include" />
           <e p="CameraPanController.cs" t="Include" />
           <e p="CameraRotationController.cs" t="Include" />
+          <e p="CameraZoomController.cs" t="Include" />
           <e p="Event" t="Include">
             <e p="EventBus.cs" t="Include" />
             <e p="EventListener.cs" t="Include" />

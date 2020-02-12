@@ -11,6 +11,8 @@ public class CameraPanController : MonoBehaviour
 	public bool UseBorderPan;
 	public float PanBorderThickness;
 
+	public GameObject FollowTarget { get; private set; }
+
 	private void Update()
 	{
 		var input = new Vector2(Input.GetAxis(HorizontalAxis), Input.GetAxis(VerticalAxis));
@@ -24,11 +26,24 @@ public class CameraPanController : MonoBehaviour
 			if (mouse.y >= Screen.height - PanBorderThickness) input.y = 1;
 		}
 
-		if (input.magnitude > 1) input.Normalize();
-		input *= PanSpeed;
-
 		Transform t = transform;
-		t.position = Bounds.ClosestPoint(t.position + new Vector3(input.x, 0, input.y));
+		if (!Mathf.Approximately(input.magnitude, 0))
+		{
+			FollowTarget = null;
+			if (input.magnitude > 1) input.Normalize();
+			input *= PanSpeed;
+
+			t.position = Bounds.ClosestPoint(t.position + new Vector3(input.x, 0, input.y));
+		}
+		else if (FollowTarget != null)
+		{
+			t.position = Bounds.ClosestPoint(FollowTarget.transform.position);
+		}
+	}
+
+	public void Follow(GameObject target)
+	{
+		FollowTarget = target;
 	}
 
 	private void OnDrawGizmos()
