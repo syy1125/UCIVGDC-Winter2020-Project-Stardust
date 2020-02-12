@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f53d4193dd95764a8e42937be957fed, type: 3}
   m_Name: Saturn
   m_EditorClassIdentifier: 
-  _gravitationalParameter: 0
+  _gravitationalParameter: 254.7
   _fixed: 0
   _position: {x: 0, y: 0, z: 0}
   _orbit:
@@ -23,8 +23,10 @@ MonoBehaviour:
     _longitudeOfAscendingNode: 2.3328
     _argumentOfPeriapsis: -0.7156
     _trueAnomalyAtEpoch: -0.7443
+  _physicalRadius: 0.06
   _buildingGridWidth: 0
   _buildingGridHeight: 0
+  _dragCost: 0
   _outlineRadius: 25
   _overviewColor: {r: 1, g: 0.8620422, b: 0.6886792, a: 1}
   _planetMaterial: {fileID: 2100000, guid: 26df463907566a14d9c4a28df7d9610c, type: 2}

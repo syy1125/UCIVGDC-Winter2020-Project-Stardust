@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f53d4193dd95764a8e42937be957fed, type: 3}
   m_Name: Mars
   m_EditorClassIdentifier: 
-  _gravitationalParameter: 0
+  _gravitationalParameter: 0.288
   _fixed: 0
   _position: {x: 0, y: 0, z: 0}
   _orbit:
@@ -23,8 +23,10 @@ MonoBehaviour:
     _longitudeOfAscendingNode: 0.865
     _argumentOfPeriapsis: -1.283
     _trueAnomalyAtEpoch: 0.3384
+  _physicalRadius: 0.0034
   _buildingGridWidth: 0
   _buildingGridHeight: 0
+  _dragCost: 0
   _outlineRadius: 13
   _overviewColor: {r: 1, g: 0.2627451, b: 0, a: 1}
   _planetMaterial: {fileID: 2100000, guid: a91d2487eca0e044a9828a884b4967f5, type: 2}

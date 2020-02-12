@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f53d4193dd95764a8e42937be957fed, type: 3}
   m_Name: Earth
   m_EditorClassIdentifier: 
-  _gravitationalParameter: 0
+  _gravitationalParameter: 2.67
   _fixed: 0
   _position: {x: 0, y: 0, z: 0}
   _orbit:
@@ -23,8 +23,10 @@ MonoBehaviour:
     _longitudeOfAscendingNode: 0
     _argumentOfPeriapsis: 1.7966
     _trueAnomalyAtEpoch: -0.04325
+  _physicalRadius: 0.0064
   _buildingGridWidth: 0
   _buildingGridHeight: 0
+  _dragCost: 0
   _outlineRadius: 24
   _overviewColor: {r: 0, g: 1, b: 1, a: 1}
   _planetMaterial: {fileID: 2100000, guid: 4ce3425ac269eb141825a3a57db1b920, type: 2}

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f53d4193dd95764a8e42937be957fed, type: 3}
   m_Name: Uranus
   m_EditorClassIdentifier: 
-  _gravitationalParameter: 0
+  _gravitationalParameter: 39
   _fixed: 0
   _position: {x: 0, y: 0, z: 0}
   _orbit:
@@ -23,8 +23,10 @@ MonoBehaviour:
     _longitudeOfAscendingNode: 1.292
     _argumentOfPeriapsis: 1.692
     _trueAnomalyAtEpoch: 2.4834
+  _physicalRadius: 0.025
   _buildingGridWidth: 0
   _buildingGridHeight: 0
+  _dragCost: 0
   _outlineRadius: 11
   _overviewColor: {r: 0.627451, g: 1, b: 1, a: 1}
   _planetMaterial: {fileID: 2100000, guid: d4a0694b004a6ba4e86b65bff9e0e48a, type: 2}

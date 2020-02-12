@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f53d4193dd95764a8e42937be957fed, type: 3}
   m_Name: Venus
   m_EditorClassIdentifier: 
-  _gravitationalParameter: 0
+  _gravitationalParameter: 2.18
   _fixed: 0
   _position: {x: 0, y: 0, z: 0}
   _orbit:
@@ -23,8 +23,10 @@ MonoBehaviour:
     _longitudeOfAscendingNode: 1.3383
     _argumentOfPeriapsis: 0.9585
     _trueAnomalyAtEpoch: 0.8793
+  _physicalRadius: 0.006
   _buildingGridWidth: 0
   _buildingGridHeight: 0
+  _dragCost: 0
   _outlineRadius: 23
   _overviewColor: {r: 1, g: 0.6799108, b: 0, a: 1}
   _planetMaterial: {fileID: 2100000, guid: 10dcf805669e2bc438e0d87d39610eab, type: 2}

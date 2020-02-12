@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f53d4193dd95764a8e42937be957fed, type: 3}
   m_Name: Neptune
   m_EditorClassIdentifier: 
-  _gravitationalParameter: 0
+  _gravitationalParameter: 45.7
   _fixed: 0
   _position: {x: 0, y: 0, z: 0}
   _orbit:
@@ -23,8 +23,10 @@ MonoBehaviour:
     _longitudeOfAscendingNode: 2.3
     _argumentOfPeriapsis: -1.5153
     _trueAnomalyAtEpoch: -1.747
+  _physicalRadius: 0.025
   _buildingGridWidth: 0
   _buildingGridHeight: 0
+  _dragCost: 0
   _outlineRadius: 10.5
   _overviewColor: {r: 0.1981132, g: 0.1981132, b: 1, a: 1}
   _planetMaterial: {fileID: 2100000, guid: e86a258daa2a8cc40b36955ad93fbd61, type: 2}

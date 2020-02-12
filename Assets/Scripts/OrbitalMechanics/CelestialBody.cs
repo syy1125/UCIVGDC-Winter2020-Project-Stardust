@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEditor;
 using UnityEngine.Serialization;
+using Debug = System.Diagnostics.Debug;
 #if UNITY_EDITOR
 using UnityEngine;
 
@@ -20,6 +21,9 @@ public class CelestialBody : ScriptableObject
 	[SerializeField]
 	private Orbit _orbit;
 	public Orbit Orbit => _orbit;
+	[SerializeField]
+	private float _physicalRadius;
+	public float PhysicalRadius => _physicalRadius;
 
 	[Header("Gameplay")]
 	[SerializeField]
@@ -28,6 +32,10 @@ public class CelestialBody : ScriptableObject
 	[SerializeField]
 	private int _buildingGridHeight;
 	public int BuildingGridHeight => _buildingGridHeight;
+	[SerializeField]
+	private float _dragCost;
+	public float DragCost => _dragCost;
+
 
 	[FormerlySerializedAs("_radius")]
 	[Header("Rendering")]
@@ -57,44 +65,48 @@ public class CelestialBody : ScriptableObject
 		_orbit = orbit;
 		_fixed = false;
 	}
+
+	public float GetOrbitalSpeed()
+	{
+		if (Mathf.Approximately(_physicalRadius, 0)) return 0;
+		return Mathf.Sqrt(_gravitationalParameter / _physicalRadius);
+	}
 }
 
 #if UNITY_EDITOR
 [CustomEditor(typeof(CelestialBody))]
 public class CelestialBodyEditor : Editor
 {
-	private SerializedProperty _gravitationalParameter;
-	private SerializedProperty _fixed;
-	private SerializedProperty _position;
 	private SerializedProperty _orbit;
-	private SerializedProperty _buildingGridWidth;
-	private SerializedProperty _buildingGridHeight;
-	private SerializedProperty _radius;
-	private SerializedProperty _overviewColor;
 
 	private void OnEnable()
 	{
-		_gravitationalParameter = serializedObject.FindProperty("_gravitationalParameter");
-		_fixed = serializedObject.FindProperty("_fixed");
-		_position = serializedObject.FindProperty("_position");
 		_orbit = serializedObject.FindProperty("_orbit");
-		_buildingGridWidth = serializedObject.FindProperty("_buildingGridWidth");
-		_buildingGridHeight = serializedObject.FindProperty("_buildingGridHeight");
-		_radius = serializedObject.FindProperty("_radius");
-		_overviewColor = serializedObject.FindProperty("_overviewColor");
 	}
 
 	public override void OnInspectorGUI()
 	{
 		base.OnInspectorGUI();
 
+		var body = target as CelestialBody;
+		Debug.Assert(body != null, nameof(body) + " != null");
+
+		EditorGUILayout.Space();
+		EditorGUILayout.LabelField("Spacecraft Characteristics", EditorStyles.boldLabel);
+
+		EditorGUILayout.LabelField(
+			"Orbital Speed",
+			(body.GetOrbitalSpeed() * GameUnits.GAME_TO_PHYSICAL_LENGTH / GameUnits.GAME_TO_PHYSICAL_TIME)
+			.ToString("0.0")
+		);
+
 		if (_orbit.isExpanded)
 		{
-			EditorGUILayout.Space();
+			Orbit orbit = body.Orbit;
 
+			EditorGUILayout.Space();
 			EditorGUILayout.LabelField("Keplerian Elements", EditorStyles.boldLabel);
 
-			Orbit orbit = ((CelestialBody) target).Orbit;
 			EditorGUILayout.LabelField("Semimajor Axis", orbit.SemimajorAxis.ToString("#00.00"));
 			EditorGUILayout.LabelField("Eccentricity", orbit.Eccentricity.ToString("#0.000"));
 			EditorGUILayout.LabelField("Inclination (deg)", (orbit.Inclination * Mathf.Rad2Deg).ToString("#0.000"));
