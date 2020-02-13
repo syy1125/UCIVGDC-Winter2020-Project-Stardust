@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class CameraPanController : MonoBehaviour
 {
 	public string HorizontalAxis;
 	public string VerticalAxis;
+	public string ResetCameraButton;
 
 	public Bounds Bounds;
 	public float PanSpeed;
@@ -13,8 +15,20 @@ public class CameraPanController : MonoBehaviour
 
 	public GameObject FollowTarget { get; private set; }
 
+	private Vector3 _initialPosition;
+
+	private void Start()
+	{
+		_initialPosition = transform.position;
+	}
+
 	private void Update()
 	{
+		if (Input.GetButtonDown(ResetCameraButton))
+		{
+			transform.position = _initialPosition;
+		}
+		
 		var input = new Vector2(Input.GetAxis(HorizontalAxis), Input.GetAxis(VerticalAxis));
 
 		if (UseBorderPan)
