@@ -28,7 +28,7 @@ public class CameraPanController : MonoBehaviour
 		{
 			transform.position = _initialPosition;
 		}
-		
+
 		var input = new Vector2(Input.GetAxis(HorizontalAxis), Input.GetAxis(VerticalAxis));
 
 		if (UseBorderPan)
@@ -47,7 +47,7 @@ public class CameraPanController : MonoBehaviour
 			if (input.magnitude > 1) input.Normalize();
 			input *= PanSpeed;
 
-			t.position = Bounds.ClosestPoint(t.position + new Vector3(input.x, 0, input.y));
+			t.position = Bounds.ClosestPoint(t.position + t.TransformVector(input.x, 0, input.y));
 		}
 		else if (FollowTarget != null)
 		{
