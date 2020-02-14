@@ -1,9 +1,8 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public class PlanetOutlineItem : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
+public class CelestialBodyOutlineItem : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler, IPointerExitHandler
 {
 	public MeshRenderer Renderer;
 	private Vector3 _originalScale;
@@ -15,7 +14,7 @@ public class PlanetOutlineItem : MonoBehaviour, IPointerEnterHandler, IPointerCl
 	private bool _hover;
 
 	public UnityEvent OnClick = new UnityEvent();
-	
+
 	private void Start()
 	{
 		_originalScale = Renderer.transform.localScale;

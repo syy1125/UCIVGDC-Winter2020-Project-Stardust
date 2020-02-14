@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class PlanetListOutline : MonoBehaviour
+public class CelestialBodyOutlineList : MonoBehaviour
 {
 	public PlanetPositionController[] Planets;
 	public GameObject PlanetOutlinePrefab;
@@ -17,7 +17,7 @@ public class PlanetListOutline : MonoBehaviour
 			planetRenderer.material = planet.Body.OutlineMaterial;
 			planetRenderer.transform.localScale = Vector3.one * (planet.Body.OutlineRadius * OverallScale);
 
-			var planetOutlineItem = planetOutline.GetComponent<PlanetOutlineItem>();
+			var planetOutlineItem = planetOutline.GetComponent<CelestialBodyOutlineItem>();
 			planetOutlineItem.OnClick.AddListener(() => CameraPan.Follow(planet.gameObject));
 		}
 	}
