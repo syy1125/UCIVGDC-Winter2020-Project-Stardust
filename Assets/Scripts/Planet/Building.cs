@@ -5,7 +5,7 @@ using UnityEngine;
 public struct BuildingTile
 {
 	public Sprite Sprite;
-	public Vector3 Offset;
+	public Vector2Int Offset;
 }
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Building", fileName = "Building")]

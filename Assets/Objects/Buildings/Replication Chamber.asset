@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d731fa26758318458d24014ff194109, type: 3}
+  m_Name: Replication Chamber
+  m_EditorClassIdentifier: 
+  Tiles:
+  - Sprite: {fileID: -1590666084121732042, guid: f7c5593ae8d31bc49b9a13d56bb811d0,
+      type: 3}
+    Offset: {x: -1, y: 0}
+  - Sprite: {fileID: -8724114351999416992, guid: f7c5593ae8d31bc49b9a13d56bb811d0,
+      type: 3}
+    Offset: {x: 0, y: 0}
+  - Sprite: {fileID: -3359659361595466102, guid: f7c5593ae8d31bc49b9a13d56bb811d0,
+      type: 3}
+    Offset: {x: 1, y: 0}
+  - Sprite: {fileID: -726715242948978953, guid: f7c5593ae8d31bc49b9a13d56bb811d0,
+      type: 3}
+    Offset: {x: 0, y: -1}
