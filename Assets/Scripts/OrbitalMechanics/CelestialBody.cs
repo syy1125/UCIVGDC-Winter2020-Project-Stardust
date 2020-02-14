@@ -32,9 +32,10 @@ public class CelestialBody : ScriptableObject
 	[SerializeField]
 	private int _buildingGridHeight;
 	public int BuildingGridHeight => _buildingGridHeight;
+	[FormerlySerializedAs("_dragCost")]
 	[SerializeField]
-	private float _dragCost;
-	public float DragCost => _dragCost;
+	private float _atmosphereDragCost;
+	public float AtmosphereDragCost => _atmosphereDragCost;
 
 
 	[FormerlySerializedAs("_radius")]

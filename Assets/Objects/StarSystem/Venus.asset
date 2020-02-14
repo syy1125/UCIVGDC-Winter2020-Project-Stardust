@@ -24,9 +24,9 @@ MonoBehaviour:
     _argumentOfPeriapsis: 0.9585
     _trueAnomalyAtEpoch: 0.8793
   _physicalRadius: 0.006
-  _buildingGridWidth: 0
-  _buildingGridHeight: 0
-  _dragCost: 4000
+  _buildingGridWidth: 15
+  _buildingGridHeight: 15
+  _atmosphereDragCost: 4000
   _outlineRadius: 23
   _overviewColor: {r: 1, g: 0.6799108, b: 0, a: 1}
   _planetMaterial: {fileID: 2100000, guid: 10dcf805669e2bc438e0d87d39610eab, type: 2}
