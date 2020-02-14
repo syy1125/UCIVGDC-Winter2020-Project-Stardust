@@ -166,7 +166,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 14
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 4
@@ -175,7 +175,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Button
+  m_Text: Next Turn
 --- !u!1 &7004376304197278377
 GameObject:
   m_ObjectHideFlags: 0
@@ -188,7 +188,6 @@ GameObject:
   - component: {fileID: 7004376304197278356}
   - component: {fileID: 7004376304197278357}
   - component: {fileID: 7004376304197278358}
-  - component: {fileID: 7004376304197278359}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -211,11 +210,11 @@ RectTransform:
   m_Father: {fileID: 7004376303585204886}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: 1, y: 1}
+  m_SizeDelta: {x: 250, y: 80}
+  m_Pivot: {x: 0, y: 0}
 --- !u!222 &7004376304197278356
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -306,22 +305,3 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7004376304197278359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7004376304197278377}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd837cecc9fef45498f3df7afdc801d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Body: {fileID: 11400000, guid: 7bde4e16142d10c4cb95274b97b4ad7a, type: 2}
-  Earth: {fileID: 0}
-  Mars: {fileID: 0}
-  OrbitPrefab: {fileID: 5470420948163164888, guid: 5dea4c27525606845a3265f128501e7e,
-    type: 3}
-  VesselPrefab: {fileID: 1797919082542209779, guid: bfe2c4691940c024c8cd27378a186b72,
-    type: 3}

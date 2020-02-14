@@ -2,14 +2,14 @@
 
 public class PlanetListOutline : MonoBehaviour
 {
-	public PlanetManager[] Planets;
+	public PlanetPositionController[] Planets;
 	public GameObject PlanetOutlinePrefab;
 	public float OverallScale = 2;
 	public CameraPanController CameraPan;
 
 	private void Start()
 	{
-		foreach (PlanetManager planet in Planets)
+		foreach (PlanetPositionController planet in Planets)
 		{
 			GameObject planetOutline = Instantiate(PlanetOutlinePrefab, transform);
 

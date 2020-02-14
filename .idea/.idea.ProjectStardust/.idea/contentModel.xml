@@ -16,11 +16,14 @@
           <e p="CameraPanController.cs" t="Include" />
           <e p="CameraRotationController.cs" t="Include" />
           <e p="CameraZoomController.cs" t="Include" />
+          <e p="Controllers" t="Include">
+            <e p="GameController.cs" t="Include" />
+            <e p="TurnAnimationController.cs" t="Include" />
+          </e>
           <e p="Event" t="Include">
             <e p="EventBus.cs" t="Include" />
             <e p="EventListener.cs" t="Include" />
           </e>
-          <e p="GameController.cs" t="Include" />
           <e p="GameUnits.cs" t="Include" />
           <e p="MathUtils.cs" t="Include" />
           <e p="OrbitalMechanics" t="Include">
@@ -28,10 +31,9 @@
             <e p="LambertSolver.cs" t="Include" />
             <e p="Orbit.cs" t="Include" />
           </e>
-          <e p="PlanetList.cs" t="Include" />
           <e p="PlanetListOutline.cs" t="Include" />
-          <e p="PlanetManager.cs" t="Include" />
           <e p="PlanetOutlineItem.cs" t="Include" />
+          <e p="PlanetPositionController.cs" t="Include" />
           <e p="Testing" t="Include">
             <e p="Clock.cs" t="Include" />
             <e p="TestScripts.cs" t="Include" />
