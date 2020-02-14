@@ -179,6 +179,7 @@ MonoBehaviour:
   PlanetOutlinePrefab: {fileID: 7441425494699201250, guid: c90f2e3565884e84c8f13a613481ab99,
     type: 3}
   OverallScale: 2
+  CameraPan: {fileID: 0}
 --- !u!1 &3036339737300858657
 GameObject:
   m_ObjectHideFlags: 0

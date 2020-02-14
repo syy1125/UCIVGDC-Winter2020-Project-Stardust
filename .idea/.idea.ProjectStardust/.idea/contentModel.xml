@@ -16,8 +16,6 @@
           <e p="CameraPanController.cs" t="Include" />
           <e p="CameraRotationController.cs" t="Include" />
           <e p="CameraZoomController.cs" t="Include" />
-          <e p="CelestialBodyOutlineItem.cs" t="Include" />
-          <e p="CelestialBodyOutlineList.cs" t="Include" />
           <e p="Controllers" t="Include">
             <e p="GameController.cs" t="Include" />
             <e p="TurnAnimationController.cs" t="Include" />
@@ -33,7 +31,13 @@
             <e p="LambertSolver.cs" t="Include" />
             <e p="Orbit.cs" t="Include" />
           </e>
+          <e p="Outliner" t="Include">
+            <e p="CelestialBodyOutlineItem.cs" t="Include" />
+            <e p="CelestialBodyOutlineList.cs" t="Include" />
+          </e>
+          <e p="PlanetBuildingController.cs" t="Include" />
           <e p="PlanetPositionController.cs" t="Include" />
+          <e p="PlanetResourceController.cs" t="Include" />
           <e p="Testing" t="Include">
             <e p="Clock.cs" t="Include" />
             <e p="TestScripts.cs" t="Include" />
