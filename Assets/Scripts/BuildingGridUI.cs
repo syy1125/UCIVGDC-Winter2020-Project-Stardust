@@ -73,7 +73,7 @@ public class BuildingGridUI : MonoBehaviour
 				{
 					GameObject tile = _gridTiles[x][y];
 					tile.GetComponent<Image>().sprite = data.Item1;
-					tile.transform.rotation = Quaternion.Euler(0, 0, 90 * (4 - data.Item2));
+					tile.transform.rotation = Quaternion.Euler(0, 0, 90 * data.Item2);
 				}
 			}
 		}
