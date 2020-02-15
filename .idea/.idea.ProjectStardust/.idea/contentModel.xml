@@ -13,6 +13,7 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
+          <e p="BuildingGridUI.cs" t="Include" />
           <e p="CameraPanController.cs" t="Include" />
           <e p="CameraRotationController.cs" t="Include" />
           <e p="CameraZoomController.cs" t="Include" />
@@ -36,13 +37,14 @@
             <e p="CelestialBodyOutlineList.cs" t="Include" />
           </e>
           <e p="Planet" t="Include">
-            <e p="Building.cs" t="Include" />
+            <e p="BuildingTemplate.cs" t="Include" />
             <e p="PlanetBuildingController.cs" t="Include" />
             <e p="PlanetPositionController.cs" t="Include" />
             <e p="PlanetResourceController.cs" t="Include" />
           </e>
           <e p="Testing" t="Include">
             <e p="Clock.cs" t="Include" />
+            <e p="TestBuildingGrid.cs" t="Include" />
             <e p="TestScripts.cs" t="Include" />
             <e p="VisualizeBodyRealtimeOverview.cs" t="Include" />
             <e p="VisualizeOrbit.cs" t="Include" />

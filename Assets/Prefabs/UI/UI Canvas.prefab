@@ -190,7 +190,7 @@ GameObject:
   - component: {fileID: 7004376304197278357}
   - component: {fileID: 7004376304197278358}
   m_Layer: 5
-  m_Name: Button
+  m_Name: End Turn Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -316,8 +316,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1917646963711898000}
   - component: {fileID: 3566293427748020276}
+  - component: {fileID: 8584748675402224457}
   m_Layer: 5
-  m_Name: GameObject
+  m_Name: Building Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -359,10 +360,24 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
-  m_StartCorner: 0
+  m_ChildAlignment: 4
+  m_StartCorner: 2
   m_StartAxis: 0
   m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
+--- !u!114 &8584748675402224457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7653508303269702097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d538e8cbe56b94e4db942924f7b920f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuildingTilePrefab: {fileID: 4513668385803060769, guid: aaeca9cd6f8a5c445be5f05e32494929,
+    type: 3}
