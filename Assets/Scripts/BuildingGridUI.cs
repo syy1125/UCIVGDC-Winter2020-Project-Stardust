@@ -1,16 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(GridLayoutGroup))]
 public class BuildingGridUI : MonoBehaviour
 {
 	public GameObject BuildingTilePrefab;
+	public GameObject PreviewTilePrefab;
+	public GridLayoutGroup BuildingGrid;
+	public GridLayoutGroup PreviewGrid;
 
 	public bool LoadedPlanet => _planet != null;
 	private PlanetBuildingController _planet;
 	private GameObject[][] _gridTiles;
+	private GameObject[][] _previewTiles;
 
 	public void LoadBuildingGrid(PlanetBuildingController planet)
 	{
@@ -18,7 +20,8 @@ public class BuildingGridUI : MonoBehaviour
 
 		_planet = planet;
 
-		SetupGridLayout();
+		SetupGridLayout(BuildingGrid);
+		SetupGridLayout(PreviewGrid);
 		SpawnGridTiles();
 		RefreshBuildings();
 	}
@@ -28,12 +31,11 @@ public class BuildingGridUI : MonoBehaviour
 		return new Vector2Int(_planet.Body.BuildingGridWidth, _planet.Body.BuildingGridHeight);
 	}
 
-	private void SetupGridLayout()
+	private void SetupGridLayout(GridLayoutGroup grid)
 	{
 		Vector2Int gridSize = GetGridSize();
 
 		var rectTransform = GetComponent<RectTransform>();
-		var grid = GetComponent<GridLayoutGroup>();
 
 		Vector2 panelSize = rectTransform.rect.size;
 		grid.constraint = GridLayoutGroup.Constraint.FixedColumnCount;
@@ -46,13 +48,19 @@ public class BuildingGridUI : MonoBehaviour
 		Vector2Int gridSize = GetGridSize();
 
 		_gridTiles = new GameObject[gridSize.x][];
-		for (int x = 0; x < gridSize.x; x++) _gridTiles[x] = new GameObject[gridSize.y];
+		_previewTiles = new GameObject[gridSize.x][];
+		for (int x = 0; x < gridSize.x; x++)
+		{
+			_gridTiles[x] = new GameObject[gridSize.y];
+			_previewTiles[x] = new GameObject[gridSize.y];
+		}
 
 		for (int y = 0; y < gridSize.y; y++)
 		{
 			for (int x = 0; x < gridSize.x; x++)
 			{
-				_gridTiles[x][y] = Instantiate(BuildingTilePrefab, transform);
+				_gridTiles[x][y] = Instantiate(BuildingTilePrefab, BuildingGrid.transform);
+				_previewTiles[x][y] = Instantiate(PreviewTilePrefab, PreviewGrid.transform);
 			}
 		}
 	}
@@ -81,7 +89,12 @@ public class BuildingGridUI : MonoBehaviour
 
 	public void UnloadBuildingGrid()
 	{
-		foreach (Transform child in transform)
+		foreach (Transform child in BuildingGrid.transform)
+		{
+			Destroy(child.gameObject);
+		}
+
+		foreach (Transform child in PreviewGrid.transform)
 		{
 			Destroy(child.gameObject);
 		}
