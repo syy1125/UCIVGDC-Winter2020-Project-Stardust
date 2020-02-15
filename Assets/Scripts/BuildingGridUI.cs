@@ -8,21 +8,30 @@ public class BuildingGridUI : MonoBehaviour
 {
 	public GameObject BuildingTilePrefab;
 
-	public bool LoadedPlanet => _gridTiles != null;
+	public bool LoadedPlanet => _planet != null;
+	private PlanetBuildingController _planet;
 	private GameObject[][] _gridTiles;
 
 	public void LoadBuildingGrid(PlanetBuildingController planet)
 	{
 		if (LoadedPlanet) UnloadBuildingGrid();
-		var gridSize = new Vector2Int(planet.Body.BuildingGridWidth, planet.Body.BuildingGridHeight);
 
-		SetupGridSize(gridSize);
-		SpawnGridTiles(gridSize);
-		RefreshBuildings(planet);
+		_planet = planet;
+
+		SetupGridLayout();
+		SpawnGridTiles();
+		RefreshBuildings();
 	}
 
-	private void SetupGridSize(Vector2Int gridSize)
+	private Vector2Int GetGridSize()
 	{
+		return new Vector2Int(_planet.Body.BuildingGridWidth, _planet.Body.BuildingGridHeight);
+	}
+
+	private void SetupGridLayout()
+	{
+		Vector2Int gridSize = GetGridSize();
+
 		var rectTransform = GetComponent<RectTransform>();
 		var grid = GetComponent<GridLayoutGroup>();
 
@@ -32,8 +41,10 @@ public class BuildingGridUI : MonoBehaviour
 		grid.cellSize = Vector2.one * Mathf.Min(panelSize.x / gridSize.x, panelSize.y / gridSize.y);
 	}
 
-	private void SpawnGridTiles(Vector2Int gridSize)
+	private void SpawnGridTiles()
 	{
+		Vector2Int gridSize = GetGridSize();
+
 		_gridTiles = new GameObject[gridSize.x][];
 		for (int x = 0; x < gridSize.x; x++) _gridTiles[x] = new GameObject[gridSize.y];
 
@@ -46,16 +57,18 @@ public class BuildingGridUI : MonoBehaviour
 		}
 	}
 
-	public void RefreshBuildings(PlanetBuildingController planet)
+	public void RefreshBuildings()
 	{
-		Debug.Assert(_gridTiles.Length == planet.Body.BuildingGridWidth);
-		Debug.Assert(_gridTiles[0].Length == planet.Body.BuildingGridHeight);
+		Vector2Int gridSize = GetGridSize();
 
-		for (int x = 0; x < planet.Body.BuildingGridWidth; x++)
+		Debug.Assert(_gridTiles.Length == gridSize.x);
+		Debug.Assert(_gridTiles[0].Length == gridSize.y);
+
+		for (int x = 0; x < gridSize.x; x++)
 		{
-			for (int y = 0; y < planet.Body.BuildingGridHeight; y++)
+			for (int y = 0; y < gridSize.y; y++)
 			{
-				Tuple<Sprite, int> data = planet.GetSpriteAndRotationAt(new Vector2Int(x, y));
+				Tuple<Sprite, int> data = _planet.GetSpriteAndRotationAt(new Vector2Int(x, y));
 				if (data != null)
 				{
 					GameObject tile = _gridTiles[x][y];
@@ -73,6 +86,7 @@ public class BuildingGridUI : MonoBehaviour
 			Destroy(child.gameObject);
 		}
 
+		_planet = null;
 		_gridTiles = null;
 	}
 }
