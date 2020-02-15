@@ -9,7 +9,7 @@ public struct BuildingTile
 }
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Building", fileName = "Building")]
-public class Building : ScriptableObject
+public class BuildingTemplate : ScriptableObject
 {
 	public BuildingTile[] Tiles;
 }
