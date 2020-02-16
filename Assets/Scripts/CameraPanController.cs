@@ -47,7 +47,7 @@ public class CameraPanController : MonoBehaviour
 			if (input.magnitude > 1) input.Normalize();
 			input *= PanSpeed;
 
-			t.position = Bounds.ClosestPoint(t.position + t.TransformVector(input.x, 0, input.y));
+			t.position = Bounds.ClosestPoint(t.position + t.TransformVector(input.x, 0, input.y) * Time.deltaTime);
 		}
 		else if (FollowTarget != null)
 		{

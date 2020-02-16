@@ -11,26 +11,26 @@ public class CameraZoomController : MonoBehaviour
 
 	public float MinZoom;
 	public float MaxZoom;
+	private float _zoom;
 
-	private Vector3 _initialPosition;
+	private Vector3 _initialScale;
 
 	private void Start()
 	{
-		_initialPosition = transform.localPosition;
+		_initialScale = transform.localScale;
+		_zoom = 1;
 	}
 
 	private void Update()
 	{
 		if (Input.GetButtonDown(ResetCameraButton))
 		{
-			transform.localPosition = _initialPosition;
+			transform.localScale = _initialScale;
 		}
-		
-		float input = Input.GetAxis(ZoomAxis) * ZoomSpeed + Input.GetAxis(ScrollAxis) * ScrollZoomSpeed;
 
-		Transform t = transform;
-		Vector3 position = t.localPosition;
-		position.z = Mathf.Clamp(position.z * Mathf.Exp(-input), -MaxZoom, -MinZoom);
-		t.localPosition = position;
+		float input = Input.GetAxis(ZoomAxis) * ZoomSpeed + Input.GetAxis(ScrollAxis) * ScrollZoomSpeed;
+		_zoom = Mathf.Clamp(_zoom * Mathf.Exp(-input * Time.deltaTime), MinZoom, MaxZoom);
+
+		transform.localScale = Vector3.one * _zoom;
 	}
 }

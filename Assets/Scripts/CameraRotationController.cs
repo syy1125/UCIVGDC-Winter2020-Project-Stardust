@@ -39,8 +39,8 @@ public class CameraRotationController : MonoBehaviour
 			if (InvertElevation) input.y *= -1;
 			input *= RotateSpeed;
 
-			_azimuth += input.x;
-			_elevation += input.y;
+			_azimuth += input.x * Time.deltaTime;
+			_elevation += input.y * Time.deltaTime;
 		}
 		
 		transform.eulerAngles = new Vector3(_elevation, _azimuth, 0);
