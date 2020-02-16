@@ -14,9 +14,13 @@
         </e>
         <e p="Scripts" t="Include">
           <e p="BuildingGridUI.cs" t="Include" />
-          <e p="CameraPanController.cs" t="Include" />
-          <e p="CameraRotationController.cs" t="Include" />
-          <e p="CameraZoomController.cs" t="Include" />
+          <e p="Camera" t="Include">
+            <e p="CameraPan.cs" t="Include" />
+            <e p="CameraReset.cs" t="Include" />
+            <e p="CameraRotation.cs" t="Include" />
+            <e p="CameraZoom.cs" t="Include" />
+            <e p="IResetListener.cs" t="Include" />
+          </e>
           <e p="Controllers" t="Include">
             <e p="GameController.cs" t="Include" />
             <e p="TurnAnimationController.cs" t="Include" />
@@ -25,6 +29,7 @@
             <e p="EventBus.cs" t="Include" />
             <e p="EventListener.cs" t="Include" />
           </e>
+          <e p="ForEachFrame.cs" t="Include" />
           <e p="GameUnits.cs" t="Include" />
           <e p="MathUtils.cs" t="Include" />
           <e p="OrbitalMechanics" t="Include">

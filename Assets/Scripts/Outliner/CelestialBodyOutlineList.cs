@@ -5,7 +5,7 @@ public class CelestialBodyOutlineList : MonoBehaviour
 	public PlanetPositionController[] Planets;
 	public GameObject PlanetOutlinePrefab;
 	public float OverallScale = 2;
-	public CameraPanController CameraPan;
+	public CameraPan CameraPan;
 
 	private void Start()
 	{
