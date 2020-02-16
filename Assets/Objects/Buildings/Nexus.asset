@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d731fa26758318458d24014ff194109, type: 3}
   m_Name: Nexus
   m_EditorClassIdentifier: 
+  DisplayName: Nexus
   Tiles:
   - Sprite: {fileID: -6567738064883459078, guid: b00fab0bdb70a0d438c81a9a31d3c698,
       type: 3}

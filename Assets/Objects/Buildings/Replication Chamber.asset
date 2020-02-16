@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d731fa26758318458d24014ff194109, type: 3}
   m_Name: Replication Chamber
   m_EditorClassIdentifier: 
+  DisplayName: Replication Chamber
   Tiles:
   - Sprite: {fileID: -1590666084121732042, guid: f7c5593ae8d31bc49b9a13d56bb811d0,
       type: 3}

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d731fa26758318458d24014ff194109, type: 3}
   m_Name: Harvester
   m_EditorClassIdentifier: 
+  DisplayName: Harvester
   Tiles:
   - Sprite: {fileID: 3444763857195385506, guid: 12ecadb0de3b7804bb71a54ea615b754,
       type: 3}

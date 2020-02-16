@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d731fa26758318458d24014ff194109, type: 3}
   m_Name: Power Plant
   m_EditorClassIdentifier: 
+  DisplayName: Power Plant
   Tiles:
   - Sprite: {fileID: 2664912858678770958, guid: 85c9fe095a3645e45a976b29c30ee580,
       type: 3}
