@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BuildingGridUI : MonoBehaviour
+[RequireComponent(typeof(RectTransform))]
+public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
 	public GameObject BuildingTilePrefab;
 	public GameObject PreviewTilePrefab;
@@ -13,6 +17,8 @@ public class BuildingGridUI : MonoBehaviour
 	private PlanetBuildingController _planet;
 	private GameObject[][] _gridTiles;
 	private GameObject[][] _previewTiles;
+
+	private bool _hover;
 
 	public void LoadBuildingGrid(PlanetBuildingController planet)
 	{
@@ -60,6 +66,7 @@ public class BuildingGridUI : MonoBehaviour
 			for (int x = 0; x < gridSize.x; x++)
 			{
 				_gridTiles[x][y] = Instantiate(BuildingTilePrefab, BuildingGrid.transform);
+				_gridTiles[x][y].GetComponent<PlanetTile>().TilePosition = new Vector2Int(x, y);
 				_previewTiles[x][y] = Instantiate(PreviewTilePrefab, PreviewGrid.transform);
 			}
 		}
@@ -85,6 +92,39 @@ public class BuildingGridUI : MonoBehaviour
 				}
 			}
 		}
+	}
+
+	public void OnPointerEnter(PointerEventData eventData)
+	{
+		_hover = true;
+	}
+
+	private void Update()
+	{
+		if (!_hover) return;
+
+		var rectTransform = GetComponent<RectTransform>();
+		if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
+			rectTransform,
+			Input.mousePosition,
+			null,
+			out Vector2 hoverPosition
+		)) return;
+
+		Rect rect = rectTransform.rect;
+		hoverPosition = Vector2.Scale(hoverPosition - rect.min, new Vector2(1 / rect.size.x, 1 / rect.size.y));
+		Vector2 gridPosition = Vector2.Scale(GetGridSize(), hoverPosition);
+		
+	}
+
+	public void OnPointerClick(PointerEventData eventData)
+	{
+		Debug.Log(eventData.pointerPressRaycast.gameObject.GetComponent<PlanetTile>().TilePosition);
+	}
+
+	public void OnPointerExit(PointerEventData eventData)
+	{
+		_hover = false;
 	}
 
 	public void UnloadBuildingGrid()

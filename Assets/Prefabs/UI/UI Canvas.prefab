@@ -436,6 +436,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1917646963711898000}
   - component: {fileID: 8584748675402224457}
+  - component: {fileID: 2685061178104819788}
   m_Layer: 5
   m_Name: Building
   m_TagString: Untagged
@@ -482,3 +483,15 @@ MonoBehaviour:
     type: 3}
   BuildingGrid: {fileID: 6781591226836473151}
   PreviewGrid: {fileID: 1523280530002391589}
+--- !u!225 &2685061178104819788
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7653508303269702097}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
