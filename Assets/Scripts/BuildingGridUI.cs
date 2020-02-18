@@ -145,10 +145,8 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		hoverPosition = Vector2.Scale(hoverPosition - rect.min, new Vector2(1 / rect.size.x, 1 / rect.size.y));
 		// Subtract 0.5 to convert between cell-corner coordinate and cell-center coordinate.
 		Vector2 gridPosition = Vector2.Scale(GetGridSize(), hoverPosition) - new Vector2(0.5f, 0.5f);
-		Debug.Log($"Grid position {gridPosition}");
 		Vector2 rawOrigin = gridPosition - (Vector2) (Quaternion.Euler(0, 0, 90 * _rotation)
 		                                              * BuildingSelection.GetSelectedBuilding().GetCenterOfMass());
-		Debug.Log($"Raw origin {rawOrigin}");
 		origin = new Vector2Int(Mathf.RoundToInt(rawOrigin.x), Mathf.RoundToInt(rawOrigin.y));
 
 		return true;
