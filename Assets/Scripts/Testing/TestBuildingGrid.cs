@@ -30,22 +30,22 @@ public class TestBuildingGrid : MonoBehaviour
 			if (Input.GetKeyDown(KeyCode.Alpha1))
 			{
 				Planet.ConstructBuilding(Nexus, Vector2Int.one, 0);
-				gridUI.RefreshBuildings();
+				gridUI.RedrawBuildings();
 			}
 			else if (Input.GetKeyDown(KeyCode.Alpha2))
 			{
 				Planet.ConstructBuilding(Nexus, Vector2Int.one, 1);
-				gridUI.RefreshBuildings();
+				gridUI.RedrawBuildings();
 			}
 			else if (Input.GetKeyDown(KeyCode.Alpha3))
 			{
 				Planet.ConstructBuilding(Nexus, Vector2Int.one, 2);
-				gridUI.RefreshBuildings();
+				gridUI.RedrawBuildings();
 			}
 			else if (Input.GetKeyDown(KeyCode.Alpha4))
 			{
 				Planet.ConstructBuilding(Nexus, Vector2Int.one, 3);
-				gridUI.RefreshBuildings();
+				gridUI.RedrawBuildings();
 			}
 		}
 	}

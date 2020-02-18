@@ -12,6 +12,7 @@ public class BuildingSelectionUI : MonoBehaviour
 
 	private int _selectedIndex;
 	private const int UNSELECT_INDEX = -1; // Index for when nothing is selected
+	public BuildingTemplate GetSelectedBuilding() => _selectedIndex == UNSELECT_INDEX ? null : Buildings[_selectedIndex];
 
 	public void LoadBuildings()
 	{
@@ -26,7 +27,7 @@ public class BuildingSelectionUI : MonoBehaviour
 			buttonController.Index = index;
 			buttonController.Building = Buildings[index];
 		}
-		
+
 		ExtraButtons.SetActive(true);
 	}
 
@@ -54,7 +55,7 @@ public class BuildingSelectionUI : MonoBehaviour
 		{
 			Destroy(child.gameObject);
 		}
-		
+
 		ExtraButtons.SetActive(false);
 	}
 }

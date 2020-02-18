@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,33 +6,46 @@ using UnityEngine.UI;
 [RequireComponent(typeof(RectTransform))]
 public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
+	[Header("Prefabs")]
 	public GameObject BuildingTilePrefab;
 	public GameObject PreviewTilePrefab;
+
+	[Header("References")]
 	public GridLayoutGroup BuildingGrid;
 	public GridLayoutGroup PreviewGrid;
+	public BuildingSelectionUI BuildingSelection;
 
-	public bool LoadedPlanet => _planet != null;
-	private PlanetBuildingController _planet;
+	[Header("Config")]
+	public string RotateBuildingButton;
+	public Color InvalidPositionColor = Color.red;
+
+	// Non-serialized fields
+	public bool LoadedPlanet => _buildingController != null;
+	private PlanetBuildingController _buildingController;
 	private GameObject[][] _gridTiles;
 	private GameObject[][] _previewTiles;
 
 	private bool _hover;
 
+	private int _rotation;
+	private BuildingTemplate _building;
+	private Vector2Int _origin;
+
 	public void LoadBuildingGrid(PlanetBuildingController planet)
 	{
 		if (LoadedPlanet) UnloadBuildingGrid();
 
-		_planet = planet;
+		_buildingController = planet;
 
 		SetupGridLayout(BuildingGrid);
 		SetupGridLayout(PreviewGrid);
 		SpawnGridTiles();
-		RefreshBuildings();
+		RedrawBuildings();
 	}
 
 	private Vector2Int GetGridSize()
 	{
-		return new Vector2Int(_planet.Body.BuildingGridWidth, _planet.Body.BuildingGridHeight);
+		return new Vector2Int(_buildingController.Body.BuildingGridWidth, _buildingController.Body.BuildingGridHeight);
 	}
 
 	private void SetupGridLayout(GridLayoutGroup grid)
@@ -72,7 +83,7 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		}
 	}
 
-	public void RefreshBuildings()
+	public void RedrawBuildings()
 	{
 		Vector2Int gridSize = GetGridSize();
 
@@ -83,7 +94,7 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		{
 			for (int y = 0; y < gridSize.y; y++)
 			{
-				Tuple<Sprite, int> data = _planet.GetSpriteAndRotationAt(new Vector2Int(x, y));
+				Tuple<Sprite, int> data = _buildingController.GetSpriteAndRotationAt(new Vector2Int(x, y));
 				if (data != null)
 				{
 					GameObject tile = _gridTiles[x][y];
@@ -103,28 +114,107 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	{
 		if (!_hover) return;
 
+		if (TryGetBuildingOrigin(out Vector2Int newOrigin))
+		{
+			BuildingTemplate newBuilding = BuildingSelection.GetSelectedBuilding();
+
+			if (newBuilding != _building || newOrigin != _origin)
+			{
+				_building = newBuilding;
+				_origin = newOrigin;
+
+				RedrawBuildingPreview();
+			}
+		}
+	}
+
+	private bool TryGetBuildingOrigin(out Vector2Int origin)
+	{
+		origin = Vector2Int.zero;
+		if (BuildingSelection.GetSelectedBuilding() == null) return false;
+
 		var rectTransform = GetComponent<RectTransform>();
 		if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
 			rectTransform,
 			Input.mousePosition,
 			null,
 			out Vector2 hoverPosition
-		)) return;
+		)) return false;
 
 		Rect rect = rectTransform.rect;
 		hoverPosition = Vector2.Scale(hoverPosition - rect.min, new Vector2(1 / rect.size.x, 1 / rect.size.y));
-		Vector2 gridPosition = Vector2.Scale(GetGridSize(), hoverPosition);
-		
+		// Subtract 0.5 to convert between cell-corner coordinate and cell-center coordinate.
+		Vector2 gridPosition = Vector2.Scale(GetGridSize(), hoverPosition) - new Vector2(0.5f, 0.5f);
+		Debug.Log($"Grid position {gridPosition}");
+		Vector2 rawOrigin = gridPosition - (Vector2) (Quaternion.Euler(0, 0, 90 * _rotation)
+		                                              * BuildingSelection.GetSelectedBuilding().GetCenterOfMass());
+		Debug.Log($"Raw origin {rawOrigin}");
+		origin = new Vector2Int(Mathf.RoundToInt(rawOrigin.x), Mathf.RoundToInt(rawOrigin.y));
+
+		return true;
+	}
+
+	private void ClearPreviewGrid()
+	{
+		foreach (GameObject[] tiles in _previewTiles)
+		{
+			foreach (GameObject tile in tiles)
+			{
+				var image = tile.GetComponent<Image>();
+				image.sprite = null;
+				image.color = new Color(1, 1, 1, 0);
+			}
+		}
+	}
+
+	private void RedrawBuildingPreview()
+	{
+		ClearPreviewGrid();
+
+		if (_building == null) return;
+
+		Color color = _buildingController.IsValidBuilding(_building, _origin, _rotation)
+			? Color.white
+			: InvalidPositionColor;
+
+		foreach (BuildingTile tile in _building.Tiles)
+		{
+			Vector2Int position = _origin + PlanetBuildingController.Rotate(tile.Offset, _rotation);
+
+			if (!_buildingController.InBounds(position)) continue;
+
+			var image = _previewTiles[position.x][position.y].GetComponent<Image>();
+			image.sprite = tile.Sprite;
+			image.color = color;
+			image.transform.rotation = Quaternion.Euler(0, 0, 90 * _rotation);
+		}
 	}
 
 	public void OnPointerClick(PointerEventData eventData)
 	{
-		Debug.Log(eventData.pointerPressRaycast.gameObject.GetComponent<PlanetTile>().TilePosition);
+		if (eventData.button == PointerEventData.InputButton.Left)
+		{
+			if (TryGetBuildingOrigin(out Vector2Int origin)
+			    && _buildingController.IsValidBuilding(_building, origin, _rotation))
+			{
+				Debug.Log($"Building {BuildingSelection.GetSelectedBuilding().DisplayName} at {origin}");
+				_buildingController.ConstructBuilding(_building, origin, _rotation);
+				
+				RedrawBuildings();
+				RedrawBuildingPreview();
+			}
+		}
+		else if (eventData.button == PointerEventData.InputButton.Right)
+		{
+			_rotation = (_rotation + 1) % 4;
+			RedrawBuildingPreview();
+		}
 	}
 
 	public void OnPointerExit(PointerEventData eventData)
 	{
 		_hover = false;
+		ClearPreviewGrid();
 	}
 
 	public void UnloadBuildingGrid()
@@ -139,7 +229,10 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			Destroy(child.gameObject);
 		}
 
-		_planet = null;
+		_buildingController = null;
 		_gridTiles = null;
 	}
+
+	private void OnDrawGizmos()
+	{}
 }

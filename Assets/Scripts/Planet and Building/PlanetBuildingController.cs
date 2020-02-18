@@ -31,6 +31,15 @@ public class PlanetBuildingController : MonoBehaviour
 
 	public void ConstructBuilding(BuildingTemplate template, Vector2Int origin, int rotation)
 	{
+		if (!IsValidBuilding(template, origin, rotation))
+		{
+			Debug.LogError(
+				$"Attempting to build invalid configuration.\n"
+				+ $"Building{template.DisplayName} origin {origin} rotation {rotation}"
+			);
+			return;
+		}
+
 		var building = new BuildingInstance(template, rotation);
 		_buildingOrigin[building] = origin;
 
@@ -41,9 +50,36 @@ public class PlanetBuildingController : MonoBehaviour
 		}
 	}
 
+	public bool IsValidBuilding(BuildingTemplate template, Vector2Int origin, int rotation)
+	{
+		if (template == null) return false;
+
+		foreach (BuildingTile tile in template.Tiles)
+		{
+			Vector2Int position = origin + Rotate(tile.Offset, rotation);
+			if (IsOccupied(position)) return false;
+			if (!InBounds(position)) return false;
+		}
+
+		return true;
+	}
+
+	public bool IsOccupied(Vector2Int position)
+	{
+		return _slotToBuilding.ContainsKey(position);
+	}
+
+	public bool InBounds(Vector2Int position)
+	{
+		return position.x >= 0
+		       && position.x < Body.BuildingGridWidth
+		       && position.y >= 0
+		       && position.y < Body.BuildingGridHeight;
+	}
+
 	public Tuple<Sprite, int> GetSpriteAndRotationAt(Vector2Int position)
 	{
-		if (!_slotToBuilding.ContainsKey(position)) return null;
+		if (!IsOccupied(position)) return null;
 
 		BuildingInstance building = _slotToBuilding[position];
 		Vector2Int origin = _buildingOrigin[building];
@@ -55,7 +91,7 @@ public class PlanetBuildingController : MonoBehaviour
 		);
 	}
 
-	private static Vector2Int Rotate(Vector2Int vector, int rotation)
+	public static Vector2Int Rotate(Vector2Int vector, int rotation)
 	{
 		switch (rotation % 4)
 		{
@@ -72,7 +108,7 @@ public class PlanetBuildingController : MonoBehaviour
 		}
 	}
 
-	private static Vector2Int InverseRotate(Vector2Int vector, int rotation)
+	public static Vector2Int InverseRotate(Vector2Int vector, int rotation)
 	{
 		return Rotate(vector, 4 - rotation);
 	}
