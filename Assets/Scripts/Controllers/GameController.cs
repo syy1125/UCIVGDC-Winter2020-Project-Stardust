@@ -43,6 +43,8 @@ public class GameController : MonoBehaviour
 
 		yield return GetComponent<TurnAnimationController>().AnimateTurn(CurrentTurn, CurrentTurn + 1);
 
+		yield return GetComponent<TurnLogicController>().ExecuteTurnLogic();
+
 		_advancingTurn = false;
 		OnEndAdvanceTurn.Invoke();
 		CurrentTurn++;
