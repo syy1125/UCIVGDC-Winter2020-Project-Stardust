@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class PlanetPositionController : MonoBehaviour
+public class PlanetVisualController : MonoBehaviour
 {
 	public CelestialBody Body;
 
@@ -9,6 +9,12 @@ public class PlanetPositionController : MonoBehaviour
 	{
 		UpdatePosition();
 		TurnAnimationController.Instance.OnTimeChanged.AddListener(UpdatePosition);
+	}
+
+	private void Start()
+	{
+		GetComponent<MeshRenderer>().material = Body.PlanetMaterial;
+		transform.localScale = Vector3.one * Body.OutlineRadius;
 	}
 
 	private void UpdatePosition()

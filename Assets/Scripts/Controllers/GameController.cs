@@ -7,7 +7,7 @@ public class GameController : MonoBehaviour
 {
 	public static GameController Instance { get; private set; }
 
-	public int CurrentTurn { get; private set; }
+	public readonly GameState State = new GameState();
 
 	private bool _advancingTurn;
 	public UnityEvent OnStartAdvanceTurn = new UnityEvent();
@@ -42,7 +42,7 @@ public class GameController : MonoBehaviour
 		OnStartAdvanceTurn.Invoke();
 
 		Debug.Log("Starting turn animation");
-		yield return GetComponent<TurnAnimationController>().AnimateTurn(CurrentTurn, CurrentTurn + 1);
+		yield return GetComponent<TurnAnimationController>().AnimateTurn(State.CurrentTurn, State.CurrentTurn + 1);
 		Debug.Log("Ending turn animation");
 
 		Debug.Log("Starting turn logic");
@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour
 
 		_advancingTurn = false;
 		OnEndAdvanceTurn.Invoke();
-		CurrentTurn++;
+		State.CurrentTurn++;
 	}
 
 	private void OnDestroy()

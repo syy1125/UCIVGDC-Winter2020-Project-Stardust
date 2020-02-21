@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
-// An instance of an effect group, allowing resource controller to disable an effect group when in deficit.
 public struct EffectGroupInstance
 {
 	private readonly EffectGroup _effectGroup;
@@ -16,11 +16,18 @@ public struct EffectGroupInstance
 }
 
 // Represents an instance of a constructed building.
-public class BuildingInstance
+public class BuildingInstance : ISaveLoad<BuildingInstance.Serialized>
 {
-	public readonly BuildingTemplate Template;
-	public readonly EffectGroupInstance[] EffectGroups;
-	public readonly int Rotation; // Number of times rotated counter-clockwise
+	[Serializable]
+	public struct Serialized
+	{
+		public string TemplatePath;
+		public int Rotation;
+	}
+
+	public BuildingTemplate Template;
+	public EffectGroupInstance[] EffectGroups;
+	public int Rotation; // Number of times rotated counter-clockwise
 
 	public BuildingInstance(BuildingTemplate template, int rotation)
 	{
@@ -28,21 +35,51 @@ public class BuildingInstance
 		EffectGroups = template.EffectGroups.Select(group => new EffectGroupInstance(group)).ToArray();
 		Rotation = rotation;
 	}
+
+	// FOR SAVE/LOAD USE ONLY
+	public BuildingInstance()
+	{}
+
+	public Serialized Save()
+	{
+		return new Serialized
+		{
+			TemplatePath = AssetDatabase.GetAssetPath(Template),
+			Rotation = Rotation
+		};
+	}
+
+	public void Load(Serialized serialized)
+	{
+		Template = AssetDatabase.LoadAssetAtPath<BuildingTemplate>(serialized.TemplatePath);
+		EffectGroups = Template.EffectGroups.Select(group => new EffectGroupInstance(group)).ToArray();
+		Rotation = serialized.Rotation;
+	}
 }
 
-public class PlanetBuildingController : MonoBehaviour
+public class PlanetBuildings : ISaveLoad<PlanetBuildings.Serialized>
 {
-	public CelestialBody Body;
-
-
-	private Dictionary<BuildingInstance, Vector2Int> _buildingOrigin;
-	private Dictionary<Vector2Int, BuildingInstance> _slotToBuilding;
-
-	private void Awake()
+	[Serializable]
+	public struct Serialized
 	{
-		_buildingOrigin = new Dictionary<BuildingInstance, Vector2Int>();
-		_slotToBuilding = new Dictionary<Vector2Int, BuildingInstance>();
+		public BuildingInstance.Serialized[] Buildings;
+		public Vector2Int[] BuildingOrigins;
 	}
+
+	private readonly CelestialBody _body;
+
+	private readonly Dictionary<BuildingInstance, Vector2Int> _buildingOrigin =
+		new Dictionary<BuildingInstance, Vector2Int>();
+	private readonly Dictionary<Vector2Int, BuildingInstance> _slotToBuilding =
+		new Dictionary<Vector2Int, BuildingInstance>();
+
+	public PlanetBuildings(CelestialBody body)
+	{
+		_body = body;
+	}
+
+	public int GridWidth => _body.BuildingGridWidth;
+	public int GridHeight => _body.BuildingGridHeight;
 
 	public void ConstructBuilding(BuildingTemplate template, Vector2Int origin, int rotation)
 	{
@@ -87,9 +124,9 @@ public class PlanetBuildingController : MonoBehaviour
 	public bool InBounds(Vector2Int position)
 	{
 		return position.x >= 0
-		       && position.x < Body.BuildingGridWidth
+		       && position.x < _body.BuildingGridWidth
 		       && position.y >= 0
-		       && position.y < Body.BuildingGridHeight;
+		       && position.y < _body.BuildingGridHeight;
 	}
 
 	public BuildingInstance[] GetBuildings()
@@ -131,5 +168,33 @@ public class PlanetBuildingController : MonoBehaviour
 	public static Vector2Int InverseRotate(Vector2Int vector, int rotation)
 	{
 		return Rotate(vector, 4 - rotation);
+	}
+
+	public Serialized Save()
+	{
+		var buildings = new List<BuildingInstance.Serialized>(_buildingOrigin.Count);
+		var buildingOrigins = new List<Vector2Int>(_buildingOrigin.Count);
+
+		foreach (KeyValuePair<BuildingInstance, Vector2Int> entry in _buildingOrigin)
+		{
+			buildings.Add(entry.Key.Save());
+			buildingOrigins.Add(entry.Value);
+		}
+
+		return new Serialized {Buildings = buildings.ToArray(), BuildingOrigins = buildingOrigins.ToArray()};
+	}
+
+	public void Load(Serialized serialized)
+	{
+		_buildingOrigin.Clear();
+		_slotToBuilding.Clear();
+
+		for (int i = 0; i < serialized.Buildings.Length; i++)
+		{
+			var building = new BuildingInstance();
+			building.Load(serialized.Buildings[i]);
+
+			_buildingOrigin.Add(building, serialized.BuildingOrigins[i]);
+		}
 	}
 }

@@ -1,12 +1,9 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 public class TestBuildingGrid : MonoBehaviour
 {
-	public PlanetBuildingController Planet;
-	public BuildingTemplate Nexus;
-	public BuildingTemplate Harvester;
-	public BuildingTemplate PowerPlant;
-	public BuildingTemplate ReplicationChamber;
+	public CelestialBody Target;
 
 	private void Update()
 	{
@@ -20,32 +17,13 @@ public class TestBuildingGrid : MonoBehaviour
 			}
 			else
 			{
+				Planet targetPlanet = GameController.Instance
+					.State
+					.Planets
+					.SkipWhile(planet => planet.Body != Target)
+					.First();
 				Debug.Log("Loading planet");
-				gridUI.LoadBuildingGrid(Planet);
-			}
-		}
-
-		if (gridUI.LoadedPlanet)
-		{
-			if (Input.GetKeyDown(KeyCode.Alpha1))
-			{
-				Planet.ConstructBuilding(Nexus, Vector2Int.one, 0);
-				gridUI.RedrawBuildings();
-			}
-			else if (Input.GetKeyDown(KeyCode.Alpha2))
-			{
-				Planet.ConstructBuilding(Nexus, Vector2Int.one, 1);
-				gridUI.RedrawBuildings();
-			}
-			else if (Input.GetKeyDown(KeyCode.Alpha3))
-			{
-				Planet.ConstructBuilding(Nexus, Vector2Int.one, 2);
-				gridUI.RedrawBuildings();
-			}
-			else if (Input.GetKeyDown(KeyCode.Alpha4))
-			{
-				Planet.ConstructBuilding(Nexus, Vector2Int.one, 3);
-				gridUI.RedrawBuildings();
+				gridUI.LoadBuildingGrid(targetPlanet.Buildings);
 			}
 		}
 	}

@@ -16,6 +16,7 @@ public class CelestialBody : ScriptableObject
 	public float GravitationalParameter => _gravitationalParameter;
 	[SerializeField]
 	private bool _fixed;
+	public bool Fixed => _fixed;
 	[SerializeField]
 	private Vector3 _position;
 	[SerializeField]

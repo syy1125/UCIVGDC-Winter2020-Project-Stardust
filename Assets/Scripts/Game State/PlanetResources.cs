@@ -1,15 +1,31 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
-using Random = UnityEngine.Random;
+using Random = System.Random;
 
-public class PlanetResourceController : MonoBehaviour, ITurnLogicListener
+public class PlanetResources : ISaveLoad<PlanetResources.Serialized>
 {
-	private Dictionary<Resource, int> _storage;
-
-	private void Start()
+	[Serializable]
+	public struct Serialized
 	{
-		_storage = new Dictionary<Resource, int>();
+		public string[] ResourcePaths;
+		public int[] Amount;
+	}
+
+	private readonly PlanetBuildings _buildingController;
+
+	private readonly Dictionary<Resource, int> _storage = new Dictionary<Resource, int>();
+
+	public PlanetResources(PlanetBuildings buildingController)
+	{
+		_buildingController = buildingController;
+	}
+
+	public int this[Resource resource]
+	{
+		get => _storage.TryGetValue(resource, out int amount) ? amount : 0;
+		set => _storage[resource] = value;
 	}
 
 	public void DoTurnLogic()
@@ -18,7 +34,7 @@ public class PlanetResourceController : MonoBehaviour, ITurnLogicListener
 		var resourceConsumers = new Dictionary<Resource, List<Tuple<BuildingInstance, EffectGroupInstance>>>();
 		var disabledGroups = new HashSet<EffectGroupInstance>();
 
-		BuildingInstance[] buildings = GetComponent<PlanetBuildingController>().GetBuildings();
+		BuildingInstance[] buildings = _buildingController.GetBuildings();
 
 		if (buildings.Length > 0)
 		{
@@ -122,7 +138,7 @@ public class PlanetResourceController : MonoBehaviour, ITurnLogicListener
 	{
 		List<Tuple<BuildingInstance, EffectGroupInstance>> consumers = resourceConsumers[resource];
 		Debug.Assert(consumers.Count > 0, $"Resource {resource.DisplayName} is in deficit but no consumers found");
-		return consumers[(int) (Random.value * consumers.Count)];
+		return consumers[new Random().Next(consumers.Count)];
 	}
 
 	private static void RemoveEffectGroup(IDictionary<Resource, int> resourceDelta, EffectGroupInstance group)
@@ -182,6 +198,34 @@ public class PlanetResourceController : MonoBehaviour, ITurnLogicListener
 		{
 			if (!capacity.TryGetValue(resource, out int max)) max = 0;
 			_storage[resource] = Mathf.Min(_storage[resource], max);
+		}
+	}
+
+	public Serialized Save()
+	{
+		var resourcePaths = new List<string>();
+		var amount = new List<int>();
+
+		foreach (KeyValuePair<Resource, int> entry in _storage)
+		{
+			resourcePaths.Add(AssetDatabase.GetAssetPath(entry.Key));
+			amount.Add(entry.Value);
+		}
+
+		return new Serialized
+		{
+			ResourcePaths = resourcePaths.ToArray(),
+			Amount = amount.ToArray()
+		};
+	}
+
+	public void Load(Serialized serialized)
+	{
+		_storage.Clear();
+
+		for (int i = 0; i < serialized.ResourcePaths.Length; i++)
+		{
+			_storage[AssetDatabase.LoadAssetAtPath<Resource>(serialized.ResourcePaths[i])] = serialized.Amount[i];
 		}
 	}
 }
