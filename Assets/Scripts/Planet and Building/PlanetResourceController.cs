@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -12,8 +12,6 @@ public struct ResourceCapacityEntry
 
 public class PlanetResourceController : MonoBehaviour, ITurnLogicListener
 {
-	public ResourceCapacityEntry[] BaseCapacity;
-
 	private Dictionary<Resource, int> _storage;
 
 	private void Start()
@@ -162,11 +160,6 @@ public class PlanetResourceController : MonoBehaviour, ITurnLogicListener
 	)
 	{
 		var capacity = new Dictionary<Resource, int>();
-
-		foreach (ResourceCapacityEntry entry in BaseCapacity)
-		{
-			capacity[entry.Resource] = entry.Amount;
-		}
 
 		foreach (BuildingInstance building in buildings)
 		{
