@@ -3,22 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+// An instance of an effect group, allowing resource controller to disable an effect group when in deficit.
+public struct EffectGroupInstance
+{
+	private readonly EffectGroup _effectGroup;
+	public BuildingEffect[] Effects => _effectGroup.Effects;
+
+	public EffectGroupInstance(EffectGroup effectGroup)
+	{
+		_effectGroup = effectGroup;
+	}
+}
+
+// Represents an instance of a constructed building.
+public class BuildingInstance
+{
+	public readonly BuildingTemplate Template;
+	public readonly EffectGroupInstance[] EffectGroups;
+	public readonly int Rotation; // Number of times rotated counter-clockwise
+
+	public BuildingInstance(BuildingTemplate template, int rotation)
+	{
+		Template = template;
+		EffectGroups = template.EffectGroups.Select(group => new EffectGroupInstance(group)).ToArray();
+		Rotation = rotation;
+	}
+}
+
 public class PlanetBuildingController : MonoBehaviour
 {
 	public CelestialBody Body;
 
-	// Represents an instance of a constructed building.
-	public class BuildingInstance
-	{
-		public readonly BuildingTemplate BuildingTemplate;
-		public readonly int Rotation; // Number of times rotated counter-clockwise
-
-		public BuildingInstance(BuildingTemplate buildingTemplate, int rotation)
-		{
-			BuildingTemplate = buildingTemplate;
-			Rotation = rotation;
-		}
-	}
 
 	private Dictionary<BuildingInstance, Vector2Int> _buildingOrigin;
 	private Dictionary<Vector2Int, BuildingInstance> _slotToBuilding;
@@ -77,6 +92,11 @@ public class PlanetBuildingController : MonoBehaviour
 		       && position.y < Body.BuildingGridHeight;
 	}
 
+	public BuildingInstance[] GetBuildings()
+	{
+		return _buildingOrigin.Keys.ToArray();
+	}
+
 	public Tuple<Sprite, int> GetSpriteAndRotationAt(Vector2Int position)
 	{
 		if (!IsOccupied(position)) return null;
@@ -86,7 +106,7 @@ public class PlanetBuildingController : MonoBehaviour
 		Vector2Int offset = InverseRotate(position - origin, building.Rotation);
 
 		return new Tuple<Sprite, int>(
-			building.BuildingTemplate.Tiles.First(tile => tile.Offset == offset).Sprite,
+			building.Template.Tiles.First(tile => tile.Offset == offset).Sprite,
 			building.Rotation
 		);
 	}
