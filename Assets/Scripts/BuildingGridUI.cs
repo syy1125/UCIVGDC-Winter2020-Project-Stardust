@@ -158,6 +158,8 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		{
 			foreach (GameObject tile in tiles)
 			{
+				if (tile == null) continue;
+				
 				var image = tile.GetComponent<Image>();
 				image.sprite = null;
 				image.color = new Color(1, 1, 1, 0);
