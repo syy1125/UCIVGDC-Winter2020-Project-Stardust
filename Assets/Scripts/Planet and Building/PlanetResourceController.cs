@@ -182,10 +182,11 @@ public class PlanetResourceController : MonoBehaviour, ITurnLogicListener
 
 	private void EnforceCapacity(IReadOnlyDictionary<Resource, int> capacity)
 	{
-		foreach (KeyValuePair<Resource, int> entry in _storage)
+		var planetResources = new List<Resource>(_storage.Keys);
+		foreach (Resource resource in planetResources)
 		{
-			if (!capacity.TryGetValue(entry.Key, out int max)) max = 0;
-			_storage[entry.Key] = Mathf.Min(entry.Value, max);
+			if (!capacity.TryGetValue(resource, out int max)) max = 0;
+			_storage[resource] = Mathf.Min(_storage[resource], max);
 		}
 	}
 }
