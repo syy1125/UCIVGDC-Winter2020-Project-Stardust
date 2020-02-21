@@ -1,14 +1,7 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
-
-[Serializable]
-public struct ResourceCapacityEntry
-{
-	public Resource Resource;
-	public int Amount;
-}
 
 public class PlanetResourceController : MonoBehaviour, ITurnLogicListener
 {
@@ -23,30 +16,32 @@ public class PlanetResourceController : MonoBehaviour, ITurnLogicListener
 	{
 		var resourceDelta = new Dictionary<Resource, int>();
 		var resourceConsumers = new Dictionary<Resource, List<Tuple<BuildingInstance, EffectGroupInstance>>>();
+		var disabledGroups = new HashSet<EffectGroupInstance>();
 
 		BuildingInstance[] buildings = GetComponent<PlanetBuildingController>().GetBuildings();
 
-		foreach (BuildingInstance building in buildings)
+		if (buildings.Length > 0)
 		{
-			ComposeProductionEffect(resourceDelta, resourceConsumers, building);
+			foreach (BuildingInstance building in buildings)
+			{
+				ComposeProductionEffect(resourceDelta, resourceConsumers, building);
+			}
+
+			while (FindDeficit(resourceDelta, out Resource resource))
+			{
+				(BuildingInstance building, EffectGroupInstance effectGroup) =
+					ChooseRandomConsumer(resource, resourceConsumers);
+
+				disabledGroups.Add(effectGroup);
+
+				RemoveEffectGroup(resourceDelta, effectGroup);
+
+				Debug.Log($"Disabled an effect group of {building.Template.DisplayName} because of resource deficit");
+				// TODO maybe send message warning about resource deficit
+			}
+
+			ApplyResourceDelta(resourceDelta);
 		}
-
-		var disabledGroups = new HashSet<EffectGroupInstance>();
-
-		while (FindDeficit(resourceDelta, out Resource resource))
-		{
-			(BuildingInstance building, EffectGroupInstance effectGroup) =
-				ChooseRandomConsumer(resource, resourceConsumers);
-
-			disabledGroups.Add(effectGroup);
-
-			RemoveEffectGroup(resourceDelta, effectGroup);
-
-			Debug.Log($"Disabled an effect group of {building.Template.DisplayName} because of resource deficit");
-			// TODO maybe send message warning about resource deficit
-		}
-
-		ApplyResourceDelta(resourceDelta);
 
 		Dictionary<Resource, int> capacity = ComputeResourceCapacity(buildings, disabledGroups);
 		EnforceCapacity(capacity);
