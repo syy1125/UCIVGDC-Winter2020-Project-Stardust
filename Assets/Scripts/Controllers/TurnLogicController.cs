@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,17 +13,40 @@ public class TurnLogicController : MonoBehaviour
 		return StartCoroutine(DoTurnLogic());
 	}
 
-	private IEnumerator DoTurnLogic()
+	private static IEnumerator DoTurnLogic()
 	{
-		Task logicTask = Task.Run(TurnLogicAction);
-		yield return new WaitUntil(() => logicTask.IsCompleted);
+		var roots = new List<GameObject>();
+
+		for (int i = 0; i < SceneManager.sceneCount; i++)
+		{
+			foreach (GameObject root in SceneManager.GetSceneAt(i).GetRootGameObjects())
+			{
+				ExecuteTurnLogicInChildren(root);
+				yield return null;
+			}
+		}
 	}
 
-	private static void TurnLogicAction()
+	private static void ExecuteTurnLogicInChildren(GameObject root)
 	{
-		foreach (GameObject root in SceneManager.GetActiveScene().GetRootGameObjects())
+		ExecuteEvents.Execute<ITurnLogicListener>(
+			root,
+			null,
+			(listener, _) =>
+			{
+				try
+				{
+					listener.DoTurnLogic();
+				}
+				catch (Exception e)
+				{
+					Debug.LogError($"Unhandled exception during turn logic in ${root}: {e.Message}\n{e.StackTrace}");
+				}
+			}
+		);
+		foreach (Transform child in root.transform)
 		{
-			ExecuteEvents.Execute<ITurnLogicListener>(root, null, (listener, _) => listener.DoTurnLogic());
+			ExecuteTurnLogicInChildren(child.gameObject);
 		}
 	}
 }

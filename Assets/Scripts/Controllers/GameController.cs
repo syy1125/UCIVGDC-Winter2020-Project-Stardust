@@ -41,9 +41,13 @@ public class GameController : MonoBehaviour
 		_advancingTurn = true;
 		OnStartAdvanceTurn.Invoke();
 
+		Debug.Log("Starting turn animation");
 		yield return GetComponent<TurnAnimationController>().AnimateTurn(CurrentTurn, CurrentTurn + 1);
+		Debug.Log("Ending turn animation");
 
+		Debug.Log("Starting turn logic");
 		yield return GetComponent<TurnLogicController>().ExecuteTurnLogic();
+		Debug.Log("Ending turn logic");
 
 		_advancingTurn = false;
 		OnEndAdvanceTurn.Invoke();
