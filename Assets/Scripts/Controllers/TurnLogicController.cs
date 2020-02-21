@@ -14,7 +14,7 @@ public class TurnLogicController : MonoBehaviour
 	private IEnumerator DoTurnLogic()
 	{
 		Task logicTask = Task.Run(TurnLogicAction);
-		yield return new WaitUntil(() => logicTask.IsCanceled);
+		yield return new WaitUntil(() => logicTask.IsCompleted);
 	}
 
 	private static void TurnLogicAction()
