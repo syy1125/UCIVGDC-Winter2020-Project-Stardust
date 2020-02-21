@@ -53,7 +53,7 @@
             <e p="CelestialBodyOutlineItem.cs" t="Include" />
             <e p="CelestialBodyOutlineList.cs" t="Include" />
           </e>
-          <e p="Planet and Building" t="Include">
+          <e p="Planet" t="Include">
             <e p="BuildingTemplate.cs" t="Include" />
             <e p="PlanetTile.cs" t="Include" />
             <e p="PlanetVisualController.cs" t="Include" />
