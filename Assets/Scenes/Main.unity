@@ -390,6 +390,7 @@ MonoBehaviour:
   ScrollZoomSpeed: 50
   MinZoom: 0.05
   MaxZoom: 20
+  FollowZoomMultiplier: 0.004
 --- !u!114 &1073853594
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -569,6 +570,11 @@ PrefabInstance:
       propertyPath: CameraPan
       value: 
       objectReference: {fileID: 1073853591}
+    - target: {fileID: 2914983310373609270, guid: 7dd1c04f736fcb344ab52c5e051aa53e,
+        type: 3}
+      propertyPath: CameraControl
+      value: 
+      objectReference: {fileID: 1073853589}
     - target: {fileID: 3036339736720872768, guid: 7dd1c04f736fcb344ab52c5e051aa53e,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class CameraZoom : MonoBehaviour, IResetListener
+public class CameraZoom : MonoBehaviour, IResetListener, IFollowTargetListener
 {
 	public string ZoomAxis;
 	public float ZoomSpeed;
@@ -10,6 +10,7 @@ public class CameraZoom : MonoBehaviour, IResetListener
 
 	public float MinZoom;
 	public float MaxZoom;
+	public float FollowZoomMultiplier;
 	private float _zoom;
 	private float _initialZoom;
 
@@ -40,4 +41,25 @@ public class CameraZoom : MonoBehaviour, IResetListener
 			ApplyZoom();
 		};
 	}
+
+	public void OnEndReset()
+	{}
+
+	public Action<float> GetProgressFollowAction(GameObject target)
+	{
+		float currentZoom = _zoom;
+		float desiredZoom = Mathf.Clamp(
+			target.GetComponent<PlanetVisualController>().Body.OutlineRadius * FollowZoomMultiplier,
+			MinZoom,
+			MaxZoom
+		);
+		return progress =>
+		{
+			_zoom = Mathf.Exp(Mathf.Lerp(Mathf.Log(currentZoom), Mathf.Log(desiredZoom), progress));
+			ApplyZoom();
+		};
+	}
+
+	public void Follow(GameObject target)
+	{}
 }

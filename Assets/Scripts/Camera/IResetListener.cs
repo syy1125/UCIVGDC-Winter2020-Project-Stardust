@@ -6,4 +6,5 @@ public interface IResetListener : IEventSystemHandler
 {
 	bool enabled { set; }
 	Action<float> GetProgressResetAction();
+	void OnEndReset();
 }

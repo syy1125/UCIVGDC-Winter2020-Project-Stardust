@@ -58,6 +58,7 @@ public class CameraReset : MonoBehaviour
 		// So I made the initial disable code match this as well.
 		foreach (IResetListener listener in listeners)
 		{
+			listener.OnEndReset();
 			listener.enabled = true;
 		}
 

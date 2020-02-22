@@ -21,6 +21,7 @@
             <e p="CameraReset.cs" t="Include" />
             <e p="CameraRotation.cs" t="Include" />
             <e p="CameraZoom.cs" t="Include" />
+            <e p="IFollowTargetListener.cs" t="Include" />
             <e p="IResetListener.cs" t="Include" />
           </e>
           <e p="Controllers" t="Include">
@@ -33,7 +34,7 @@
             <e p="EventListener.cs" t="Include" />
           </e>
           <e p="ForEachFrame.cs" t="Include" />
-          <e p="Game State" t="Include">
+          <e p="GameState" t="Include">
             <e p="GameState.cs" t="Include" />
             <e p="ISerializableState.cs" t="Include" />
             <e p="Planet.cs" t="Include" />

@@ -56,4 +56,7 @@ public class CameraRotation : MonoBehaviour, IResetListener
 			ApplyRotation();
 		};
 	}
+
+	public void OnEndReset()
+	{}
 }

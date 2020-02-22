@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections;
 using UnityEngine;
 
-public class CameraPan : MonoBehaviour, IResetListener
+public class CameraPan : MonoBehaviour, IResetListener, IFollowTargetListener
 {
 	public string HorizontalAxis;
 	public string VerticalAxis;
@@ -46,8 +45,19 @@ public class CameraPan : MonoBehaviour, IResetListener
 		}
 		else if (FollowTarget != null)
 		{
-			t.position = Bounds.ClosestPoint(FollowTarget.transform.position);
+			t.position = FollowTarget.transform.position;
 		}
+	}
+
+	public Action<float> GetProgressResetAction()
+	{
+		Vector3 currentPosition = transform.position;
+		return progress => transform.position = Vector3.Lerp(currentPosition, _initialPosition, progress);
+	}
+
+	public void OnEndReset()
+	{
+		FollowTarget = null;
 	}
 
 	public void Follow(GameObject target)
@@ -55,10 +65,10 @@ public class CameraPan : MonoBehaviour, IResetListener
 		FollowTarget = target;
 	}
 
-	public Action<float> GetProgressResetAction()
+	public Action<float> GetProgressFollowAction(GameObject target)
 	{
 		Vector3 currentPosition = transform.position;
-		return progress => transform.position = Vector3.Lerp(currentPosition, _initialPosition, progress);
+		return progress => transform.position = Vector3.Lerp(currentPosition, target.transform.position, progress);
 	}
 
 	private void OnDrawGizmos()
