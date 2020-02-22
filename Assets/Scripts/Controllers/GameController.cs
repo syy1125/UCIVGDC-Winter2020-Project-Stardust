@@ -8,10 +8,12 @@ public class GameController : MonoBehaviour
 	public static GameController Instance { get; private set; }
 
 	public readonly GameState State = new GameState();
+	public CelestialBody SelectedBody { get; private set; }
 
 	private bool _advancingTurn;
 	public UnityEvent OnStartAdvanceTurn = new UnityEvent();
 	public UnityEvent OnEndAdvanceTurn = new UnityEvent();
+	public UnityEvent OnBodySelectionChanged = new UnityEvent();
 
 	private void Awake()
 	{
@@ -27,6 +29,12 @@ public class GameController : MonoBehaviour
 			);
 			Destroy(this);
 		}
+	}
+
+	public void SetSelectedBody(CelestialBody body)
+	{
+		SelectedBody = body;
+		OnBodySelectionChanged.Invoke();
 	}
 
 	public void AdvanceTurn()

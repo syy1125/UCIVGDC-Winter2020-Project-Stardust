@@ -58,6 +58,7 @@
             <e p="BuildingTemplate.cs" t="Include" />
             <e p="PlanetTile.cs" t="Include" />
             <e p="PlanetVisualController.cs" t="Include" />
+            <e p="ResourceUI.cs" t="Include" />
             <e p="VisualizeOrbit.cs" t="Include" />
           </e>
           <e p="Resource.cs" t="Include" />

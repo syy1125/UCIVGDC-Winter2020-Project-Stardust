@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Random = System.Random;
@@ -26,6 +27,57 @@ public class PlanetResources : ISaveLoad<PlanetResources.Serialized>
 	{
 		get => _storage.TryGetValue(resource, out int amount) ? amount : 0;
 		set => _storage[resource] = value;
+	}
+
+	public int GetRawProduction(Resource resource)
+	{
+		int production = 0;
+		foreach (BuildingInstance building in _buildingController.GetBuildings())
+		{
+			foreach (EffectGroupInstance group in building.EffectGroups)
+			{
+				production += group.Effects
+					.Where(effect => effect.Type == BuildingEffect.EffectType.Produce && effect.Resource == resource)
+					.Sum(effect => effect.Amount);
+			}
+		}
+
+		return production;
+	}
+
+	public int GetRawConsumption(Resource resource)
+	{
+		int consumption = 0;
+
+		foreach (BuildingInstance building in _buildingController.GetBuildings())
+		{
+			foreach (EffectGroupInstance group in building.EffectGroups)
+			{
+				consumption += group.Effects
+					.Where(effect => effect.Type == BuildingEffect.EffectType.Consume && effect.Resource == resource)
+					.Sum(effect => effect.Amount);
+			}
+		}
+
+		return consumption;
+	}
+
+	public Dictionary<Resource, int> GetIdealResourceDelta()
+	{
+		var resourceDelta = new Dictionary<Resource, int>();
+		var resourceConsumers = new Dictionary<Resource, List<Tuple<BuildingInstance, EffectGroupInstance>>>();
+		foreach (BuildingInstance building in _buildingController.GetBuildings())
+		{
+			ComposeProductionEffect(resourceDelta, resourceConsumers, building);
+		}
+
+		return resourceDelta;
+	}
+
+	public Dictionary<Resource, int> GetIdealResourceCapacity()
+	{
+		var disabledGroups = new HashSet<EffectGroupInstance>();
+		return ComputeResourceCapacity(_buildingController.GetBuildings(), disabledGroups);
 	}
 
 	public void DoTurnLogic()
@@ -165,7 +217,7 @@ public class PlanetResources : ISaveLoad<PlanetResources.Serialized>
 		}
 	}
 
-	private Dictionary<Resource, int> ComputeResourceCapacity(
+	private static Dictionary<Resource, int> ComputeResourceCapacity(
 		IEnumerable<BuildingInstance> buildings,
 		ICollection<EffectGroupInstance> disabledGroups
 	)

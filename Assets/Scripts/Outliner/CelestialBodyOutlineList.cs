@@ -30,6 +30,7 @@ public class CelestialBodyOutlineList : MonoBehaviour
 				if (_currentTarget == planet.gameObject) return;
 				if (_followCoroutine != null) StopCoroutine(_followCoroutine);
 				_followCoroutine = StartCoroutine(FollowPlanet(planet.gameObject));
+				GameController.Instance.SetSelectedBody(planet.Body);
 			}
 		);
 	}

@@ -26,3 +26,14 @@ MonoBehaviour:
   - Sprite: {fileID: -726715242948978953, guid: f7c5593ae8d31bc49b9a13d56bb811d0,
       type: 3}
     Offset: {x: 0, y: -1}
+  EffectGroups:
+  - Effects:
+    - Type: 1
+      Resource: {fileID: 11400000, guid: be291d583375aa7478755a53e5ad5082, type: 2}
+      Amount: 15
+    - Type: 1
+      Resource: {fileID: 11400000, guid: 7f5e2ddcc9f435246b534cff314116cb, type: 2}
+      Amount: 5000
+    - Type: 0
+      Resource: {fileID: 11400000, guid: 72f2aa53834de7949ba1f4fa5fa292c0, type: 2}
+      Amount: 20
