@@ -20,8 +20,8 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	public Color InvalidPositionColor = Color.red;
 
 	// Non-serialized fields
-	public bool LoadedPlanet => _buildingController != null;
-	private CelestialBodyBuildings _buildingController;
+	public bool LoadedPlanet => _selectedBody != null;
+	private CelestialBodyLogic _selectedBody;
 	private GameObject[][] _gridTiles;
 	private GameObject[][] _previewTiles;
 
@@ -31,11 +31,11 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	private BuildingTemplate _building;
 	private Vector2Int _origin;
 
-	public void LoadBuildingGrid(CelestialBodyBuildings buildings)
+	public void LoadBuildingGrid(CelestialBodyLogic bodyLogic)
 	{
 		if (LoadedPlanet) UnloadBuildingGrid();
 
-		_buildingController = buildings;
+		_selectedBody = bodyLogic;
 
 		SetupGridLayout(BuildingGrid);
 		SetupGridLayout(PreviewGrid);
@@ -45,7 +45,7 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	private Vector2Int GetGridSize()
 	{
-		return new Vector2Int(_buildingController.GridWidth, _buildingController.GridHeight);
+		return new Vector2Int(_selectedBody.Buildings.GridWidth, _selectedBody.Buildings.GridHeight);
 	}
 
 	private void SetupGridLayout(GridLayoutGroup grid)
@@ -94,7 +94,7 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		{
 			for (int y = 0; y < gridSize.y; y++)
 			{
-				Tuple<Sprite, int> data = _buildingController.GetSpriteAndRotationAt(new Vector2Int(x, y));
+				Tuple<Sprite, int> data = _selectedBody.Buildings.GetSpriteAndRotationAt(new Vector2Int(x, y));
 				if (data != null)
 				{
 					GameObject tile = _gridTiles[x][y];
@@ -159,7 +159,7 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			foreach (GameObject tile in tiles)
 			{
 				if (tile == null) continue;
-				
+
 				var image = tile.GetComponent<Image>();
 				image.sprite = null;
 				image.color = new Color(1, 1, 1, 0);
@@ -173,7 +173,7 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 		if (_building == null) return;
 
-		Color color = _buildingController.IsValidBuilding(_building, _origin, _rotation)
+		Color color = _selectedBody.Buildings.IsValidBuilding(_building, _origin, _rotation)
 			? Color.white
 			: InvalidPositionColor;
 
@@ -181,7 +181,7 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		{
 			Vector2Int position = _origin + CelestialBodyBuildings.Rotate(tile.Offset, _rotation);
 
-			if (!_buildingController.InBounds(position)) continue;
+			if (!_selectedBody.Buildings.InBounds(position)) continue;
 
 			var image = _previewTiles[position.x][position.y].GetComponent<Image>();
 			image.sprite = tile.Sprite;
@@ -195,13 +195,18 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 		if (eventData.button == PointerEventData.InputButton.Left)
 		{
 			if (TryGetBuildingOrigin(out Vector2Int origin)
-			    && _buildingController.IsValidBuilding(_building, origin, _rotation))
+			    && _selectedBody.Buildings.IsValidBuilding(_building, origin, _rotation))
 			{
 				Debug.Log($"Building {BuildingSelection.GetSelectedBuilding().DisplayName} at {origin}");
-				_buildingController.ConstructBuilding(_building, origin, _rotation);
-				
+				_selectedBody.Buildings.ConstructBuilding(_building, origin, _rotation);
+
 				RedrawBuildings();
 				RedrawBuildingPreview();
+
+				if (!(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+				{
+					BuildingSelection.CancelSelection();
+				}
 			}
 		}
 		else if (eventData.button == PointerEventData.InputButton.Right)
@@ -229,10 +234,7 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			Destroy(child.gameObject);
 		}
 
-		_buildingController = null;
+		_selectedBody = null;
 		_gridTiles = null;
 	}
-
-	private void OnDrawGizmos()
-	{}
 }

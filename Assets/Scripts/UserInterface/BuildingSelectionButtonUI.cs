@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,10 +21,16 @@ public class BuildingSelectionButtonUI : MonoBehaviour
 
 	private ColorBlock _initialColors;
 
+	// Awake executes during instantiate, while Start executes after instantiate.
+	// This execution order initializes the fields correctly.
+	private void Awake()
+	{
+		_initialColors = GetComponent<Button>().colors;
+	}
+
 	private void Start()
 	{
 		BuildingName.text = Building.DisplayName;
-		_initialColors = GetComponent<Button>().colors;
 	}
 
 	public void SetSelected(bool selected)

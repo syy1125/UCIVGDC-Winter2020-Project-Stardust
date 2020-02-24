@@ -13,9 +13,6 @@
           </e>
         </e>
         <e p="Scripts" t="Include">
-          <e p="BuildingGridUI.cs" t="Include" />
-          <e p="BuildingSelectionButtonUI.cs" t="Include" />
-          <e p="BuildingSelectionUI.cs" t="Include" />
           <e p="Camera" t="Include">
             <e p="CameraPan.cs" t="Include" />
             <e p="CameraReset.cs" t="Include" />
@@ -58,7 +55,6 @@
             <e p="BuildingTemplate.cs" t="Include" />
             <e p="PlanetTile.cs" t="Include" />
             <e p="PlanetVisualController.cs" t="Include" />
-            <e p="ResourceUI.cs" t="Include" />
             <e p="VisualizeOrbit.cs" t="Include" />
           </e>
           <e p="Resource.cs" t="Include" />
@@ -72,6 +68,13 @@
             <e p="VisualizeBodyRealtimeOverview.cs" t="Include" />
           </e>
           <e p="Transfer.cs" t="Include" />
+          <e p="UserInterface" t="Include">
+            <e p="BuildingGridUI.cs" t="Include" />
+            <e p="BuildingSelectionButtonUI.cs" t="Include" />
+            <e p="BuildingSelectionUI.cs" t="Include" />
+            <e p="BuildingUI.cs" t="Include" />
+            <e p="ResourceUI.cs" t="Include" />
+          </e>
         </e>
         <e p="Textures" t="Include">
           <e p="credits.txt" t="Include" />

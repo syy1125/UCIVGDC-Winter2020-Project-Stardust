@@ -17,7 +17,6 @@ public class TestBuildingSelection : MonoBehaviour
 			}
 			else
 			{
-				selectionUI.LoadBuildings();
 				_loaded = true;
 			}
 		}

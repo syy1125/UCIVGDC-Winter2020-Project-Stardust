@@ -23,7 +23,7 @@ public class TestBuildingGrid : MonoBehaviour
 					.SkipWhile(planet => planet.Body != Target)
 					.First();
 				Debug.Log("Loading planet");
-				gridUI.LoadBuildingGrid(target.Buildings);
+				gridUI.LoadBuildingGrid(target);
 			}
 		}
 	}

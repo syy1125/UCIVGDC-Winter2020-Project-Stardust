@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,12 +11,16 @@ public class BuildingSelectionUI : MonoBehaviour
 	public GameObject ExtraButtons;
 	public Button CancelButton;
 
+	private CelestialBodyLogic _selectedBody;
 	private int _selectedIndex;
 	private const int UNSELECT_INDEX = -1; // Index for when nothing is selected
-	public BuildingTemplate GetSelectedBuilding() => _selectedIndex == UNSELECT_INDEX ? null : Buildings[_selectedIndex];
 
-	public void LoadBuildings()
+	public BuildingTemplate GetSelectedBuilding() =>
+		_selectedIndex == UNSELECT_INDEX ? null : Buildings[_selectedIndex];
+
+	public void LoadBuildings(CelestialBodyLogic bodyLogic)
 	{
+		_selectedBody = bodyLogic;
 		_selectedIndex = UNSELECT_INDEX;
 
 		for (int index = 0; index < Buildings.Length; index++)
@@ -28,6 +33,8 @@ public class BuildingSelectionUI : MonoBehaviour
 			buttonController.Building = Buildings[index];
 		}
 
+		RefreshBuildingButtons();
+
 		ExtraButtons.SetActive(true);
 	}
 
@@ -35,13 +42,24 @@ public class BuildingSelectionUI : MonoBehaviour
 	{
 		_selectedIndex = index;
 
-		foreach (Transform child in transform)
-		{
-			var button = child.GetComponent<BuildingSelectionButtonUI>();
-			button.SetSelected(button.Index == _selectedIndex);
-		}
+		RefreshBuildingButtons();
 
 		CancelButton.interactable = index != UNSELECT_INDEX;
+	}
+
+	private void RefreshBuildingButtons()
+	{
+		foreach (Transform child in transform)
+		{
+			var buttonUI = child.GetComponent<BuildingSelectionButtonUI>();
+			buttonUI.SetSelected(buttonUI.Index == _selectedIndex);
+			child.GetComponent<Button>().interactable = CanBuild(buttonUI.Building);
+		}
+	}
+
+	private bool CanBuild(BuildingTemplate building)
+	{
+		return building.Costs.All(cost => _selectedBody.Resources[cost.Resource] >= cost.Amount);
 	}
 
 	public void CancelSelection()

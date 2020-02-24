@@ -1,9 +1,15 @@
 using System.Collections.Generic;
+using System.Linq;
 
-public class GameState: IHasTurnLogic
+public class GameState : IHasTurnLogic
 {
 	public int CurrentTurn;
-	public List<CelestialBodyLogic> StarSystem = new List<CelestialBodyLogic>();
+	public List<CelestialBodyLogic> StarSystem { get; private set; }
+
+	public GameState()
+	{
+		StarSystem = new List<CelestialBodyLogic>();
+	}
 
 	public void DoTurnLogic()
 	{
@@ -11,5 +17,10 @@ public class GameState: IHasTurnLogic
 		{
 			logic.DoTurnLogic();
 		}
+	}
+
+	public CelestialBodyLogic FindLogicComponent(CelestialBody body)
+	{
+		return StarSystem.SkipWhile(logic => logic.Body != body).FirstOrDefault();
 	}
 }
