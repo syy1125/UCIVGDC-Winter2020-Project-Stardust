@@ -20,6 +20,11 @@ MonoBehaviour:
   - Sprite: {fileID: 5510718359920071087, guid: 12ecadb0de3b7804bb71a54ea615b754,
       type: 3}
     Offset: {x: 1, y: 0}
+  Costs:
+  - Resource: {fileID: 11400000, guid: 7f5e2ddcc9f435246b534cff314116cb, type: 2}
+    Amount: 1000
+  - Resource: {fileID: 11400000, guid: 72f2aa53834de7949ba1f4fa5fa292c0, type: 2}
+    Amount: 10
   EffectGroups:
   - Effects:
     - Type: 1

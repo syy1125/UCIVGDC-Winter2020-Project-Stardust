@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.WSA;
 
 [Serializable]
 public struct BuildingTile
 {
 	public Sprite Sprite;
 	public Vector2Int Offset;
+}
+
+[Serializable]
+public struct BuildingCost
+{
+	public Resource Resource;
+	public int Amount;
 }
 
 [Serializable]
@@ -39,6 +45,7 @@ public class BuildingTemplate : ScriptableObject
 {
 	public string DisplayName;
 	public BuildingTile[] Tiles;
+	public BuildingCost[] Costs;
 	public EffectGroup[] EffectGroups;
 
 	public Vector2 GetCenterOfMass()
