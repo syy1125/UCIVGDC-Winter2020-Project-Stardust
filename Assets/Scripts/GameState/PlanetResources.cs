@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using UnityEditor;
 using UnityEngine;
 using Random = System.Random;
 
-public class PlanetResources : ISaveLoad<PlanetResources.Serialized>
+public class PlanetResources : ISaveLoad<PlanetResources.Serialized>, IHasTurnLogic
 {
 	[Serializable]
 	public struct Serialized
@@ -14,13 +15,13 @@ public class PlanetResources : ISaveLoad<PlanetResources.Serialized>
 		public int[] Amount;
 	}
 
-	private readonly PlanetBuildings _buildingController;
+	private readonly Planet _planet;
 
 	private readonly Dictionary<Resource, int> _storage = new Dictionary<Resource, int>();
 
-	public PlanetResources(PlanetBuildings buildingController)
+	public PlanetResources(Planet planet)
 	{
-		_buildingController = buildingController;
+		_planet = planet;
 	}
 
 	public int this[Resource resource]
@@ -32,7 +33,7 @@ public class PlanetResources : ISaveLoad<PlanetResources.Serialized>
 	public int GetRawProduction(Resource resource)
 	{
 		int production = 0;
-		foreach (BuildingInstance building in _buildingController.GetBuildings())
+		foreach (BuildingInstance building in _planet.Buildings.GetBuildings())
 		{
 			foreach (EffectGroupInstance group in building.EffectGroups)
 			{
@@ -49,7 +50,7 @@ public class PlanetResources : ISaveLoad<PlanetResources.Serialized>
 	{
 		int consumption = 0;
 
-		foreach (BuildingInstance building in _buildingController.GetBuildings())
+		foreach (BuildingInstance building in _planet.Buildings.GetBuildings())
 		{
 			foreach (EffectGroupInstance group in building.EffectGroups)
 			{
@@ -66,7 +67,7 @@ public class PlanetResources : ISaveLoad<PlanetResources.Serialized>
 	{
 		var resourceDelta = new Dictionary<Resource, int>();
 		var resourceConsumers = new Dictionary<Resource, List<Tuple<BuildingInstance, EffectGroupInstance>>>();
-		foreach (BuildingInstance building in _buildingController.GetBuildings())
+		foreach (BuildingInstance building in _planet.Buildings.GetBuildings())
 		{
 			ComposeProductionEffect(resourceDelta, resourceConsumers, building);
 		}
@@ -77,7 +78,7 @@ public class PlanetResources : ISaveLoad<PlanetResources.Serialized>
 	public Dictionary<Resource, int> GetIdealResourceCapacity()
 	{
 		var disabledGroups = new HashSet<EffectGroupInstance>();
-		return ComputeResourceCapacity(_buildingController.GetBuildings(), disabledGroups);
+		return ComputeResourceCapacity(_planet.Buildings.GetBuildings(), disabledGroups);
 	}
 
 	public void DoTurnLogic()
@@ -86,7 +87,7 @@ public class PlanetResources : ISaveLoad<PlanetResources.Serialized>
 		var resourceConsumers = new Dictionary<Resource, List<Tuple<BuildingInstance, EffectGroupInstance>>>();
 		var disabledGroups = new HashSet<EffectGroupInstance>();
 
-		BuildingInstance[] buildings = _buildingController.GetBuildings();
+		BuildingInstance[] buildings = _planet.Buildings.GetBuildings();
 
 		if (buildings.Length > 0)
 		{

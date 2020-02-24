@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Experimental.XR;
 
 public struct EffectGroupInstance
 {
@@ -66,20 +67,21 @@ public class PlanetBuildings : ISaveLoad<PlanetBuildings.Serialized>
 		public Vector2Int[] BuildingOrigins;
 	}
 
-	private readonly CelestialBody _body;
+	private readonly Planet _planet;
+	private CelestialBody Body => _planet.Body;
 
 	private readonly Dictionary<BuildingInstance, Vector2Int> _buildingOrigin =
 		new Dictionary<BuildingInstance, Vector2Int>();
 	private readonly Dictionary<Vector2Int, BuildingInstance> _slotToBuilding =
 		new Dictionary<Vector2Int, BuildingInstance>();
 
-	public PlanetBuildings(CelestialBody body)
+	public PlanetBuildings(Planet planet)
 	{
-		_body = body;
+		_planet = planet;
 	}
 
-	public int GridWidth => _body.BuildingGridWidth;
-	public int GridHeight => _body.BuildingGridHeight;
+	public int GridWidth => Body.BuildingGridWidth;
+	public int GridHeight => Body.BuildingGridHeight;
 
 	public void ConstructBuilding(BuildingTemplate template, Vector2Int origin, int rotation)
 	{
@@ -124,9 +126,9 @@ public class PlanetBuildings : ISaveLoad<PlanetBuildings.Serialized>
 	public bool InBounds(Vector2Int position)
 	{
 		return position.x >= 0
-		       && position.x < _body.BuildingGridWidth
+		       && position.x < Body.BuildingGridWidth
 		       && position.y >= 0
-		       && position.y < _body.BuildingGridHeight;
+		       && position.y < Body.BuildingGridHeight;
 	}
 
 	public BuildingInstance[] GetBuildings()

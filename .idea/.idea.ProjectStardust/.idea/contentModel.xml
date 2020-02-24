@@ -24,18 +24,19 @@
             <e p="IFollowTargetListener.cs" t="Include" />
             <e p="IResetListener.cs" t="Include" />
           </e>
-          <e p="Controllers" t="Include">
-            <e p="GameController.cs" t="Include" />
-            <e p="TurnAnimationController.cs" t="Include" />
-            <e p="TurnLogicController.cs" t="Include" />
-          </e>
           <e p="Event" t="Include">
             <e p="EventBus.cs" t="Include" />
             <e p="EventListener.cs" t="Include" />
           </e>
           <e p="ForEachFrame.cs" t="Include" />
+          <e p="GameControl" t="Include">
+            <e p="GameController.cs" t="Include" />
+            <e p="TurnAnimationController.cs" t="Include" />
+            <e p="TurnLogicController.cs" t="Include" />
+          </e>
           <e p="GameState" t="Include">
             <e p="GameState.cs" t="Include" />
+            <e p="IHasTurnLogic.cs" t="Include" />
             <e p="ISerializableState.cs" t="Include" />
             <e p="Planet.cs" t="Include" />
             <e p="PlanetBuildings.cs" t="Include" />

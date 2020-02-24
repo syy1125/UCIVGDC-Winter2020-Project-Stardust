@@ -18,6 +18,10 @@ public class ResourceUI : MonoBehaviour
 	public Text PowerDisplay;
 	public ResourceDisplayEntry[] ResourceDisplays;
 
+	[Header("Config")]
+	public Color DeficitWarningColor;
+	public Color DeficitColor;
+
 	private void Start()
 	{
 		GameController.Instance.OnBodySelectionChanged.AddListener(UpdateDisplay);
@@ -55,6 +59,18 @@ public class ResourceUI : MonoBehaviour
 				resourceCapacity.TryGetValue(entry.Resource, out int capacity);
 				
 				entry.Display.text = $"{storage}{delta:+0;-0} / {capacity}";
+				if (delta < 0 && storage + delta < 0)
+				{
+					entry.Display.color = DeficitColor;
+				}
+				else if (delta < 0 && storage + delta * 10 < 0)
+				{
+					entry.Display.color = DeficitWarningColor;
+				}
+				else
+				{
+					entry.Display.color = Color.white;
+				}
 			}
 		}
 	}

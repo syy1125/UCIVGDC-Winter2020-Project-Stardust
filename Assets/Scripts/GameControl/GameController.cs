@@ -54,7 +54,7 @@ public class GameController : MonoBehaviour
 		Debug.Log("Ending turn animation");
 
 		Debug.Log("Starting turn logic");
-		yield return GetComponent<TurnLogicController>().ExecuteTurnLogic();
+		State.DoTurnLogic();
 		Debug.Log("Ending turn logic");
 
 		_advancingTurn = false;

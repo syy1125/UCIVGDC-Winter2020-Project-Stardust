@@ -1,6 +1,6 @@
 using UnityEditor;
 
-public class Planet : ISaveLoad<Planet.Serialized>
+public class Planet : ISaveLoad<Planet.Serialized>, IHasTurnLogic
 {
 	public struct Serialized
 	{
@@ -16,8 +16,13 @@ public class Planet : ISaveLoad<Planet.Serialized>
 	public Planet(CelestialBody body)
 	{
 		Body = body;
-		Buildings = new PlanetBuildings(Body);
-		Resources = new PlanetResources(Buildings);
+		Buildings = new PlanetBuildings(this);
+		Resources = new PlanetResources(this);
+	}
+
+	public void DoTurnLogic()
+	{
+		Resources.DoTurnLogic();
 	}
 
 	public Serialized Save()
