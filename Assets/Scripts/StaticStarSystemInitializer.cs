@@ -10,10 +10,9 @@ public class StaticStarSystemInitializer : MonoBehaviour
 	{
 		GameState state = GameController.Instance.State;
 
-		state.StarSystem.CelestialBodies = Bodies.ToArray();
 		foreach (CelestialBody body in Bodies)
 		{
-			state.Planets.Add(new Planet(body));
+			state.StarSystem.Add(new CelestialBodyLogic(body));
 		}
 	}
 }

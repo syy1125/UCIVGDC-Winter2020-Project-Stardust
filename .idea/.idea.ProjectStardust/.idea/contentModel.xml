@@ -35,13 +35,12 @@
             <e p="TurnLogicController.cs" t="Include" />
           </e>
           <e p="GameState" t="Include">
+            <e p="CelestialBodyBuildings.cs" t="Include" />
+            <e p="CelestialBodyLogic.cs" t="Include" />
+            <e p="CelestialBodyResources.cs" t="Include" />
             <e p="GameState.cs" t="Include" />
             <e p="IHasTurnLogic.cs" t="Include" />
             <e p="ISerializableState.cs" t="Include" />
-            <e p="Planet.cs" t="Include" />
-            <e p="PlanetBuildings.cs" t="Include" />
-            <e p="PlanetResources.cs" t="Include" />
-            <e p="StarSystem.cs" t="Include" />
           </e>
           <e p="GameUnits.cs" t="Include" />
           <e p="ITurnLogicListener.cs" t="Include" />

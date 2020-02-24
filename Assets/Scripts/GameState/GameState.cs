@@ -3,14 +3,13 @@ using System.Collections.Generic;
 public class GameState: IHasTurnLogic
 {
 	public int CurrentTurn;
-	public StarSystem StarSystem = new StarSystem();
-	public List<Planet> Planets = new List<Planet>();
+	public List<CelestialBodyLogic> StarSystem = new List<CelestialBodyLogic>();
 
 	public void DoTurnLogic()
 	{
-		foreach (Planet planet in Planets)
+		foreach (CelestialBodyLogic logic in StarSystem)
 		{
-			planet.DoTurnLogic();
+			logic.DoTurnLogic();
 		}
 	}
 }

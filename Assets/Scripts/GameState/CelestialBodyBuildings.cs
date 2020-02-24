@@ -58,7 +58,7 @@ public class BuildingInstance : ISaveLoad<BuildingInstance.Serialized>
 	}
 }
 
-public class PlanetBuildings : ISaveLoad<PlanetBuildings.Serialized>
+public class CelestialBodyBuildings : ISaveLoad<CelestialBodyBuildings.Serialized>
 {
 	[Serializable]
 	public struct Serialized
@@ -67,17 +67,17 @@ public class PlanetBuildings : ISaveLoad<PlanetBuildings.Serialized>
 		public Vector2Int[] BuildingOrigins;
 	}
 
-	private readonly Planet _planet;
-	private CelestialBody Body => _planet.Body;
+	private readonly CelestialBodyLogic _logic;
+	private CelestialBody Body => _logic.Body;
 
 	private readonly Dictionary<BuildingInstance, Vector2Int> _buildingOrigin =
 		new Dictionary<BuildingInstance, Vector2Int>();
 	private readonly Dictionary<Vector2Int, BuildingInstance> _slotToBuilding =
 		new Dictionary<Vector2Int, BuildingInstance>();
 
-	public PlanetBuildings(Planet planet)
+	public CelestialBodyBuildings(CelestialBodyLogic logic)
 	{
-		_planet = planet;
+		_logic = logic;
 	}
 
 	public int GridWidth => Body.BuildingGridWidth;

@@ -14,8 +14,10 @@ public class StarSystemSpawner : MonoBehaviour
 	{
 		Instantiate(LightPrefab, transform);
 
-		foreach (CelestialBody body in GameController.Instance.State.StarSystem.CelestialBodies)
+		foreach (CelestialBodyLogic bodyLogic in GameController.Instance.State.StarSystem)
 		{
+			CelestialBody body = bodyLogic.Body;
+
 			GameObject bodyObject = Instantiate(CelestialBodyPrefab, transform);
 			bodyObject.GetComponent<PlanetVisualController>().Body = body;
 			bodyObject.SetActive(true);

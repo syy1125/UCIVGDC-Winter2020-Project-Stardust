@@ -21,7 +21,7 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 	// Non-serialized fields
 	public bool LoadedPlanet => _buildingController != null;
-	private PlanetBuildings _buildingController;
+	private CelestialBodyBuildings _buildingController;
 	private GameObject[][] _gridTiles;
 	private GameObject[][] _previewTiles;
 
@@ -31,11 +31,11 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	private BuildingTemplate _building;
 	private Vector2Int _origin;
 
-	public void LoadBuildingGrid(PlanetBuildings planetBuildings)
+	public void LoadBuildingGrid(CelestialBodyBuildings buildings)
 	{
 		if (LoadedPlanet) UnloadBuildingGrid();
 
-		_buildingController = planetBuildings;
+		_buildingController = buildings;
 
 		SetupGridLayout(BuildingGrid);
 		SetupGridLayout(PreviewGrid);
@@ -179,7 +179,7 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
 		foreach (BuildingTile tile in _building.Tiles)
 		{
-			Vector2Int position = _origin + PlanetBuildings.Rotate(tile.Offset, _rotation);
+			Vector2Int position = _origin + CelestialBodyBuildings.Rotate(tile.Offset, _rotation);
 
 			if (!_buildingController.InBounds(position)) continue;
 

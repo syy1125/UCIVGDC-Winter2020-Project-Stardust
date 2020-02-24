@@ -17,13 +17,13 @@ public class TestBuildingGrid : MonoBehaviour
 			}
 			else
 			{
-				Planet targetPlanet = GameController.Instance
+				CelestialBodyLogic target = GameController.Instance
 					.State
-					.Planets
+					.StarSystem
 					.SkipWhile(planet => planet.Body != Target)
 					.First();
 				Debug.Log("Loading planet");
-				gridUI.LoadBuildingGrid(targetPlanet.Buildings);
+				gridUI.LoadBuildingGrid(target.Buildings);
 			}
 		}
 	}

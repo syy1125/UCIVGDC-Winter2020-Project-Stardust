@@ -37,9 +37,9 @@ public class ResourceUI : MonoBehaviour
 		{
 			enabled = true;
 
-			PlanetResources resources = GameController.Instance
+			CelestialBodyResources resources = GameController.Instance
 				.State
-				.Planets
+				.StarSystem
 				.SkipWhile(planet => planet.Body != GameController.Instance.SelectedBody)
 				.First()
 				.Resources;
