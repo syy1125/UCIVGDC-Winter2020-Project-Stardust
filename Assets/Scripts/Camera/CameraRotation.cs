@@ -1,16 +1,23 @@
 ﻿using System;
+using Microsoft.Win32;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CameraRotation : MonoBehaviour, IResetListener
 {
-	public string RotateButton;
-	public string AzimuthAxis;
-	public string ElevationAxis;
+	[FormerlySerializedAs("RotateButton")]
+	public string MouseRotateButton;
+	[FormerlySerializedAs("AzimuthAxis")]
+	public string MouseAzimuthAxis;
+	[FormerlySerializedAs("ElevationAxis")]
+	public string MouseElevationAxis;
+	public string KeyboardAzimuthAxis;
 
-	public bool InvertAzimuth;
-	public bool InvertElevation;
-
-	public float RotateSpeed;
+	[FormerlySerializedAs("RotateSpeed")]
+	public float MouseRotateSpeed;
+	public float KeyboardRotateSpeed;
+	public float AzimuthFactor;
+	public float ElevationFactor;
 
 	private float _azimuth;
 	private float _initialAzimuth;
@@ -26,16 +33,15 @@ public class CameraRotation : MonoBehaviour, IResetListener
 
 	private void Update()
 	{
-		if (Input.GetButton(RotateButton))
-		{
-			var input = new Vector2(Input.GetAxis(AzimuthAxis), Input.GetAxis(ElevationAxis));
-			if (InvertAzimuth) input.x *= -1;
-			if (InvertElevation) input.y *= -1;
-			input *= RotateSpeed;
+		Vector2 input = new Vector2(Input.GetAxis(KeyboardAzimuthAxis), 0) * KeyboardRotateSpeed;
 
-			_azimuth += input.x * Time.deltaTime;
-			_elevation += input.y * Time.deltaTime;
+		if (Input.GetButton(MouseRotateButton))
+		{
+			input += new Vector2(Input.GetAxis(MouseAzimuthAxis), Input.GetAxis(MouseElevationAxis)) * MouseRotateSpeed;
 		}
+
+		_azimuth += input.x * AzimuthFactor * Time.deltaTime;
+		_elevation += input.y * ElevationFactor * Time.deltaTime;
 
 		ApplyRotation();
 	}

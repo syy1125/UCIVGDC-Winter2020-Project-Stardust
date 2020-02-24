@@ -366,12 +366,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f68e0c5e1d357124889d4b959933dd04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotateButton: Rotate Camera
-  AzimuthAxis: Mouse X
-  ElevationAxis: Mouse Y
-  InvertAzimuth: 0
-  InvertElevation: 1
-  RotateSpeed: 360
+  MouseRotateButton: Rotate Camera
+  MouseAzimuthAxis: Mouse X
+  MouseElevationAxis: Mouse Y
+  KeyboardAzimuthAxis: Yaw Camera
+  MouseRotateSpeed: 360
+  KeyboardRotateSpeed: 180
+  AzimuthFactor: 1
+  ElevationFactor: -1
 --- !u!114 &1073853593
 MonoBehaviour:
   m_ObjectHideFlags: 0
