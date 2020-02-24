@@ -28,6 +28,9 @@ public class CelestialBody : ScriptableObject
 
 	[Header("Gameplay")]
 	[SerializeField]
+	private bool _colonizable;
+	public bool Colonizable => _colonizable;
+	[SerializeField]
 	private int _buildingGridWidth;
 	public int BuildingGridWidth => _buildingGridWidth;
 	[SerializeField]
@@ -113,13 +116,16 @@ public class CelestialBodyEditor : Editor
 			EditorGUILayout.LabelField("Eccentricity", orbit.Eccentricity.ToString("#0.000"));
 			EditorGUILayout.LabelField("Inclination (deg)", (orbit.Inclination * Mathf.Rad2Deg).ToString("#0.000"));
 			EditorGUILayout.LabelField(
-				"L of AN (deg)", (orbit.LongitudeOfAscendingNode * Mathf.Rad2Deg).ToString("#0.000")
+				"L of AN (deg)",
+				(orbit.LongitudeOfAscendingNode * Mathf.Rad2Deg).ToString("#0.000")
 			);
 			EditorGUILayout.LabelField(
-				"Arg of PE (deg)", (orbit.ArgumentOfPeriapsis * Mathf.Rad2Deg).ToString("#0.000")
+				"Arg of PE (deg)",
+				(orbit.ArgumentOfPeriapsis * Mathf.Rad2Deg).ToString("#0.000")
 			);
 			EditorGUILayout.LabelField(
-				"TA at Epoch (deg)", (orbit.TrueAnomalyAtEpoch * Mathf.Rad2Deg).ToString("#0.000")
+				"TA at Epoch (deg)",
+				(orbit.TrueAnomalyAtEpoch * Mathf.Rad2Deg).ToString("#0.000")
 			);
 
 			EditorGUILayout.LabelField("Orbit Characteristics", EditorStyles.boldLabel);

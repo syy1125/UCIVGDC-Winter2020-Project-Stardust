@@ -24,6 +24,7 @@ MonoBehaviour:
     _argumentOfPeriapsis: -1.283
     _trueAnomalyAtEpoch: 0.3384
   _physicalRadius: 0.0034
+  _colonizable: 1
   _buildingGridWidth: 10
   _buildingGridHeight: 10
   _atmosphereDragCost: 400

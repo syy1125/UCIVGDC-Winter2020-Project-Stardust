@@ -23,5 +23,12 @@ MonoBehaviour:
     _longitudeOfAscendingNode: 1.925
     _argumentOfPeriapsis: 1.9857
     _trueAnomalyAtEpoch: 0.2593
-  _radius: 0
+  _physicalRadius: 0
+  _colonizable: 0
+  _buildingGridWidth: 0
+  _buildingGridHeight: 0
+  _atmosphereDragCost: 0
+  _outlineRadius: 0
   _overviewColor: {r: 0.1981132, g: 0.1981132, b: 1, a: 1}
+  _planetMaterial: {fileID: 0}
+  _outlineMaterial: {fileID: 0}
