@@ -24,10 +24,12 @@ MonoBehaviour:
     _argumentOfPeriapsis: -1.5153
     _trueAnomalyAtEpoch: -1.747
   _physicalRadius: 0.025
+  _colonizable: 0
   _buildingGridWidth: 0
   _buildingGridHeight: 0
-  _dragCost: 0
+  _atmosphereDragCost: 0
   _outlineRadius: 10.5
   _overviewColor: {r: 0.1981132, g: 0.1981132, b: 1, a: 1}
   _planetMaterial: {fileID: 2100000, guid: e86a258daa2a8cc40b36955ad93fbd61, type: 2}
   _outlineMaterial: {fileID: 2100000, guid: f7a64b8b2a1bf424285ddb71bc42734a, type: 2}
+  DisplayName: Neptune

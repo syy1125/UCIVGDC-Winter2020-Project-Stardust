@@ -68,7 +68,11 @@
             <e p="TestScripts.cs" t="Include" />
             <e p="VisualizeBodyRealtimeOverview.cs" t="Include" />
           </e>
-          <e p="Transfer.cs" t="Include" />
+          <e p="Transfer" t="Include">
+            <e p="PlanetSelect.cs" t="Include" />
+            <e p="ToggleTransferButton.cs" t="Include" />
+            <e p="Transfer.cs" t="Include" />
+          </e>
           <e p="UserInterface" t="Include">
             <e p="BuildingGridUI.cs" t="Include" />
             <e p="BuildingSelectionButtonUI.cs" t="Include" />

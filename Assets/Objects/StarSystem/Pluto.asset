@@ -32,3 +32,4 @@ MonoBehaviour:
   _overviewColor: {r: 0.1981132, g: 0.1981132, b: 1, a: 1}
   _planetMaterial: {fileID: 0}
   _outlineMaterial: {fileID: 0}
+  DisplayName: Pluto

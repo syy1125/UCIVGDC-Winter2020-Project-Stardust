@@ -24,6 +24,7 @@ MonoBehaviour:
     _argumentOfPeriapsis: 0
     _trueAnomalyAtEpoch: 0
   _physicalRadius: 0
+  _colonizable: 0
   _buildingGridWidth: 0
   _buildingGridHeight: 0
   _atmosphereDragCost: 0
@@ -31,3 +32,4 @@ MonoBehaviour:
   _overviewColor: {r: 1, g: 1, b: 0, a: 1}
   _planetMaterial: {fileID: 2100000, guid: 1404359b87d3a2640a6a587fc7337986, type: 2}
   _outlineMaterial: {fileID: 2100000, guid: 1404359b87d3a2640a6a587fc7337986, type: 2}
+  DisplayName: Sun

@@ -23,5 +23,13 @@ MonoBehaviour:
     _longitudeOfAscendingNode: 0
     _argumentOfPeriapsis: 0
     _trueAnomalyAtEpoch: 0
-  _radius: 0
+  _physicalRadius: 0
+  _colonizable: 0
+  _buildingGridWidth: 0
+  _buildingGridHeight: 0
+  _atmosphereDragCost: 0
+  _outlineRadius: 0
   _overviewColor: {r: 1, g: 1, b: 0, a: 1}
+  _planetMaterial: {fileID: 0}
+  _outlineMaterial: {fileID: 0}
+  DisplayName: Test

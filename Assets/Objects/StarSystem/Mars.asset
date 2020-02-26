@@ -32,3 +32,4 @@ MonoBehaviour:
   _overviewColor: {r: 1, g: 0.2627451, b: 0, a: 1}
   _planetMaterial: {fileID: 2100000, guid: a91d2487eca0e044a9828a884b4967f5, type: 2}
   _outlineMaterial: {fileID: 2100000, guid: 806f8b4f7af2b804b8f30fa51e0b7722, type: 2}
+  DisplayName: Mars

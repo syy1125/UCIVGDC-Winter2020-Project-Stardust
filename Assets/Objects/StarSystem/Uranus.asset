@@ -24,10 +24,12 @@ MonoBehaviour:
     _argumentOfPeriapsis: 1.692
     _trueAnomalyAtEpoch: 2.4834
   _physicalRadius: 0.025
+  _colonizable: 0
   _buildingGridWidth: 0
   _buildingGridHeight: 0
-  _dragCost: 0
+  _atmosphereDragCost: 0
   _outlineRadius: 11
   _overviewColor: {r: 0.627451, g: 1, b: 1, a: 1}
   _planetMaterial: {fileID: 2100000, guid: d4a0694b004a6ba4e86b65bff9e0e48a, type: 2}
   _outlineMaterial: {fileID: 2100000, guid: e870dfabb5a71b24aa8fca2be3feb311, type: 2}
+  DisplayName: Uranus

@@ -32,3 +32,4 @@ MonoBehaviour:
   _overviewColor: {r: 1, g: 0.6799108, b: 0, a: 1}
   _planetMaterial: {fileID: 2100000, guid: 10dcf805669e2bc438e0d87d39610eab, type: 2}
   _outlineMaterial: {fileID: 2100000, guid: b0dfffbaf5043874ab980c3fc07e0252, type: 2}
+  DisplayName: Venus

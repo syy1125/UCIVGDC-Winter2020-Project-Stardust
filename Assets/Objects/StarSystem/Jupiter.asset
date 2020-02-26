@@ -24,10 +24,12 @@ MonoBehaviour:
     _argumentOfPeriapsis: -1.4965
     _trueAnomalyAtEpoch: 0.34326
   _physicalRadius: 0.0715
+  _colonizable: 0
   _buildingGridWidth: 0
   _buildingGridHeight: 0
-  _dragCost: 0
+  _atmosphereDragCost: 0
   _outlineRadius: 30
   _overviewColor: {r: 0.91827095, g: 1, b: 0, a: 1}
   _planetMaterial: {fileID: 2100000, guid: a12cb9bd3fbbfd44ea09bf6f6f505f3f, type: 2}
   _outlineMaterial: {fileID: 2100000, guid: 208ffb86a141cf0408d4d6723b2e07bc, type: 2}
+  DisplayName: Jupiter

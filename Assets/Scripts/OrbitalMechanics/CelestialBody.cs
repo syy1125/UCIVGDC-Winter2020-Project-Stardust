@@ -42,8 +42,8 @@ public class CelestialBody : ScriptableObject
 	public float AtmosphereDragCost => _atmosphereDragCost;
 
 
+	[Header("Display")]
 	[FormerlySerializedAs("_radius")]
-	[Header("Rendering")]
 	[SerializeField]
 	private float _outlineRadius;
 	public float OutlineRadius => _outlineRadius;
@@ -57,6 +57,10 @@ public class CelestialBody : ScriptableObject
 	[SerializeField]
 	private Material _outlineMaterial;
 	public Material OutlineMaterial => _outlineMaterial;
+	[SerializeField]
+	[FormerlySerializedAs("DisplayName")]
+	private string _displayName;
+	public string DisplayName => _displayName;
 
 	public Tuple<Vector3, Vector3> GetGlobalPositionAndVelocityAt(float time)
 	{
