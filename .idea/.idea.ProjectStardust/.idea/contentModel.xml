@@ -27,6 +27,7 @@
           </e>
           <e p="ForEachFrame.cs" t="Include" />
           <e p="GameControl" t="Include">
+            <e p="EscapeEventBus.cs" t="Include" />
             <e p="GameController.cs" t="Include" />
             <e p="TurnAnimationController.cs" t="Include" />
             <e p="TurnLogicController.cs" t="Include" />

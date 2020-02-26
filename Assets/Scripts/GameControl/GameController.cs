@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -13,7 +14,9 @@ public class GameController : MonoBehaviour
 	private bool _advancingTurn;
 	public UnityEvent OnStartAdvanceTurn = new UnityEvent();
 	public UnityEvent OnEndAdvanceTurn = new UnityEvent();
-	public UnityEvent OnBodySelectionChanged = new UnityEvent();
+	[NonSerialized]
+	public readonly UnityEvent OnBodySelectionChanged = new UnityEvent();
+	public readonly EscapeEventBus OnEscapePressed = new EscapeEventBus();
 
 	private void Awake()
 	{
@@ -28,6 +31,20 @@ public class GameController : MonoBehaviour
 				+ $"Destroying the new controller on {gameObject}"
 			);
 			Destroy(this);
+		}
+	}
+
+	private void Update()
+	{
+		if (!Input.GetKeyDown(KeyCode.Escape)) return;
+		
+		bool handled = OnEscapePressed.Invoke();
+		if (handled) return;
+		
+		// Default escape behaviour
+		if (SelectedBody != null)
+		{
+			SetSelectedBody(null);
 		}
 	}
 
@@ -58,8 +75,8 @@ public class GameController : MonoBehaviour
 		Debug.Log("Ending turn logic");
 
 		_advancingTurn = false;
-		OnEndAdvanceTurn.Invoke();
 		State.CurrentTurn++;
+		OnEndAdvanceTurn.Invoke();
 	}
 
 	private void OnDestroy()

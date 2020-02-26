@@ -806,7 +806,7 @@ PrefabInstance:
     - target: {fileID: 4958101198362788619, guid: 0fa283f90456e2d4cb8d79f3620c2ded,
         type: 3}
       propertyPath: OnBodySelectionChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4958101198362788619, guid: 0fa283f90456e2d4cb8d79f3620c2ded,
         type: 3}

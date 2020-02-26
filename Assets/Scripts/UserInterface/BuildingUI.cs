@@ -10,6 +10,12 @@ public class BuildingUI : MonoBehaviour
 
 	public bool BuildingScreenOpen { get; private set; }
 
+	private void Start()
+	{
+		GameController.Instance.OnBodySelectionChanged.AddListener(UpdateDisplay);
+		UpdateDisplay();
+	}
+
 	public void UpdateDisplay()
 	{
 		CelestialBody selected = GameController.Instance.SelectedBody;

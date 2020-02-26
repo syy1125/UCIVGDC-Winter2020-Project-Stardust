@@ -25,17 +25,18 @@ public class ResourceUI : MonoBehaviour
 	private void Start()
 	{
 		GameController.Instance.OnBodySelectionChanged.AddListener(UpdateDisplay);
+		UpdateDisplay();
 	}
 
 	private void UpdateDisplay()
 	{
 		if (GameController.Instance.SelectedBody == null)
 		{
-			enabled = false;
+			gameObject.SetActive(false);
 		}
 		else
 		{
-			enabled = true;
+			gameObject.SetActive(true);
 
 			CelestialBodyResources resources = GameController.Instance
 				.State
