@@ -5,10 +5,12 @@ public class GameState : IHasTurnLogic
 {
 	public int CurrentTurn;
 	public List<CelestialBodyLogic> StarSystem { get; private set; }
+	public List<Spaceship> Spaceships { get; private set; }
 
 	public GameState()
 	{
 		StarSystem = new List<CelestialBodyLogic>();
+		Spaceships = new List<Spaceship>();
 	}
 
 	public void DoTurnLogic()

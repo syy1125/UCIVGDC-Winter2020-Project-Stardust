@@ -28,50 +28,48 @@ public class ResourceUI : MonoBehaviour
 		UpdateDisplay();
 	}
 
+	private void OnEnable()
+	{
+		UpdateDisplay();
+	}
+
 	private void UpdateDisplay()
 	{
-		if (GameController.Instance.SelectedBody == null)
+		if (GameController.Instance.SelectedBody == null || !gameObject.activeSelf) return;
+
+		CelestialBodyResources resources = GameController.Instance
+			.State
+			.StarSystem
+			.SkipWhile(planet => planet.Body != GameController.Instance.SelectedBody)
+			.First()
+			.Resources;
+
+		int powerProduction = resources.GetRawProduction(Energy);
+		int powerConsumption = resources.GetRawConsumption(Energy);
+		Dictionary<Resource, int> resourceDelta = resources.GetIdealResourceDelta();
+		Dictionary<Resource, int> resourceCapacity = resources.GetIdealResourceCapacity();
+
+		PowerDisplay.text = $"{powerConsumption} / {powerProduction}";
+		PowerDisplay.color = powerConsumption > powerProduction ? Color.red : Color.white;
+
+		foreach (ResourceDisplayEntry entry in ResourceDisplays)
 		{
-			gameObject.SetActive(false);
-		}
-		else
-		{
-			gameObject.SetActive(true);
+			int storage = resources[entry.Resource];
+			resourceDelta.TryGetValue(entry.Resource, out int delta);
+			resourceCapacity.TryGetValue(entry.Resource, out int capacity);
 
-			CelestialBodyResources resources = GameController.Instance
-				.State
-				.StarSystem
-				.SkipWhile(planet => planet.Body != GameController.Instance.SelectedBody)
-				.First()
-				.Resources;
-
-			int powerProduction = resources.GetRawProduction(Energy);
-			int powerConsumption = resources.GetRawConsumption(Energy);
-			Dictionary<Resource, int> resourceDelta = resources.GetIdealResourceDelta();
-			Dictionary<Resource, int> resourceCapacity = resources.GetIdealResourceCapacity();
-
-			PowerDisplay.text = $"{powerConsumption} / {powerProduction}";
-			PowerDisplay.color = powerConsumption > powerProduction ? Color.red : Color.white;
-
-			foreach (ResourceDisplayEntry entry in ResourceDisplays)
+			entry.Display.text = $"{storage}{delta:+0;-0} / {capacity}";
+			if (delta < 0 && storage + delta < 0)
 			{
-				int storage = resources[entry.Resource];
-				resourceDelta.TryGetValue(entry.Resource, out int delta);
-				resourceCapacity.TryGetValue(entry.Resource, out int capacity);
-				
-				entry.Display.text = $"{storage}{delta:+0;-0} / {capacity}";
-				if (delta < 0 && storage + delta < 0)
-				{
-					entry.Display.color = DeficitColor;
-				}
-				else if (delta < 0 && storage + delta * 10 < 0)
-				{
-					entry.Display.color = DeficitWarningColor;
-				}
-				else
-				{
-					entry.Display.color = Color.white;
-				}
+				entry.Display.color = DeficitColor;
+			}
+			else if (delta < 0 && storage + delta * 10 < 0)
+			{
+				entry.Display.color = DeficitWarningColor;
+			}
+			else
+			{
+				entry.Display.color = Color.white;
 			}
 		}
 	}
