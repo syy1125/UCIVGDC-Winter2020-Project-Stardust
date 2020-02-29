@@ -199,6 +199,10 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 			{
 				Debug.Log($"Building {BuildingSelection.GetSelectedBuilding().DisplayName} at {origin}");
 				_selectedBody.Buildings.ConstructBuilding(_building, origin, _rotation);
+				foreach (BuildingCost cost in _building.Costs)
+				{
+					_selectedBody.Resources[cost.Resource] -= cost.Amount;
+				}
 
 				RedrawBuildings();
 				RedrawBuildingPreview();
