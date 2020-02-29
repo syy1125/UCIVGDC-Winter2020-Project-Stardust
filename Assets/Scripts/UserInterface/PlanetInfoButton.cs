@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-public class PlanetInfoUI : MonoBehaviour
+public class PlanetInfoButton : MonoBehaviour
 {
-	public Button PlanetInfoButton;
+	[FormerlySerializedAs("PlanetInfoButton")]
+	public Button InfoButton;
 	public GameObject PlanetInfoPanel;
 
 	private void Start()
@@ -22,12 +24,12 @@ public class PlanetInfoUI : MonoBehaviour
 	{
 		if (GameController.Instance.SelectedBody == null)
 		{
-			PlanetInfoButton.interactable = false;
+			InfoButton.interactable = false;
 			PlanetInfoPanel.SetActive(false);
 		}
 		else
 		{
-			PlanetInfoButton.interactable = true;
+			InfoButton.interactable = true;
 		}
 	}
 }

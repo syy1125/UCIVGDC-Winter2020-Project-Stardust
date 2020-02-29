@@ -20,7 +20,7 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	public Color InvalidPositionColor = Color.red;
 
 	// Non-serialized fields
-	public bool LoadedPlanet => _selectedBody != null;
+	private bool LoadedPlanet => _selectedBody != null;
 	private CelestialBodyLogic _selectedBody;
 	private GameObject[][] _gridTiles;
 	private GameObject[][] _previewTiles;

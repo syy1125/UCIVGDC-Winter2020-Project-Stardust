@@ -22,20 +22,16 @@ public class ResourceUI : MonoBehaviour
 	public Color DeficitWarningColor;
 	public Color DeficitColor;
 
-	private void Start()
+	private void OnEnable()
 	{
 		GameController.Instance.OnBodySelectionChanged.AddListener(UpdateDisplay);
 		UpdateDisplay();
 	}
 
-	private void OnEnable()
-	{
-		UpdateDisplay();
-	}
-
 	private void UpdateDisplay()
 	{
-		if (GameController.Instance.SelectedBody == null || !gameObject.activeSelf) return;
+		if (GameController.Instance.SelectedBody == null) gameObject.SetActive(false);
+		if (!gameObject.activeSelf) return;
 
 		CelestialBodyResources resources = GameController.Instance
 			.State
@@ -72,5 +68,10 @@ public class ResourceUI : MonoBehaviour
 				entry.Display.color = Color.white;
 			}
 		}
+	}
+
+	private void OnDisable()
+	{
+		GameController.Instance.OnBodySelectionChanged.RemoveListener(UpdateDisplay);
 	}
 }

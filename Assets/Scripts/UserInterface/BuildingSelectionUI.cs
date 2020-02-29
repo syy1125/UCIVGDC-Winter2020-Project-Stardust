@@ -11,6 +11,7 @@ public class BuildingSelectionUI : MonoBehaviour
 	public GameObject ExtraButtons;
 	public Button CancelButton;
 
+	private bool LoadedPlanet => _selectedBody != null;
 	private CelestialBodyLogic _selectedBody;
 	private int _selectedIndex;
 	private const int UNSELECT_INDEX = -1; // Index for when nothing is selected
@@ -20,6 +21,8 @@ public class BuildingSelectionUI : MonoBehaviour
 
 	public void LoadBuildings(CelestialBodyLogic bodyLogic)
 	{
+		if (LoadedPlanet) UnloadBuildings();
+
 		_selectedBody = bodyLogic;
 		_selectedIndex = UNSELECT_INDEX;
 
@@ -34,8 +37,6 @@ public class BuildingSelectionUI : MonoBehaviour
 		}
 
 		RefreshBuildingButtons();
-
-		ExtraButtons.SetActive(true);
 	}
 
 	public void SetSelectedIndex(int index)
@@ -74,6 +75,6 @@ public class BuildingSelectionUI : MonoBehaviour
 			Destroy(child.gameObject);
 		}
 
-		ExtraButtons.SetActive(false);
+		_selectedBody = null;
 	}
 }

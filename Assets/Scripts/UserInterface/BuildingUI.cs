@@ -1,48 +1,38 @@
+using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BuildingUI : MonoBehaviour
 {
-	[Header("References")]
-	public Button BuildButton;
-	public BuildingGridUI BuildingGrid;
-	public BuildingSelectionUI BuildingSelection;
+	public BuildingGridUI GridUI;
+	public BuildingSelectionUI SelectionUI;
 
-	public bool BuildingScreenOpen { get; private set; }
-
-	private void Start()
+	private void OnEnable()
 	{
 		GameController.Instance.OnBodySelectionChanged.AddListener(UpdateDisplay);
 		UpdateDisplay();
 	}
 
-	public void UpdateDisplay()
+	private void UpdateDisplay()
 	{
 		CelestialBody selected = GameController.Instance.SelectedBody;
-		BuildButton.interactable = selected != null && selected.Colonizable;
 
-		if (BuildingScreenOpen)
+		if (selected == null)
 		{
-			ToggleBuildingScreen();
-		}
-	}
-
-	public void ToggleBuildingScreen()
-	{
-		if (BuildingScreenOpen)
-		{
-			BuildingGrid.UnloadBuildingGrid();
-			BuildingSelection.UnloadBuildings();
-			BuildingScreenOpen = false;
+			GridUI.UnloadBuildingGrid();
+			SelectionUI.UnloadBuildings();
 		}
 		else
 		{
-			CelestialBodyLogic logic =
-				GameController.Instance.State.FindLogicComponent(GameController.Instance.SelectedBody);
-			if (logic == null) return;
-			BuildingGrid.LoadBuildingGrid(logic);
-			BuildingSelection.LoadBuildings(logic);
-			BuildingScreenOpen = true;
+			CelestialBodyLogic logic = GameController.Instance.State.FindLogicComponent(selected);
+			GridUI.LoadBuildingGrid(logic);
+			SelectionUI.LoadBuildings(logic);
 		}
+	}
+
+	private void OnDisable()
+	{
+		GridUI.UnloadBuildingGrid();
+		SelectionUI.UnloadBuildings();
+		GameController.Instance.OnBodySelectionChanged.RemoveListener(UpdateDisplay);
 	}
 }

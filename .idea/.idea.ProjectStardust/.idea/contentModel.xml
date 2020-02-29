@@ -67,23 +67,23 @@
           <e p="StaticStarSystemInitializer.cs" t="Include" />
           <e p="Testing" t="Include">
             <e p="Clock.cs" t="Include" />
-            <e p="TestBuildingGrid.cs" t="Include" />
             <e p="TestBuildingSelection.cs" t="Include" />
             <e p="TestScripts.cs" t="Include" />
             <e p="VisualizeBodyRealtimeOverview.cs" t="Include" />
           </e>
           <e p="Transfer" t="Include">
             <e p="PlanetSelect.cs" t="Include" />
-            <e p="ToggleTransferButton.cs" t="Include" />
             <e p="Transfer.cs" t="Include" />
           </e>
           <e p="UserInterface" t="Include">
+            <e p="BuildingButton.cs" t="Include" />
             <e p="BuildingGridUI.cs" t="Include" />
             <e p="BuildingSelectionButtonUI.cs" t="Include" />
             <e p="BuildingSelectionUI.cs" t="Include" />
             <e p="BuildingUI.cs" t="Include" />
-            <e p="PlanetInfoUI.cs" t="Include" />
+            <e p="PlanetInfoButton.cs" t="Include" />
             <e p="ResourceUI.cs" t="Include" />
+            <e p="UIWindow.cs" t="Include" />
           </e>
         </e>
         <e p="Textures" t="Include">
