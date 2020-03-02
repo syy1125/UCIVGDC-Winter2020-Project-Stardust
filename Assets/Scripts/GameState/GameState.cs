@@ -4,8 +4,8 @@ using System.Linq;
 public class GameState : IHasTurnLogic
 {
 	public int CurrentTurn;
-	public List<CelestialBodyLogic> StarSystem { get; private set; }
-	public List<Spaceship> Spaceships { get; private set; }
+	public readonly List<CelestialBodyLogic> StarSystem;
+	public readonly List<Spaceship> Spaceships;
 
 	public GameState()
 	{

@@ -16,7 +16,6 @@ public class TogglePanelButton : MonoBehaviour
 	{
 		GameController.Instance.OnBodySelectionChanged.AddListener(UpdateDisplay);
 		UpdateDisplay();
-		GetComponent<Button>().onClick.AddListener(TogglePanel);
 	}
 
 	private void UpdateDisplay()

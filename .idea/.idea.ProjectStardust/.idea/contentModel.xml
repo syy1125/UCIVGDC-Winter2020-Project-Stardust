@@ -60,9 +60,7 @@
             <e p="VisualizeOrbit.cs" t="Include" />
           </e>
           <e p="Resource.cs" t="Include" />
-          <e p="Spaceship" t="Include">
-            <e p="SpaceshipTemplate.cs" t="Include" />
-          </e>
+          <e p="SpaceshipTemplate.cs" t="Include" />
           <e p="StarSystemSpawner.cs" t="Include" />
           <e p="StaticStarSystemInitializer.cs" t="Include" />
           <e p="Testing" t="Include">
@@ -76,13 +74,15 @@
             <e p="Transfer.cs" t="Include" />
           </e>
           <e p="UserInterface" t="Include">
-            <e p="BuildingButton.cs" t="Include" />
             <e p="BuildingGridUI.cs" t="Include" />
-            <e p="BuildingSelectionButtonUI.cs" t="Include" />
             <e p="BuildingSelectionUI.cs" t="Include" />
             <e p="BuildingUI.cs" t="Include" />
-            <e p="PlanetInfoButton.cs" t="Include" />
+            <e p="ICanSelectIndex.cs" t="Include" />
+            <e p="IndexSelectionButton.cs" t="Include" />
             <e p="ResourceUI.cs" t="Include" />
+            <e p="ShipConstructionUI.cs" t="Include" />
+            <e p="TabsController.cs" t="Include" />
+            <e p="TogglePanelButton.cs" t="Include" />
             <e p="UIWindow.cs" t="Include" />
           </e>
         </e>
