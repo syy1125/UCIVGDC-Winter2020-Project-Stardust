@@ -13,5 +13,8 @@ public struct ShipCost
 public class SpaceshipTemplate : ScriptableObject
 {
 	public string DisplayName;
-	[FormerlySerializedAs("Cost")] public ShipCost[] Costs;
+	[FormerlySerializedAs("Mass")]
+	public int DryMass;
+	[FormerlySerializedAs("Cost")]
+	public ShipCost[] Costs;
 }
