@@ -31,6 +31,7 @@ public class BuildingUI : MonoBehaviour
 
 	private void OnDisable()
 	{
+		if (GridUI == null || SelectionUI == null || GameController.Instance == null) return;
 		GridUI.UnloadBuildingGrid();
 		SelectionUI.UnloadBuildings();
 		GameController.Instance.OnBodySelectionChanged.RemoveListener(UpdateDisplay);

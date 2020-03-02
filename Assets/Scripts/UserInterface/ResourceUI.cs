@@ -30,8 +30,7 @@ public class ResourceUI : MonoBehaviour
 
 	private void UpdateDisplay()
 	{
-		if (GameController.Instance.SelectedBody == null) gameObject.SetActive(false);
-		if (!gameObject.activeSelf) return;
+		if (GameController.Instance.SelectedBody == null || !gameObject.activeSelf) return;
 
 		CelestialBodyResources resources = GameController.Instance
 			.State
@@ -40,13 +39,17 @@ public class ResourceUI : MonoBehaviour
 			.First()
 			.Resources;
 
-		int powerProduction = resources.GetRawProduction(Energy);
-		int powerConsumption = resources.GetRawConsumption(Energy);
+		if (Energy != null)
+		{
+			int powerProduction = resources.GetRawProduction(Energy);
+			int powerConsumption = resources.GetRawConsumption(Energy);
+
+			PowerDisplay.text = $"{powerConsumption} / {powerProduction}";
+			PowerDisplay.color = powerConsumption > powerProduction ? DeficitColor : Color.white;
+		}
+
 		Dictionary<Resource, int> resourceDelta = resources.GetIdealResourceDelta();
 		Dictionary<Resource, int> resourceCapacity = resources.GetIdealResourceCapacity();
-
-		PowerDisplay.text = $"{powerConsumption} / {powerProduction}";
-		PowerDisplay.color = powerConsumption > powerProduction ? Color.red : Color.white;
 
 		foreach (ResourceDisplayEntry entry in ResourceDisplays)
 		{
@@ -72,6 +75,9 @@ public class ResourceUI : MonoBehaviour
 
 	private void OnDisable()
 	{
-		GameController.Instance.OnBodySelectionChanged.RemoveListener(UpdateDisplay);
+		if (GameController.Instance != null)
+		{
+			GameController.Instance.OnBodySelectionChanged.RemoveListener(UpdateDisplay);
+		}
 	}
 }

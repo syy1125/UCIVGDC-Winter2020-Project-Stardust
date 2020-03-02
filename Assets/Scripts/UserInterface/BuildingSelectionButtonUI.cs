@@ -6,11 +6,11 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class BuildingSelectionButtonUI : MonoBehaviour
 {
-	[HideInInspector]
+	[NonSerialized]
 	public BuildingSelectionUI BuildingSelection;
-	[HideInInspector]
+	[NonSerialized]
 	public int Index;
-	[HideInInspector]
+	[NonSerialized]
 	public BuildingTemplate Building;
 
 	[Header("References")]
