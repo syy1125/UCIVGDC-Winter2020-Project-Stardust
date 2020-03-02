@@ -1,9 +1,8 @@
-using System;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildingSelectionUI : MonoBehaviour
+public class BuildingSelectionUI : MonoBehaviour, ICanSelectIndex
 {
 	[Header("References")]
 	public BuildingTemplate[] Buildings;
@@ -29,17 +28,17 @@ public class BuildingSelectionUI : MonoBehaviour
 		for (int index = 0; index < Buildings.Length; index++)
 		{
 			GameObject button = Instantiate(BuildingButtonPrefab, transform);
-			var buttonController = button.GetComponent<BuildingSelectionButtonUI>();
+			var buttonController = button.GetComponent<IndexSelectionButton>();
 
-			buttonController.BuildingSelection = this;
+			buttonController.Controller = this;
 			buttonController.Index = index;
-			buttonController.Building = Buildings[index];
+			buttonController.GetComponentInChildren<Text>().text = Buildings[index].DisplayName;
 		}
 
 		RefreshBuildingButtons();
 	}
 
-	public void SetSelectedIndex(int index)
+	public void SelectIndex(int index)
 	{
 		_selectedIndex = index;
 
@@ -52,9 +51,9 @@ public class BuildingSelectionUI : MonoBehaviour
 	{
 		foreach (Transform child in transform)
 		{
-			var buttonUI = child.GetComponent<BuildingSelectionButtonUI>();
+			var buttonUI = child.GetComponent<IndexSelectionButton>();
 			buttonUI.SetSelected(buttonUI.Index == _selectedIndex);
-			child.GetComponent<Button>().interactable = CanBuild(buttonUI.Building);
+			child.GetComponent<Button>().interactable = CanBuild(Buildings[buttonUI.Index]);
 		}
 	}
 
@@ -65,7 +64,7 @@ public class BuildingSelectionUI : MonoBehaviour
 
 	public void CancelSelection()
 	{
-		SetSelectedIndex(UNSELECT_INDEX);
+		SelectIndex(UNSELECT_INDEX);
 	}
 
 	public void UnloadBuildings()

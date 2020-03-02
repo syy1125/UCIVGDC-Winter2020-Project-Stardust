@@ -4,33 +4,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
-public class BuildingSelectionButtonUI : MonoBehaviour
+public class IndexSelectionButton : MonoBehaviour
 {
 	[NonSerialized]
-	public BuildingSelectionUI BuildingSelection;
+	public ICanSelectIndex Controller;
 	[NonSerialized]
 	public int Index;
-	[NonSerialized]
-	public BuildingTemplate Building;
-
-	[Header("References")]
-	public Text BuildingName;
 
 	[Header("Config")]
-	public Color SelectedColor;
+	public Color SelectedColor = Color.cyan;
 
 	private ColorBlock _initialColors;
-
-	// Awake executes during instantiate, while Start executes after instantiate.
-	// This execution order initializes the fields correctly.
 	private void Awake()
 	{
 		_initialColors = GetComponent<Button>().colors;
-	}
-
-	private void Start()
-	{
-		BuildingName.text = Building.DisplayName;
 	}
 
 	public void SetSelected(bool selected)
@@ -55,6 +42,6 @@ public class BuildingSelectionButtonUI : MonoBehaviour
 
 	public void OnClick()
 	{
-		BuildingSelection.SetSelectedIndex(Index);
+		Controller.SelectIndex(Index);
 	}
 }
