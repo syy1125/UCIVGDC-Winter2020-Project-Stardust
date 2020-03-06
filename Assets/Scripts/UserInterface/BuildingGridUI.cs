@@ -204,13 +204,14 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 					_selectedBody.Resources[cost.Resource] -= cost.Amount;
 				}
 
-				RedrawBuildings();
-				RedrawBuildingPreview();
-
 				if (!(Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
 				{
 					BuildingSelection.CancelSelection();
+					_building = null;
 				}
+
+				RedrawBuildings();
+				RedrawBuildingPreview();
 			}
 		}
 		else if (eventData.button == PointerEventData.InputButton.Right)

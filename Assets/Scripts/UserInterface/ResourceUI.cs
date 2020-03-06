@@ -25,6 +25,7 @@ public class ResourceUI : MonoBehaviour
 	private void OnEnable()
 	{
 		GameController.Instance.OnBodySelectionChanged.AddListener(UpdateDisplay);
+		GameController.Instance.OnEndAdvanceTurn.AddListener(UpdateDisplay);
 		UpdateDisplay();
 	}
 
@@ -78,6 +79,7 @@ public class ResourceUI : MonoBehaviour
 		if (GameController.Instance != null)
 		{
 			GameController.Instance.OnBodySelectionChanged.RemoveListener(UpdateDisplay);
+			GameController.Instance.OnEndAdvanceTurn.RemoveListener(UpdateDisplay);
 		}
 	}
 }

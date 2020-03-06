@@ -30,6 +30,7 @@ public class ShipConstructionUI : MonoBehaviour, ICanSelectIndex
 	private void OnEnable()
 	{
 		GameController.Instance.OnBodySelectionChanged.AddListener(UpdateDisplay);
+		GameController.Instance.OnEndAdvanceTurn.AddListener(UpdateDisplay);
 		UpdateDisplay();
 	}
 
@@ -109,6 +110,7 @@ public class ShipConstructionUI : MonoBehaviour, ICanSelectIndex
 		if (GameController.Instance != null)
 		{
 			GameController.Instance.OnBodySelectionChanged.RemoveListener(UpdateDisplay);
+			GameController.Instance.OnEndAdvanceTurn.RemoveListener(UpdateDisplay);
 		}
 	}
 }
