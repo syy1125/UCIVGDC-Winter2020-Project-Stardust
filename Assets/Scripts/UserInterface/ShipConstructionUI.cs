@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,8 @@ public class ShipConstructionUI : MonoBehaviour, ICanSelectIndex
 	public GameObject ButtonPrefab;
 	public SpaceshipTemplate[] Ships;
 	private GameObject[] _buttons;
+	public GameObject QueuedShipPrefab;
+	public GameObject ConstructionQueueDisplay;
 
 	private void Awake()
 	{
@@ -32,12 +35,13 @@ public class ShipConstructionUI : MonoBehaviour, ICanSelectIndex
 
 	private static CelestialBodyResources GetSelectedResources()
 	{
-		return GameController.Instance.State.FindLogicComponent(GameController.Instance.SelectedBody).Resources;
+		return GameController.Instance.GetSelectedLogic().Resources;
 	}
 
-	private void UpdateDisplay()
+	public void UpdateDisplay()
 	{
 		CelestialBodyResources resources = GetSelectedResources();
+		List<SpaceshipTemplate> constructionQueue = GameController.Instance.GetSelectedLogic().ShipQueue;
 
 		foreach (GameObject button in _buttons)
 		{
@@ -45,6 +49,28 @@ public class ShipConstructionUI : MonoBehaviour, ICanSelectIndex
 				resources,
 				Ships[button.GetComponent<IndexSelectionButton>().Index]
 			);
+		}
+
+		int childCount = ConstructionQueueDisplay.transform.childCount;
+		if (childCount > constructionQueue.Count)
+		{
+			for (int i = childCount - 1; i >= constructionQueue.Count; i--)
+			{
+				Destroy(ConstructionQueueDisplay.transform.GetChild(i).gameObject);
+			}
+		}
+		else if (childCount < constructionQueue.Count)
+		{
+			for (int i = childCount; i < constructionQueue.Count; i++)
+			{
+				GameObject row = Instantiate(QueuedShipPrefab, ConstructionQueueDisplay.transform);
+				row.GetComponent<QueuedShipUI>().Controller = this;
+			}
+		}
+
+		foreach (Transform row in ConstructionQueueDisplay.transform)
+		{
+			row.GetComponent<QueuedShipUI>().UpdateDisplay();
 		}
 	}
 
@@ -65,7 +91,17 @@ public class ShipConstructionUI : MonoBehaviour, ICanSelectIndex
 		if (!CanAfford(resources, template))
 		{
 			Debug.LogError($"Tried to construct {template.DisplayName} but can't afford!");
+			return;
 		}
+
+		foreach (ShipCost cost in template.Costs)
+		{
+			resources[cost.Resource] -= cost.Amount;
+		}
+
+		GameController.Instance.GetSelectedLogic().ShipQueue.Add(template);
+
+		UpdateDisplay();
 	}
 
 	private void OnDisable()

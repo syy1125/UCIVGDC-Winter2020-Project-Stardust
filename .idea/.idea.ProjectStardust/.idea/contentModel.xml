@@ -79,6 +79,7 @@
             <e p="BuildingUI.cs" t="Include" />
             <e p="ICanSelectIndex.cs" t="Include" />
             <e p="IndexSelectionButton.cs" t="Include" />
+            <e p="QueuedShipUI.cs" t="Include" />
             <e p="ResourceUI.cs" t="Include" />
             <e p="ShipConstructionUI.cs" t="Include" />
             <e p="TabsController.cs" t="Include" />

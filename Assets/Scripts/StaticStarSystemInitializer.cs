@@ -12,7 +12,7 @@ public class StaticStarSystemInitializer : MonoBehaviour
 
 		foreach (CelestialBody body in Bodies)
 		{
-			state.StarSystem.Add(new CelestialBodyLogic(body));
+			state.StarSystem.Add(new CelestialBodyLogic(state, body));
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Security;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -37,10 +38,10 @@ public class GameController : MonoBehaviour
 	private void Update()
 	{
 		if (!Input.GetKeyDown(KeyCode.Escape)) return;
-		
+
 		bool handled = OnEscapePressed.Invoke();
 		if (handled) return;
-		
+
 		// Default escape behaviour
 		if (SelectedBody != null)
 		{
@@ -77,6 +78,12 @@ public class GameController : MonoBehaviour
 		_advancingTurn = false;
 		State.CurrentTurn++;
 		OnEndAdvanceTurn.Invoke();
+	}
+
+	public CelestialBodyLogic GetSelectedLogic()
+	{
+		if (SelectedBody == null) return null;
+		return State.FindLogicComponent(SelectedBody);
 	}
 
 	private void OnDestroy()
