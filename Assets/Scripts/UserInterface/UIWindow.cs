@@ -10,7 +10,7 @@ public class UIWindow : MonoBehaviour
 	private void HandleEscapePress(EscapeEvent e)
 	{
 		gameObject.SetActive(false);
-		e.Handle();
+		e.SetHandled();
 	}
 
 	private void OnDisable()

@@ -10,7 +10,7 @@ public class EscapeEvent
 		Handled = false;
 	}
 
-	public void Handle()
+	public void SetHandled()
 	{
 		Handled = true;
 	}
