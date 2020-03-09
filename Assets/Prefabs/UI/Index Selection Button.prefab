@@ -50,6 +50,11 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 4319736642245546233, guid: ad724e781cf8be64e846a6a3be66c973,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7936893090968795107, guid: ad724e781cf8be64e846a6a3be66c973,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -113,7 +118,7 @@ PrefabInstance:
     - target: {fileID: 7936893090968795107, guid: ad724e781cf8be64e846a6a3be66c973,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 30
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 7936893090968795107, guid: ad724e781cf8be64e846a6a3be66c973,
         type: 3}
@@ -148,7 +153,7 @@ PrefabInstance:
     - target: {fileID: 9020090820662778022, guid: ad724e781cf8be64e846a6a3be66c973,
         type: 3}
       propertyPath: m_Name
-      value: Building Selection Button
+      value: Index Selection Button
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad724e781cf8be64e846a6a3be66c973, type: 3}

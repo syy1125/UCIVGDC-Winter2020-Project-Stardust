@@ -1,6 +1,6 @@
 public class Spaceship
 {
-	private SpaceshipTemplate _template;
+	public readonly SpaceshipTemplate Template;
 
 	// If the spaceship is in orbit around a planet, OrbitingBody is set and FreeOrbit is null
 	// If the spaceship is moving through space, FreeOrbit is set and OrbitingBody is null
@@ -9,7 +9,7 @@ public class Spaceship
 
 	public Spaceship(SpaceshipTemplate template, CelestialBody orbitingBody)
 	{
-		_template = template;
+		Template = template;
 		OrbitingBody = orbitingBody;
 	}
 
