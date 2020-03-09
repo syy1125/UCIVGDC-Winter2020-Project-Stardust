@@ -8,7 +8,9 @@ public class QueuedShipUI : MonoBehaviour
 	private int ShipIndex => transform.GetSiblingIndex();
 	public Text ShipName;
 	[NonSerialized]
-	public ShipConstructionUI Controller;
+	public ShipQueueUI Controller;
+	[NonSerialized]
+	public ShipConstructionUI ConstructionUI;
 
 	public void UpdateDisplay()
 	{
@@ -38,5 +40,6 @@ public class QueuedShipUI : MonoBehaviour
 		}
 
 		Controller.UpdateDisplay();
+		ConstructionUI.UpdateDisplay();
 	}
 }

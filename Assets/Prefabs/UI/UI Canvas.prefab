@@ -2812,9 +2812,7 @@ MonoBehaviour:
   Ships:
   - {fileID: 11400000, guid: c8e959ae82f3ac045b7b8943cc1db23c, type: 2}
   - {fileID: 11400000, guid: b09ced410a3ff1a4f974553d1aa62fab, type: 2}
-  QueuedShipPrefab: {fileID: 4085685601869487864, guid: ad4250319e98a954f85e7a6696eb8aa0,
-    type: 3}
-  ConstructionQueueDisplay: {fileID: 8938167956043115975}
+  QueueUI: {fileID: 2283053004411849762}
 --- !u!114 &282787504253575505
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5030,6 +5028,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7756896360430267842}
   - component: {fileID: 8809445754390328341}
+  - component: {fileID: 2283053004411849762}
   m_Layer: 5
   m_Name: Construction Queue
   m_TagString: Untagged
@@ -5081,6 +5080,21 @@ MonoBehaviour:
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &2283053004411849762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8938167956043115975}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5ddb13e58d3497181f6bffbff949ae4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  QueuedShipPrefab: {fileID: 4085685601869487864, guid: ad4250319e98a954f85e7a6696eb8aa0,
+    type: 3}
+  ConstructionUI: {fileID: 6052291770543606778}
 --- !u!1 &9114240235635638315
 GameObject:
   m_ObjectHideFlags: 0

@@ -82,6 +82,7 @@
             <e p="QueuedShipUI.cs" t="Include" />
             <e p="ResourceUI.cs" t="Include" />
             <e p="ShipConstructionUI.cs" t="Include" />
+            <e p="ShipQueueUI.cs" t="Include" />
             <e p="TabsController.cs" t="Include" />
             <e p="TogglePanelButton.cs" t="Include" />
             <e p="UIWindow.cs" t="Include" />

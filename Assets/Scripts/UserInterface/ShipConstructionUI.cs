@@ -8,8 +8,7 @@ public class ShipConstructionUI : MonoBehaviour, ICanSelectIndex
 	public GameObject ButtonPrefab;
 	public SpaceshipTemplate[] Ships;
 	private GameObject[] _buttons;
-	public GameObject QueuedShipPrefab;
-	public GameObject ConstructionQueueDisplay;
+	public ShipQueueUI QueueUI;
 
 	private void Awake()
 	{
@@ -42,7 +41,6 @@ public class ShipConstructionUI : MonoBehaviour, ICanSelectIndex
 	public void UpdateDisplay()
 	{
 		CelestialBodyResources resources = GetSelectedResources();
-		List<SpaceshipTemplate> constructionQueue = GameController.Instance.GetSelectedLogic().ShipQueue;
 
 		foreach (GameObject button in _buttons)
 		{
@@ -50,28 +48,6 @@ public class ShipConstructionUI : MonoBehaviour, ICanSelectIndex
 				resources,
 				Ships[button.GetComponent<IndexSelectionButton>().Index]
 			);
-		}
-
-		int childCount = ConstructionQueueDisplay.transform.childCount;
-		if (childCount > constructionQueue.Count)
-		{
-			for (int i = childCount - 1; i >= constructionQueue.Count; i--)
-			{
-				Destroy(ConstructionQueueDisplay.transform.GetChild(i).gameObject);
-			}
-		}
-		else if (childCount < constructionQueue.Count)
-		{
-			for (int i = childCount; i < constructionQueue.Count; i++)
-			{
-				GameObject row = Instantiate(QueuedShipPrefab, ConstructionQueueDisplay.transform);
-				row.GetComponent<QueuedShipUI>().Controller = this;
-			}
-		}
-
-		foreach (Transform row in ConstructionQueueDisplay.transform)
-		{
-			row.GetComponent<QueuedShipUI>().UpdateDisplay();
 		}
 	}
 
@@ -103,6 +79,7 @@ public class ShipConstructionUI : MonoBehaviour, ICanSelectIndex
 		GameController.Instance.GetSelectedLogic().ShipQueue.Add(template);
 
 		UpdateDisplay();
+		QueueUI.UpdateDisplay();
 	}
 
 	private void OnDisable()
