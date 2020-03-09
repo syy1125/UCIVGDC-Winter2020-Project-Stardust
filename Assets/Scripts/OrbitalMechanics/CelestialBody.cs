@@ -1,10 +1,9 @@
 ﻿using System;
-using UnityEditor;
+using UnityEngine;
 using UnityEngine.Serialization;
 using Debug = System.Diagnostics.Debug;
 #if UNITY_EDITOR
-using UnityEngine;
-
+using UnityEditor;
 #endif
 
 [CreateAssetMenu(menuName = "Scriptable Objects/Celestial Body")]

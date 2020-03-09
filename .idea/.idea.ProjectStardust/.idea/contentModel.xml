@@ -38,7 +38,6 @@
             <e p="CelestialBodyResources.cs" t="Include" />
             <e p="GameState.cs" t="Include" />
             <e p="IHasTurnLogic.cs" t="Include" />
-            <e p="ISerializableState.cs" t="Include" />
             <e p="Spaceship.cs" t="Include" />
           </e>
           <e p="GameUnits.cs" t="Include" />

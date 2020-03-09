@@ -5,15 +5,8 @@ using UnityEditor;
 using UnityEngine;
 using Random = System.Random;
 
-public class CelestialBodyResources : ISaveLoad<CelestialBodyResources.Serialized>, IHasTurnLogic
+public class CelestialBodyResources: IHasTurnLogic
 {
-	[Serializable]
-	public struct Serialized
-	{
-		public string[] ResourcePaths;
-		public int[] Amount;
-	}
-
 	private readonly CelestialBodyLogic _logic;
 
 	private readonly Dictionary<Resource, int> _storage = new Dictionary<Resource, int>();
@@ -250,34 +243,6 @@ public class CelestialBodyResources : ISaveLoad<CelestialBodyResources.Serialize
 		{
 			if (!capacity.TryGetValue(resource, out int max)) max = 0;
 			_storage[resource] = Mathf.Min(_storage[resource], max);
-		}
-	}
-
-	public Serialized Save()
-	{
-		var resourcePaths = new List<string>();
-		var amount = new List<int>();
-
-		foreach (KeyValuePair<Resource, int> entry in _storage)
-		{
-			resourcePaths.Add(AssetDatabase.GetAssetPath(entry.Key));
-			amount.Add(entry.Value);
-		}
-
-		return new Serialized
-		{
-			ResourcePaths = resourcePaths.ToArray(),
-			Amount = amount.ToArray()
-		};
-	}
-
-	public void Load(Serialized serialized)
-	{
-		_storage.Clear();
-
-		for (int i = 0; i < serialized.ResourcePaths.Length; i++)
-		{
-			_storage[AssetDatabase.LoadAssetAtPath<Resource>(serialized.ResourcePaths[i])] = serialized.Amount[i];
 		}
 	}
 }

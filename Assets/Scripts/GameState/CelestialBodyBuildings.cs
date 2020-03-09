@@ -16,14 +16,8 @@ public struct EffectGroupInstance
 }
 
 // Represents an instance of a constructed building.
-public class BuildingInstance : ISaveLoad<BuildingInstance.Serialized>
+public class BuildingInstance
 {
-	[Serializable]
-	public struct Serialized
-	{
-		public string TemplatePath;
-		public int Rotation;
-	}
 
 	public BuildingTemplate Template;
 	public EffectGroupInstance[] EffectGroups;
@@ -35,37 +29,10 @@ public class BuildingInstance : ISaveLoad<BuildingInstance.Serialized>
 		EffectGroups = template.EffectGroups.Select(group => new EffectGroupInstance(group)).ToArray();
 		Rotation = rotation;
 	}
-
-	// FOR SAVE/LOAD USE ONLY
-	public BuildingInstance()
-	{}
-
-	public Serialized Save()
-	{
-		return new Serialized
-		{
-			TemplatePath = AssetDatabase.GetAssetPath(Template),
-			Rotation = Rotation
-		};
-	}
-
-	public void Load(Serialized serialized)
-	{
-		Template = AssetDatabase.LoadAssetAtPath<BuildingTemplate>(serialized.TemplatePath);
-		EffectGroups = Template.EffectGroups.Select(group => new EffectGroupInstance(group)).ToArray();
-		Rotation = serialized.Rotation;
-	}
 }
 
-public class CelestialBodyBuildings : ISaveLoad<CelestialBodyBuildings.Serialized>
+public class CelestialBodyBuildings
 {
-	[Serializable]
-	public struct Serialized
-	{
-		public BuildingInstance.Serialized[] Buildings;
-		public Vector2Int[] BuildingOrigins;
-	}
-
 	private readonly CelestialBodyLogic _logic;
 	private CelestialBody Body => _logic.Body;
 
@@ -169,33 +136,5 @@ public class CelestialBodyBuildings : ISaveLoad<CelestialBodyBuildings.Serialize
 	public static Vector2Int InverseRotate(Vector2Int vector, int rotation)
 	{
 		return Rotate(vector, 4 - rotation);
-	}
-
-	public Serialized Save()
-	{
-		var buildings = new List<BuildingInstance.Serialized>(_buildingOrigin.Count);
-		var buildingOrigins = new List<Vector2Int>(_buildingOrigin.Count);
-
-		foreach (KeyValuePair<BuildingInstance, Vector2Int> entry in _buildingOrigin)
-		{
-			buildings.Add(entry.Key.Save());
-			buildingOrigins.Add(entry.Value);
-		}
-
-		return new Serialized {Buildings = buildings.ToArray(), BuildingOrigins = buildingOrigins.ToArray()};
-	}
-
-	public void Load(Serialized serialized)
-	{
-		_buildingOrigin.Clear();
-		_slotToBuilding.Clear();
-
-		for (int i = 0; i < serialized.Buildings.Length; i++)
-		{
-			var building = new BuildingInstance();
-			building.Load(serialized.Buildings[i]);
-
-			_buildingOrigin.Add(building, serialized.BuildingOrigins[i]);
-		}
 	}
 }

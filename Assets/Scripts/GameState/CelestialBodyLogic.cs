@@ -1,15 +1,8 @@
 using System.Collections.Generic;
 using UnityEditor;
 
-public class CelestialBodyLogic : ISaveLoad<CelestialBodyLogic.Serialized>, IHasTurnLogic
+public class CelestialBodyLogic : IHasTurnLogic
 {
-	public struct Serialized
-	{
-		public string CelestialBodyPath;
-		public CelestialBodyBuildings.Serialized Buildings;
-		public CelestialBodyResources.Serialized Resources;
-	}
-
 	private readonly GameState _state;
 	public CelestialBody Body { get; private set; }
 	public CelestialBodyBuildings Buildings { get; }
@@ -34,22 +27,5 @@ public class CelestialBodyLogic : ISaveLoad<CelestialBodyLogic.Serialized>, IHas
 		}
 
 		ShipQueue.Clear();
-	}
-
-	public Serialized Save()
-	{
-		return new Serialized
-		{
-			CelestialBodyPath = AssetDatabase.GetAssetPath(Body),
-			Buildings = Buildings.Save(),
-			Resources = Resources.Save()
-		};
-	}
-
-	public void Load(Serialized serialized)
-	{
-		Body = AssetDatabase.LoadAssetAtPath<CelestialBody>(serialized.CelestialBodyPath);
-		Buildings.Load(serialized.Buildings);
-		Resources.Load(serialized.Resources);
 	}
 }
