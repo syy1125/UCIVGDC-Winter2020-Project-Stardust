@@ -1,10 +1,9 @@
-using System;
 using UnityEngine;
 
 public class TestBuildingSelection : MonoBehaviour
 {
-	private bool _loaded = false;
-	
+	private bool _loaded;
+
 	private void Update()
 	{
 		if (Input.GetButtonDown("Submit"))

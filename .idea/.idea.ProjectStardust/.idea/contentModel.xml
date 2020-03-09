@@ -77,6 +77,7 @@
             <e p="BuildingGridUI.cs" t="Include" />
             <e p="BuildingSelectionUI.cs" t="Include" />
             <e p="BuildingUI.cs" t="Include" />
+            <e p="GameUI.cs" t="Include" />
             <e p="ICanSelectIndex.cs" t="Include" />
             <e p="IndexSelectionButton.cs" t="Include" />
             <e p="QueuedShipUI.cs" t="Include" />

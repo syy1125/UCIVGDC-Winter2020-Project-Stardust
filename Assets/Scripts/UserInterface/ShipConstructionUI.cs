@@ -1,9 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShipConstructionUI : MonoBehaviour, ICanSelectIndex
+public class ShipConstructionUI : GameUI, ICanSelectIndex
 {
 	public GameObject ButtonPrefab;
 	public SpaceshipTemplate[] Ships;
@@ -26,19 +25,12 @@ public class ShipConstructionUI : MonoBehaviour, ICanSelectIndex
 		}
 	}
 
-	private void OnEnable()
-	{
-		GameController.Instance.OnBodySelectionChanged.AddListener(UpdateDisplay);
-		GameController.Instance.OnEndAdvanceTurn.AddListener(UpdateDisplay);
-		UpdateDisplay();
-	}
-
 	private static CelestialBodyResources GetSelectedResources()
 	{
 		return GameController.Instance.GetSelectedLogic().Resources;
 	}
 
-	public void UpdateDisplay()
+	public override void UpdateDisplay()
 	{
 		CelestialBodyResources resources = GetSelectedResources();
 
@@ -80,14 +72,5 @@ public class ShipConstructionUI : MonoBehaviour, ICanSelectIndex
 
 		UpdateDisplay();
 		QueueUI.UpdateDisplay();
-	}
-
-	private void OnDisable()
-	{
-		if (GameController.Instance != null)
-		{
-			GameController.Instance.OnBodySelectionChanged.RemoveListener(UpdateDisplay);
-			GameController.Instance.OnEndAdvanceTurn.RemoveListener(UpdateDisplay);
-		}
 	}
 }

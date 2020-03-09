@@ -83,8 +83,20 @@ public class LambertSolver
 		theta = theta + 2.0f * Mathf.PI * Mathf.Abs(nrev);
 
 		VLAMB(
-			GM, R1.magnitude, R2.magnitude, theta, tof, out n, out VR11, out VT11, out VR12, out VT12, out VR21,
-			out VT21, out VR22, out VT22
+			GM,
+			R1.magnitude,
+			R2.magnitude,
+			theta,
+			tof,
+			out n,
+			out VR11,
+			out VT11,
+			out VR12,
+			out VT12,
+			out VR21,
+			out VT21,
+			out VR22,
+			out VT22
 		);
 
 		//Debug.Log("VLAMBOUT: n= " + n + " VR11= " + VR11 + " VT11= " + VT11 + " VR12= " + VR12 + " VT12= " + VT12 + " VR21= " + VR21 + " VT21= " + VT21 + " VR22= " + VR22 + " VT22= " + VT22);
@@ -95,7 +107,8 @@ public class LambertSolver
 			{
 				throw new Exception("Gooding Solver found no tminimum");
 			}
-			else if (n == 0)
+
+			if (n == 0)
 			{
 				throw new Exception("Gooding Solver found no solution time");
 			}
@@ -290,33 +303,32 @@ public class LambertSolver
 				return;
 				/* "EXIT IF NO SOLUTION ALTREADY FROM X(TMIN)" -- Gooding */
 			}
-			else if (TDIFFM == 0.0)
+
+			if (TDIFFM == 0.0)
 			{
 				X = XM;
 				N = 1;
 				return;
 				/* "EXIT IF UNIQUE SOLUTION ALREADY FROM X(TMIN) -- Gooding */
 			}
-			else
-			{
-				N = 3;
-				if (D2T == 0.0)
-					D2T = 6.0f * M * Mathf.PI;
-				X = Mathf.Sqrt(TDIFFM / (D2T / 2.0f + TDIFFM / Mathf.Pow(1.0f - XM, 2.0f)));
-				W = XM + X;
-				W = W * 4.0f / (4.0f + TDIFFM) + Mathf.Pow(1.0f - W, 2.0f);
-				X = X * (1.0f - (1.0f + M + C41 * (THR2 - 0.5f)) / (1.0f + C3 * M) * X
-				                                                                   * (C1 * W + C2 * X * Mathf.Sqrt(W)))
-				    + XM;
-				D2T2 = D2T / 2.0f;
-				if (X >= 1.0)
-				{
-					N = 1;
-					goto Three;
-				}
 
-				/* "(NO FINITE SOLUTION WITH X > XM)" -- Gooding */
+			N = 3;
+			if (D2T == 0.0)
+				D2T = 6.0f * M * Mathf.PI;
+			X = Mathf.Sqrt(TDIFFM / (D2T / 2.0f + TDIFFM / Mathf.Pow(1.0f - XM, 2.0f)));
+			W = XM + X;
+			W = W * 4.0f / (4.0f + TDIFFM) + Mathf.Pow(1.0f - W, 2.0f);
+			X = X * (1.0f - (1.0f + M + C41 * (THR2 - 0.5f)) / (1.0f + C3 * M) * X
+			                                                                   * (C1 * W + C2 * X * Mathf.Sqrt(W)))
+			    + XM;
+			D2T2 = D2T / 2.0f;
+			if (X >= 1.0)
+			{
+				N = 1;
+				goto Three;
 			}
+
+			/* "(NO FINITE SOLUTION WITH X > XM)" -- Gooding */
 		}
 
 		/* "(NOW HAVE A STARTER, SO PROCEED BY HALLEY)" -- Gooding */
@@ -654,8 +666,20 @@ public class LambertSolver
 				int n;
 
 				VLAMB(
-					1.0f, rlist[n1], rlist[n2], flist[n2] - flist[n1], tlist[n2] - tlist[n1], out n, out VR11, out VT11,
-					out VR12, out VT12, out VR21, out VT21, out VR22, out VT22
+					1.0f,
+					rlist[n1],
+					rlist[n2],
+					flist[n2] - flist[n1],
+					tlist[n2] - tlist[n1],
+					out n,
+					out VR11,
+					out VT11,
+					out VR12,
+					out VT12,
+					out VR21,
+					out VT21,
+					out VR22,
+					out VT22
 				);
 				float Vi = Mathf.Sqrt(VR11 * VR11 + VT11 * VT11);
 				float Vf = Mathf.Sqrt(VR12 * VR12 + VT12 * VT12);

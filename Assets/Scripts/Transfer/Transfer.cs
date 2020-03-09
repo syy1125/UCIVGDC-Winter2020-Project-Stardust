@@ -7,7 +7,7 @@ public class Transfer
 	public CelestialBody LaunchBody;
 	public float ArrivalTime;
 	public CelestialBody TargetBody;
-	
+
 	// delta-v data
 	public float LaunchCostGravity;
 	public float LaunchCostOrbitSpeed;

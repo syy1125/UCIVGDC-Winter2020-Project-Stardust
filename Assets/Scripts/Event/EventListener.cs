@@ -1,12 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 public class EventListener : MonoBehaviour
 {
 	public EventBus EventBus;
 	public bool ActiveWhenDisabled = true;
-	public UnityEvent OnEvent = new UnityEvent(); 
+	public UnityEvent OnEvent = new UnityEvent();
 
 	private void Awake()
 	{

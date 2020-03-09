@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,6 +14,7 @@ public class IndexSelectionButton : MonoBehaviour
 	public Color SelectedColor = Color.cyan;
 
 	private ColorBlock _initialColors;
+
 	private void Awake()
 	{
 		_initialColors = GetComponent<Button>().colors;

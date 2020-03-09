@@ -11,7 +11,7 @@ public struct ResourceDisplayEntry
 	public Text Display;
 }
 
-public class ResourceUI : MonoBehaviour
+public class ResourceUI : GameUI
 {
 	[Header("References")]
 	public Resource Energy;
@@ -22,14 +22,7 @@ public class ResourceUI : MonoBehaviour
 	public Color DeficitWarningColor;
 	public Color DeficitColor;
 
-	private void OnEnable()
-	{
-		GameController.Instance.OnBodySelectionChanged.AddListener(UpdateDisplay);
-		GameController.Instance.OnEndAdvanceTurn.AddListener(UpdateDisplay);
-		UpdateDisplay();
-	}
-
-	private void UpdateDisplay()
+	public override void UpdateDisplay()
 	{
 		if (GameController.Instance.SelectedBody == null || !gameObject.activeSelf) return;
 
@@ -71,15 +64,6 @@ public class ResourceUI : MonoBehaviour
 			{
 				entry.Display.color = Color.white;
 			}
-		}
-	}
-
-	private void OnDisable()
-	{
-		if (GameController.Instance != null)
-		{
-			GameController.Instance.OnBodySelectionChanged.RemoveListener(UpdateDisplay);
-			GameController.Instance.OnEndAdvanceTurn.RemoveListener(UpdateDisplay);
 		}
 	}
 }

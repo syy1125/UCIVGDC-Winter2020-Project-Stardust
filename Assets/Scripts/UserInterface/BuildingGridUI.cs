@@ -16,7 +16,6 @@ public class BuildingGridUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 	public BuildingSelectionUI BuildingSelection;
 
 	[Header("Config")]
-	public string RotateBuildingButton;
 	public Color InvalidPositionColor = Color.red;
 
 	// Non-serialized fields

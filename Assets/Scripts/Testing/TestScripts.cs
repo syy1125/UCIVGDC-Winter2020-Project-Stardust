@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using UnityEngine;
 
 public class TestScripts : MonoBehaviour
@@ -35,8 +34,10 @@ public class TestScripts : MonoBehaviour
 
 		LambertSolver.Solve(
 			Body.GravitationalParameter,
-			re, ve,
-			rm, vm,
+			re,
+			ve,
+			rm,
+			vm,
 			8,
 			0,
 			out Vector3 vi,

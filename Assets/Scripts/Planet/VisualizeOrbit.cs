@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(LineRenderer))]
@@ -25,7 +23,7 @@ public class VisualizeOrbit : MonoBehaviour
 		if (Body == null || Body.Orbit == null) return;
 
 		Vector3[] positions = Body.Orbit.GetDrawPositions(Segments);
-		
+
 		var lineRenderer = GetComponent<LineRenderer>();
 		lineRenderer.startColor = lineRenderer.endColor = Body.OverviewColor;
 		lineRenderer.positionCount = positions.Length;

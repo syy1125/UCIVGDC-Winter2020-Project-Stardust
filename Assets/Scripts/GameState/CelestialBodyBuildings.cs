@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.Experimental.XR;
 
 public struct EffectGroupInstance
 {
@@ -88,7 +87,7 @@ public class CelestialBodyBuildings : ISaveLoad<CelestialBodyBuildings.Serialize
 		if (!IsValidBuilding(template, origin, rotation))
 		{
 			Debug.LogError(
-				$"Attempting to build invalid configuration.\n"
+				"Attempting to build invalid configuration.\n"
 				+ $"Building{template.DisplayName} origin {origin} rotation {rotation}"
 			);
 			return;
